@@ -1,4 +1,8 @@
-package com.study.stuhostelsys.common.model;
+package com.study.stuhostelsys.model;
+
+/**
+ * 用户权限表
+ */
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
