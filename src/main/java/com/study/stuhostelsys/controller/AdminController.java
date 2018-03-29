@@ -6,12 +6,15 @@ package com.study.stuhostelsys.controller;
 import com.study.stuhostelsys.dao.AdminInterface;
 import com.study.stuhostelsys.model.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@RestController
+@Controller
 public class AdminController {
 
     @Autowired
@@ -23,13 +26,22 @@ public class AdminController {
      */
     @RequestMapping(value = "/admin")
     public ModelAndView admin(){
-        ModelAndView index = new ModelAndView("admin");
+        ModelAndView index = new ModelAndView("index");
         return index;
     }
 
     @PostMapping("/saveAdmin")
-    public Admin saveAdmin(@RequestParam("admin") Admin admin){
-        return adminInterface.save(admin);
+    public @ResponseBody String saveAdmin(@RequestParam String userName, @RequestParam String userPassword, @RequestParam String power, HttpServletRequest request, HttpServletResponse response){
+        Admin admin = new Admin();
+        admin.setUser_name(userName);
+        admin.setUser_password(userPassword);
+        admin.setPower(power);
+        try {
+            adminInterface.save(admin);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "0";
     }
 
     @GetMapping("/getAdminList")

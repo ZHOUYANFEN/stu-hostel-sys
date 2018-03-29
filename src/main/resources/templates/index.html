@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" th:href="@{bootstarp/bootstrap.min.css}">
+</head>
+<body>
+<h1>Index</h1>
+    <div>
+        <form name="addForm" id="adminForm">
+<!-- th:action="@{/saveAdmin}" method="post"-->
+            <div class="form-group">
+                <label for="user_name">user_name</label>
+                <input type="text" class="form-control" id="user_name">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="user_password">Password</label>
+                <input type="password" class="form-control" id="user_password" placeholder="Password">
+            </div>
+            <button type="button" class="btn btn-primary" id="save_admin">Submit</button>
+
+        </form>
+        <form name="getAdminList" id="getAdminList">
+            <button type="button" id="admin_list">getAdmin List</button>
+            <!-- onclick="getAdminList()" -->
+        </form>
+    </div>
+
+    <script type="text/javascript" th:src="@{js/jquery-3.3.1.min.js}"></script>
+    <script>
+        $(function () {
+            $('#save_admin').click(function () {
+                var user_name = $('#user_name').val();
+                var user_password = $('#user_password').val();
+                $.post("/stu-hostel-sys/saveAdmin",{
+                    'userName': user_name,
+                    'userPassword': user_password,
+                    'power': null
+                },function (r) {
+                    if(r != null) {
+                        console.log(r);
+                    }
+                }, 'json');
+            });
+        })
+
+        $('#admin_list').click(function (){
+            $.ajax({
+            type: "get",
+            contentType: "application/json;charset=utf-8", // WebService 会返回Json类型
+            url: "http://localhost:8080/stu-hostel-sys/getAdminList", //调用WebService
+            data: "", //参数
+            dataType: 'json',
+            error: function(x, e) {
+                alert("我屮艸芔茻！getAdminList");
+            },
+            success: function(response) { //回调函数，result，返回值
+                alert("getAdminList" + response);
+            }
+        });
+        })
+    </script>
+</body>
+</html>
