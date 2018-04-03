@@ -2,14 +2,20 @@ package com.study.stuhostelsys.model;
 
 import javax.persistence.*;
 
-@Table(name = "Admin")
+@Table(name = "admin")
 @Entity
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // 管理员id
-    private String user_name; // 管理员用户名
-    private String user_password; // 管理员密码
+
+    @Column(name = "user_name")
+    private String userName; // 管理员用户名
+
+    @Column(name = "user_password")
+    private String userPassword; // 管理员密码
+
+    @Column(name = "power")
     private String power; // 管理员权限：
 
     public Admin() {
@@ -23,20 +29,20 @@ public class Admin {
         this.id = id;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     public String getPower() {

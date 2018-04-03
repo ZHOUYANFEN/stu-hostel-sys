@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
     <link rel="stylesheet" th:href="@{bootstarp/bootstrap.min.css}">
 </head>
+
+<!-- 引用html段 -->
 <body>
-<h1>Index</h1>
+    <div th:insert="~{/test :: copy}"></div>
+    <div th:replace="/test :: copy"></div>
+
+    <h1>Index</h1>
     <div>
         <form name="addForm" id="adminForm">
-<!-- th:action="@{/saveAdmin}" method="post"-->
             <div class="form-group">
                 <label for="user_name">user_name</label>
                 <input type="text" class="form-control" id="user_name">
@@ -22,12 +25,12 @@
                 <input type="password" class="form-control" id="user_password" placeholder="Password">
             </div>
             <button type="button" class="btn btn-primary" id="save_admin">Submit</button>
-
         </form>
+
         <form name="getAdminList" id="getAdminList">
             <button type="button" id="admin_list">getAdmin List</button>
-            <!-- onclick="getAdminList()" -->
         </form>
+
     </div>
 
     <script type="text/javascript" th:src="@{js/jquery-3.3.1.min.js}"></script>
@@ -46,23 +49,29 @@
                     }
                 }, 'json');
             });
+            $('#admin_list').click(function (){
+                $.post("/stu-hostel-sys/getAdminList",{},function (r) {
+                    if(r != null) {
+                        console.log(r);
+                    }
+                }, 'json');
+                // $.ajax({
+                //     type: "post",
+                //     contentType: "application/json;charset=utf-8", // WebService 会返回Json类型
+                //     url: "/stu-hostel-sys/getAdminList", //调用WebService
+                //     data: "", //参数
+                //     dataType: 'json',
+                //     error: function(x, e) {
+                //         alert("我屮艸芔茻！getAdminList");
+                //     },
+                //     success: function(response) { //回调函数，result，返回值
+                //         alert("getAdminList" + response);
+                //     }
+                // });
+            })
         })
 
-        $('#admin_list').click(function (){
-            $.ajax({
-            type: "get",
-            contentType: "application/json;charset=utf-8", // WebService 会返回Json类型
-            url: "http://localhost:8080/stu-hostel-sys/getAdminList", //调用WebService
-            data: "", //参数
-            dataType: 'json',
-            error: function(x, e) {
-                alert("我屮艸芔茻！getAdminList");
-            },
-            success: function(response) { //回调函数，result，返回值
-                alert("getAdminList" + response);
-            }
-        });
-        })
+
     </script>
 </body>
 </html>

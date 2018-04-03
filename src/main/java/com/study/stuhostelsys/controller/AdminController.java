@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,20 +22,74 @@ public class AdminController {
     private AdminInterface adminInterface;
 
     /**
-     * 视图绑定
+     * 跳转login页
      * @return
      */
-    @RequestMapping(value = "/admin")
-    public ModelAndView admin(){
-        ModelAndView index = new ModelAndView("index");
-        return index;
+    @RequestMapping(value = "/login")
+    public ModelAndView login(){
+        ModelAndView login = new ModelAndView("login");
+        return login;
     }
 
-    @PostMapping("/saveAdmin")
-    public @ResponseBody String saveAdmin(@RequestParam String userName, @RequestParam String userPassword, @RequestParam String power, HttpServletRequest request, HttpServletResponse response){
+    /**
+     * 登录 - signin
+     * @param userName
+     * @param userPassword
+     * @param request
+     * @param response
+     * @return
+     */
+    @PostMapping(value = "/signin")
+    public @ResponseBody Admin signin(@RequestParam String userName,
+                        @RequestParam String userPassword,
+                        HttpServletRequest request,HttpServletResponse response) {
         Admin admin = new Admin();
-        admin.setUser_name(userName);
-        admin.setUser_password(userPassword);
+        try {
+            admin = adminInterface.findByUserNameAndUserPassword(userName, userPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return admin;
+    }
+
+    /**
+     * 修改密码
+     * @param userName
+     * @param userPassword
+     * @param request
+     * @param response
+     * @return
+     */
+    @PostMapping("/updateUserPassword")
+    public @ResponseBody Boolean updateUserPassword(@RequestParam String userName,
+                                     @RequestParam String userPassword,
+                                     HttpServletRequest request,HttpServletResponse response){
+        boolean i = false;
+        try {
+            adminInterface.updateUserPassword(userName, userPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return i;
+    }
+
+    /**
+     * 新增admin
+     * @param userName
+     * @param userPassword
+     * @param power
+     * @param request
+     * @param response
+     * @return
+     */
+    @PostMapping("/saveAdmin")
+    public @ResponseBody String saveAdmin(@RequestParam String userName,
+                                          @RequestParam String userPassword,
+                                          @RequestParam String power,
+                                          HttpServletRequest request, HttpServletResponse response){
+        Admin admin = new Admin();
+        admin.setUserName(userName);
+        admin.setUserPassword(userPassword);
         admin.setPower(power);
         try {
             adminInterface.save(admin);
@@ -44,9 +99,25 @@ public class AdminController {
         return "0";
     }
 
-    @GetMapping("/getAdminList")
-    public List<Admin> getAdminList(){
-        return adminInterface.findAll();
+    /**
+     * 所有admin
+     * @param request
+     * @param response
+     * @return
+     */
+    @PostMapping("/getAdminList")
+    public @ResponseBody List<Admin> getAdminList(HttpServletRequest request, HttpServletResponse response){
+        List<Admin> admin = adminInterface.findAll();
+        return admin;
     }
 
+    /**
+     * 跳转admin框架主页
+     * @return
+     */
+    @RequestMapping(value = "/admin")
+    public ModelAndView admin(){
+        ModelAndView index = new ModelAndView("index");
+        return index;
+    }
 }
