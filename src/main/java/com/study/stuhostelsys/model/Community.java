@@ -2,15 +2,23 @@ package com.study.stuhostelsys.model;
 
 import javax.persistence.*;
 
-@Table(name = "Community")
+@Table(name = "community")
 @Entity
 public class Community {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // 公社id
-    private String community_name; // 公社名
+
+    @Column(name = "community_name")
+    private String communityName; // 公社名
+
+    @Column(name = "address")
     private String address; // 公社地址
-    private int admin_id; // 管理员id
+
+    @Column(name = "admin_id")
+    private int adminId; // 管理员id
+
+    @Column(name = "remark")
     private String remark; // 备注
 
     public Community() {
@@ -25,12 +33,12 @@ public class Community {
         this.id = id;
     }
 
-    public String getCommunity_name() {
-        return community_name;
+    public String getCommunityName() {
+        return communityName;
     }
 
-    public void setCommunity_name(String community_name) {
-        this.community_name = community_name;
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
     }
 
     public String getAddress() {
@@ -41,12 +49,12 @@ public class Community {
         this.address = address;
     }
 
-    public int getAdmin_id() {
-        return admin_id;
+    public int getAdminId() {
+        return adminId;
     }
 
-    public void setAdmin_id(int admin_id) {
-        this.admin_id = admin_id;
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 
     public String getRemark() {

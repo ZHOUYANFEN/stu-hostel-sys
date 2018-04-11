@@ -5,17 +5,21 @@ package com.study.stuhostelsys.controller;
  */
 import com.study.stuhostelsys.dao.AdminInterface;
 import com.study.stuhostelsys.model.Admin;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 public class AdminController {
 
     @Autowired
@@ -40,16 +44,26 @@ public class AdminController {
      * @return
      */
     @PostMapping(value = "/signin")
-    public @ResponseBody Admin signin(@RequestParam String userName,
-                        @RequestParam String userPassword,
-                        HttpServletRequest request,HttpServletResponse response) {
+    @ResponseBody
+    public JSONObject signin(@RequestParam String userName,
+                             @RequestParam String userPassword,
+                             HttpServletRequest request, HttpServletResponse response,
+                             Model model) {
+        JSONObject result = new JSONObject();
         Admin admin = new Admin();
         try {
             admin = adminInterface.findByUserNameAndUserPassword(userName, userPassword);
+            if(admin == null){
+                result.put("msage", Boolean.FALSE);
+                result.put("data", "用户名 / 密码错误！");
+            } else {
+                result.put("power", admin.getPower());
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            result.put("error", e.getMessage());
         }
-        return admin;
+        return result;
     }
 
     /**
@@ -62,11 +76,12 @@ public class AdminController {
      */
     @PostMapping("/updateUserPassword")
     public @ResponseBody Boolean updateUserPassword(@RequestParam String userName,
-                                     @RequestParam String userPassword,
+                                                    @RequestParam String userPassword,
+                                                    @RequestParam String power,
                                      HttpServletRequest request,HttpServletResponse response){
         boolean i = false;
         try {
-            adminInterface.updateUserPassword(userName, userPassword);
+            adminInterface.updateUserPassword(userName, userPassword, power);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,17 +122,47 @@ public class AdminController {
      */
     @PostMapping("/getAdminList")
     public @ResponseBody List<Admin> getAdminList(HttpServletRequest request, HttpServletResponse response){
-        List<Admin> admin = adminInterface.findAll();
+        List<Admin> admin = new ArrayList<>();
+        try {
+            admin = adminInterface.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return admin;
+    }
+
+    /**
+     * 删除admin
+     * @param id
+     * @return
+     */
+    public @ResponseBody String deletAdmin(@RequestParam Integer id,@RequestParam String power){
+        String data = "";
+        try {
+            if (!power.isEmpty() || !power.equals("2")){
+                adminInterface.deleteById(id);
+                data = "0";
+            } else {
+                data = "-1";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 
     /**
      * 跳转admin框架主页
      * @return
      */
-    @RequestMapping(value = "/admin")
-    public ModelAndView admin(){
-        ModelAndView index = new ModelAndView("index");
+    @GetMapping(value = "/admin")
+    public ModelAndView admin(@RequestParam("power") String power){
+        ModelAndView index;
+        if (power.equals("1")){
+            index = new ModelAndView("sys_manage/root");
+        } else {
+            index = new ModelAndView("hostel/index");
+        }
         return index;
     }
 }

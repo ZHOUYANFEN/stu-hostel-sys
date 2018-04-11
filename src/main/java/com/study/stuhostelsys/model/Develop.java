@@ -2,14 +2,20 @@ package com.study.stuhostelsys.model;
 
 import javax.persistence.*;
 
-@Table(name = "Develop")
+@Table(name = "develop")
 @Entity
 public class Develop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // 第三方id
-    private String dev_name; // 第三方名字
+
+    @Column(name = "dev_name")
+    private String devName; // 第三方名字
+
+    @Column(name = "url")
     private String url; // 第三方URL
+
+    @Column(name = "remark")
     private String remark; // 备注
 
     public Develop(){
@@ -23,12 +29,12 @@ public class Develop {
         this.id = id;
     }
 
-    public String getDev_name() {
-        return dev_name;
+    public String getDevName() {
+        return devName;
     }
 
-    public void setDev_name(String dev_name) {
-        this.dev_name = dev_name;
+    public void setDevName(String devName) {
+        this.devName = devName;
     }
 
     public String getUrl() {

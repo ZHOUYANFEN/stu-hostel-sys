@@ -9,31 +9,62 @@
 <body class="bg-dark">
 <div class="container">
     <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Login</div>
+        <div class="card-header">欢迎登录系统</div>
         <div class="card-body">
             <form>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <label for="exampleInputUserName">用户名</label>
+                    <input class="form-control" id="exampleInputUserName" type="email" aria-describedby="emailHelp" placeholder="Enter Username">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                    <label for="exampleInputPassword">密码</label>
+                    <input class="form-control" id="exampleInputPassword" type="password" placeholder="Password">
                 </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox"> Remember Password</label>
-                    </div>
-                </div>
-                <a class="btn btn-primary btn-block" href="index.html">Login</a>
+                <!-- 记住密码 -->
+                <!--<div class="form-group">-->
+                    <!--<div class="form-check">-->
+                        <!--<label class="form-check-label">-->
+                            <!--<input class="form-check-input" type="checkbox"> 记住密码</label>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <a class="btn btn-primary btn-block" id="login">登录</a>
             </form>
-            <div class="text-center">
-                <a class="d-block small mt-3" href="register.html">Register an Account</a>
-                <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
-            </div>
+            <!-- Forgot Password? -->
+            <!--<div class="text-center">-->
+                <!--<a class="d-block small mt-3" href="register.html">Register an Account</a>-->
+                <!--<a class="d-block small" href="forgot-password.html">Forgot Password?</a>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
+<script type="text/javascript" th:src="@{js/jquery-3.3.1.min.js}"></script>
+<script>
+    $(function () {
+        var power = 0;
+        $("#login").click(function () {
+            var user_name = $('#exampleInputUserName').val();
+            var user_password = $('#exampleInputPassword').val();
+
+            $.post("/stu-hostel-sys/signin",{
+                'userName': user_name,
+                'userPassword': user_password
+            },function (e,n,r,i) {
+                console.log(e);
+                if(e.power == "1"){
+                    power = e.power;
+                    index(power);
+                } else {
+                    alert(e.data);
+                }
+            });
+        });
+
+        function index(power) {
+            $.get("/stu-hostel-sys/admin",{"power":power}, function (e,n,r,i) {
+                window.location.href = "/stu-hostel-sys/admin?power="+power;
+            })
+        }
+    })
+</script>
 </body>
 </html>
