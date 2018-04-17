@@ -156,12 +156,14 @@ public class AdminController {
      * @return
      */
     @GetMapping(value = "/admin")
-    public ModelAndView admin(@RequestParam("power") String power){
+    public ModelAndView admin(@RequestParam("power") String power, Model model){
         ModelAndView index;
         if (power.equals("1")){
-            index = new ModelAndView("sys_manage/root");
+            index = new ModelAndView("sys_manage/index");
+            model.addAttribute("model", index);
         } else {
             index = new ModelAndView("hostel/index");
+            model.addAttribute("model", index);
         }
         return index;
     }
