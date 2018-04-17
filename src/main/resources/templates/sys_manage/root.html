@@ -1,62 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Root Setting</title>
 
-    <link rel="stylesheet"  th:href="@{bootstrap/bootstrap.min.css}"></link>
-    <link rel="stylesheet"  th:href="@{bootstrap/dashboard.css}"></link>
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}"></link>
+    <link rel="stylesheet" th:href="@{bootstrap/dashboard.css}"></link>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}">
 </head>
+
 <body>
 
-<div class="content-page">
+    <div class="content-page">
 
-    <!-- Start content -->
-    <div class="content">
+        <!-- Start content -->
+        <div class="content">
 
-        <div class="container-fluid">
+            <div class="container-fluid">
 
-
-
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="breadcrumb-holder">
-                        <h1 class="main-title float-left">Data Tables</h1>
-                        <ol class="breadcrumb float-right">
-                            <li class="breadcrumb-item">Home</li>
-                            <li class="breadcrumb-item active">Data Tables</li>
-                        </ol>
-                        <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="breadcrumb-holder">
+                            <h1 class="main-title float-left">Data Tables</h1>
+                            <ol class="breadcrumb float-right">
+                                <li class="breadcrumb-item">Home</li>
+                                <li class="breadcrumb-item active">Data Tables</li>
+                            </ol>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- end row -->
+                <!-- end row -->
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h3><i class="fa fa-table"></i> Child rows (show extra / detailed information)</h3>
-                            The DataTables API has a number of methods available for attaching child rows to a parent row in the DataTable. This can be used to show additional information about a row, useful for cases where you wish to convey more information about a row than there is space for in the host table. <a target="_blank" href="https://datatables.net/examples/api/row_details.html">(more info)</a>
-                        </div>
+                    <table id="rootSetTable" class="display" width="100%"></table>
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="example2" class="table table-bordered table-hover display">
-                                </table>
-                            </div>
-                        </div>
-                    </div><!-- end card-->
+
                 </div>
-
             </div>
+            <!-- END container-fluid -->
         </div>
-        <!-- END container-fluid -->
+        <!-- END content -->
     </div>
-    <!-- END content -->
-</div>
-<!-- END content-page -->
+    <!-- END content-page -->
 
+    <script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../../static/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#rootSetTable').DataTable({
+                data: "",
+                columns: [{
+                        title: "id"
+                    },
+                    {
+                        title: "用户名"
+                    },
+                    {
+                        title: "权限"
+                    },
+                    {
+                        title: "操作"
+                    }
+                ]
+            });
+        });
+    </script>
 </body>
+
 </html>

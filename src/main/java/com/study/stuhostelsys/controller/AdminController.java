@@ -121,10 +121,11 @@ public class AdminController {
      * @return
      */
     @PostMapping("/getAdminList")
-    public @ResponseBody List<Admin> getAdminList(HttpServletRequest request, HttpServletResponse response){
+    public @ResponseBody List<Admin> getAdminList(Model model, HttpServletRequest request, HttpServletResponse response){
         List<Admin> admin = new ArrayList<>();
         try {
             admin = adminInterface.findAll();
+            model.addAttribute("model", admin);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -136,7 +137,8 @@ public class AdminController {
      * @param id
      * @return
      */
-    public @ResponseBody String deletAdmin(@RequestParam Integer id,@RequestParam String power){
+    @PostMapping("/deleteAdmin")
+    public @ResponseBody String deleteAdmin(@RequestParam Integer id,@RequestParam String power){
         String data = "";
         try {
             if (!power.isEmpty() || !power.equals("2")){
@@ -166,5 +168,18 @@ public class AdminController {
             model.addAttribute("model", index);
         }
         return index;
+    }
+
+    /**
+     * 根据ID查用户信息
+     */
+    @PostMapping("/findAdminById")
+    public JSONObject findAdminById(@RequestParam Integer id, Model model){
+        JSONObject result = new JSONObject();
+        Admin admin = new Admin();
+        admin = adminInterface.findAdminById(id);
+        model.addAttribute("admin", admin);
+        result.put("admin",admin);
+        return result;
     }
 }

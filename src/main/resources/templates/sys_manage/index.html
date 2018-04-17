@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}">
     <!-- Font Awesome CSS -->
-    <link href="../../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"/>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}">
     <!-- BEGIN CSS for this page -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
     <!-- END CSS for this page -->
@@ -21,7 +21,6 @@
 
         <!-- top bar navigation -->
         <div class="headerbar">
-
             <!-- LOGO -->
             <div class="headerbar-left">
                 <a href="index.html" class="logo">
@@ -33,7 +32,6 @@
             <nav class="navbar-custom">
 
                 <ul class="list-inline float-right mb-0">
-
                     <li class="list-inline-item dropdown notif">
                         <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="fa fa-fw fa-question-circle"></i>
@@ -66,10 +64,8 @@
                             <a title="Clcik to visit Pike Admin Website" target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item notify-all">
                                 <i class="fa fa-link"></i> Visit Pike Admin Website
                             </a>
-
                         </div>
                     </li>
-
                     <li class="list-inline-item dropdown notif">
                         <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="fa fa-fw fa-envelope-o"></i>
@@ -208,7 +204,6 @@
                             </a>
                         </div>
                     </li>
-
                 </ul>
 
                 <ul class="list-inline menu-left mb-0">
@@ -218,7 +213,6 @@
                         </button>
                     </li>
                 </ul>
-
             </nav>
 
         </div>
@@ -227,13 +221,10 @@
 
         <!-- Left Sidebar -->
         <div class="left main-sidebar">
-
             <div class="sidebar-inner leftscroll">
-
                 <div id="sidebar-menu">
 
                     <ul>
-
                         <li class="submenu">
                             <a class="active" href="index.html">
                                 <i class="fa fa-fw fa-bars"></i>
@@ -276,25 +267,6 @@
                                 </li>
                                 <li>
                                     <a href="ui-buttons.html">Buttons</a>
-                                </li>
-                                <li>
-                                    <a href="ui-cards.html">Cards</a>
-                                </li>
-                                <li>
-                                    <a href="ui-carousel.html">Carousel</a>
-                                </li>
-                                <li>
-                                    <a href="ui-collapse.html">Collapse</a>
-                                </li>
-                                <li>
-                                    <a href="ui-icons.html">Icons</a>
-                                </li>
-                                <li>
-                                    <a href="ui-modals.html">Modals</a>
-                                </li>
-                                <li>
-                                    <a href="ui-tooltips.html">Tooltips and Popovers</a>
-                                </li>
                             </ul>
                         </li>
 
@@ -310,21 +282,6 @@
                                 </li>
                                 <li>
                                     <a href="forms-select2.html">Select2</a>
-                                </li>
-                                <li>
-                                    <a href="forms-validation.html">Form Validation</a>
-                                </li>
-                                <li>
-                                    <a href="forms-text-editor.html">Text Editors</a>
-                                </li>
-                                <li>
-                                    <a href="forms-upload.html">Multiple File Upload</a>
-                                </li>
-                                <li>
-                                    <a href="forms-datetime-picker.html">Date and Time Picker</a>
-                                </li>
-                                <li>
-                                    <a href="forms-color-picker.html">Color Picker</a>
                                 </li>
                             </ul>
                         </li>
@@ -342,20 +299,6 @@
                                 <li>
                                     <a href="range-sliders.html">Range Sliders</a>
                                 </li>
-                                <li>
-                                    <a href="tree-view.html">Tree View</a>
-                                </li>
-                                <li>
-                                    <a href="sweetalert.html">SweetAlert</a>
-                                </li>
-                                <li>
-                                    <a href="calendar.html">Calendar</a>
-                                </li>
-                                <li>
-                                    <a href="gmaps.html">GMaps</a>
-                                </li>
-                                <li>
-                                    <a href="counter-up.html">Counter-Up</a>
                                 </li>
                             </ul>
                         </li>
@@ -373,15 +316,6 @@
                                 </li>
                                 <li>
                                     <a href="media-masonry.html">Masonry</a>
-                                </li>
-                                <li>
-                                    <a href="media-lightbox.html">Lightbox</a>
-                                </li>
-                                <li>
-                                    <a href="media-owl-carousel.html">Owl Carousel</a>
-                                </li>
-                                <li>
-                                    <a href="media-image-magnifier.html">Image Magnifier</a>
                                 </li>
 
                             </ul>
@@ -402,12 +336,6 @@
                                 </li>
                                 <li>
                                     <a href="page-invoice.html">Invoice</a>
-                                </li>
-                                <li>
-                                    <a href="page-login.html">Login / Register</a>
-                                </li>
-                                <li>
-                                    <a href="page-blank.html">Blank Page</a>
                                 </li>
                             </ul>
                         </li>
@@ -458,44 +386,19 @@
                                 <li>
                                     <a href="pro-settings.html">Settings</a>
                                 </li>
-                                <li>
-                                    <a href="pro-profile.html">My Profile</a>
-                                </li>
-                                <li>
-                                    <a href="pro-users.html">Users</a>
-                                </li>
-                                <li>
-                                    <a href="pro-articles.html">Articles</a>
-                                </li>
-                                <li>
-                                    <a href="pro-categories.html">Categories</a>
-                                </li>
-                                <li>
-                                    <a href="pro-pages.html">Pages</a>
-                                </li>
-                                <li>
-                                    <a href="pro-contact-messages.html">Contact Messages</a>
-                                </li>
-                                <li>
-                                    <a href="pro-slider.html">Slider</a>
-                                </li>
                             </ul>
                         </li>
 
                     </ul>
 
                     <div class="clearfix"></div>
-
                 </div>
-
                 <div class="clearfix"></div>
-
             </div>
-
         </div>
         <!-- End Sidebar -->
 
-        <iframe class="content-page" id="iframe" src="dashboard.html" frameborder="0"></iframe>
+        <iframe class="content-page" id="iframe" src="root.html" frameborder="0" width="85%"></iframe>
 
         <footer class="footer">
             <span class="text-right">
@@ -504,16 +407,17 @@
             </span>
             <span class="float-right">
                 Powered by
-                <a target="_blank" href="https://www.pikeadmin.com">
-                    <b>Pike Admin</b>
+                <a target="_blank" href="https://www.workroom.top">
+                    <b>Work Room</b>
                 </a>
             </span>
         </footer>
 
     </div>
 
-    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/js/jquery-3.3.1.min.js" th:src=""></script>
     <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/pikeadmin.js"></script>
     <script>
         function goSrc(url) {
             document.getElementById('iframe').src = "table.html";
