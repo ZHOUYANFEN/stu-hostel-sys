@@ -1,6 +1,7 @@
 package com.study.stuhostelsys.dao;
 
 import com.study.stuhostelsys.model.Admin;
+import net.sf.json.JSONArray;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,4 +28,11 @@ public interface AdminInterface extends JpaRepository<Admin, Integer>, JpaSpecif
     @Transactional
     void updateUserPassword(String userName, String userPassword, String power);
 
+    /**
+     * 根据ID查用户信息
+     * @param id
+     * @return
+     */
+    @Query("SELECT a FROM Admin a WHERE a.id=?1")
+    JSONArray findAllById(Integer id);
 }

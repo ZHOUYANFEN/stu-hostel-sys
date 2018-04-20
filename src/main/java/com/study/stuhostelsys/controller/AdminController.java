@@ -5,6 +5,7 @@ package com.study.stuhostelsys.controller;
  */
 import com.study.stuhostelsys.dao.AdminInterface;
 import com.study.stuhostelsys.model.Admin;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -121,15 +122,17 @@ public class AdminController {
      * @return
      */
     @PostMapping("/getAdminList")
-    public @ResponseBody List<Admin> getAdminList(Model model, HttpServletRequest request, HttpServletResponse response){
+    public @ResponseBody JSONObject getAdminList(Model model, HttpServletRequest request, HttpServletResponse response){
         List<Admin> admin = new ArrayList<>();
+        JSONObject obj = new JSONObject();
         try {
             admin = adminInterface.findAll();
+            obj.put("data", admin);
             model.addAttribute("model", admin);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return admin;
+        return obj;
     }
 
     /**
@@ -172,14 +175,26 @@ public class AdminController {
 
     /**
      * 根据ID查用户信息
+     * @param id
+     * @param model
+     * @return
      */
     @PostMapping("/findAdminById")
     public JSONObject findAdminById(@RequestParam Integer id, Model model){
         JSONObject result = new JSONObject();
-        Admin admin = new Admin();
-        admin = adminInterface.findAdminById(id);
-        model.addAttribute("admin", admin);
-        result.put("admin",admin);
+        result.put("admin",adminInterface.findAllById(id));
+        model.addAttribute("admin", result);
         return result;
+    }
+
+    @GetMapping("/root")
+    public ModelAndView root(){
+        ModelAndView root = new ModelAndView("sys_manage/root");
+        return root;
+    }
+    @GetMapping("/develop")
+    public ModelAndView develop(){
+        ModelAndView root = new ModelAndView("sys_manage/develop");
+        return root;
     }
 }

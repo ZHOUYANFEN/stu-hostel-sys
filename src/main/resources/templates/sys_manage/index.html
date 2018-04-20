@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -398,7 +398,7 @@
         </div>
         <!-- End Sidebar -->
 
-        <iframe class="content-page" id="iframe" src="root.html" frameborder="0" width="85%"></iframe>
+        <iframe class="content-page" id="iframe" src="root.html" th:src="@{/root}" frameborder="0" width="85%" height="1000px"></iframe>
 
         <footer class="footer">
             <span class="text-right">
@@ -415,12 +415,18 @@
 
     </div>
 
-    <script src="../../static/js/jquery-3.3.1.min.js" th:src=""></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
-    <script src="../../static/js/pikeadmin.js"></script>
+    <script src="../../static/js/modernizr.min.js" th:src="@{js/modernizr.min.js}"></script>
+    <script src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+
+    <script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+
+    <script src="../../static/js/detect.js" th:src="@{js/detect.js}"></script>
+    <script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+    <script src="../../static/js/jquery.nicescroll.js" th:src="@{js/jquery.nicescroll.js}"></script>
+    <script src="../../static/js/pikeadmin.js" th:src="@{js/pikeadmin.js}"></script>
     <script>
         function goSrc(url) {
-            document.getElementById('iframe').src = "table.html";
+            document.getElementById('iframe').src = "develop";
 
         }
     </script>
