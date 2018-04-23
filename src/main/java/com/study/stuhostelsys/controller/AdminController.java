@@ -76,17 +76,21 @@ public class AdminController {
      * @return
      */
     @PostMapping("/updateUserPassword")
-    public @ResponseBody Boolean updateUserPassword(@RequestParam String userName,
+    public @ResponseBody JSONObject updateUserPassword(@RequestParam String userName,
                                                     @RequestParam String userPassword,
                                                     @RequestParam String power,
+                                                    @RequestParam Integer id,
                                      HttpServletRequest request,HttpServletResponse response){
-        boolean i = false;
+        JSONObject r = new JSONObject();
         try {
-            adminInterface.updateUserPassword(userName, userPassword, power);
+            adminInterface.updateUserPassword(userName, userPassword, power, id);
+            r.put("data", "0");
         } catch (Exception e) {
             e.printStackTrace();
+            r.put("data", "-1");
+            r.put("error", e.getMessage());
         }
-        return i;
+        return r;
     }
 
     /**
@@ -99,7 +103,7 @@ public class AdminController {
      * @return
      */
     @PostMapping("/saveAdmin")
-    public @ResponseBody String saveAdmin(@RequestParam String userName,
+    public @ResponseBody JSONObject saveAdmin(@RequestParam String userName,
                                           @RequestParam String userPassword,
                                           @RequestParam String power,
                                           HttpServletRequest request, HttpServletResponse response){
@@ -107,12 +111,16 @@ public class AdminController {
         admin.setUserName(userName);
         admin.setUserPassword(userPassword);
         admin.setPower(power);
+        JSONObject r = new JSONObject();
         try {
             adminInterface.save(admin);
+            r.put("data","0");
         } catch (Exception e) {
             e.printStackTrace();
+            r.put("data","-1");
+            r.put("error",e.getMessage());
         }
-        return "0";
+        return r;
     }
 
     /**
@@ -141,19 +149,17 @@ public class AdminController {
      * @return
      */
     @PostMapping("/deleteAdmin")
-    public @ResponseBody String deleteAdmin(@RequestParam Integer id,@RequestParam String power){
-        String data = "";
+    public @ResponseBody JSONObject deleteAdmin(@RequestParam Integer id){
+        JSONObject r = new JSONObject();
         try {
-            if (!power.isEmpty() || !power.equals("2")){
-                adminInterface.deleteById(id);
-                data = "0";
-            } else {
-                data = "-1";
-            }
+            adminInterface.deleteById(id);
+            r.put("data", "0");
         } catch (Exception e) {
             e.printStackTrace();
+            r.put("data", "-1");
+            r.put("error", e.getMessage());
         }
-        return data;
+        return r;
     }
 
     /**

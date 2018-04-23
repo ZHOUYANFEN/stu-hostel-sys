@@ -35,6 +35,10 @@
                 <!-- end row -->
 
                 <div class="row">
+                    <!-- 新增用户 trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAdminModal">
+                        新增用户
+                    </button>
 
                     <table id="rootSetTable" class="table table-striped table-bordered" width="100%">
                         <thead>
@@ -46,11 +50,141 @@
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
 
+                    <!-- 新增用户 Modal -->
+                    <div class="modal fade bd-example-modal-lg" id="addAdminModal" tabindex="-1" role="dialog" aria-labelledby="addAdminModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addAdminModalLabel">新增用户</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" title="关闭">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group row">
+                                            <label for="inputUserName" class="col-sm-2 col-form-label">用户名：</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputUserName" placeholder="用户名">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="firstPassword" class="col-sm-2 col-form-label">请输入密码：</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="firstPassword" placeholder="请输入密码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="secondPassword" class="col-sm-2 col-form-label">请确认密码：</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="secondPassword" placeholder="请确认密码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">用户权限：</label>
+                                            <div class="col-sm-10">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="radioPower" id="radioPower1" value="1">
+                                                    <label class="form-check-label" for="radioPower1">系统管理权限</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="radioPower" id="radioPower2" value="2">
+                                                    <label class="form-check-label" for="radioPower2">公社管理权限</label>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" id="saveAdmin" onclick="saveAdmin()">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end 新增用户 Modal -->
+
+                    <!-- 修改用户 Modal -->
+                    <div class="modal fade bd-example-modal-lg" id="updateAdminModal" tabindex="-1" role="dialog" aria-labelledby="updatedminModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateAdminModalLabel">修改用户</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" title="关闭">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group row">
+                                            <label for="inputUserName" class="col-sm-2 col-form-label">用户名：</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="updateUserName" placeholder="用户名" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="firstPassword" class="col-sm-2 col-form-label">请输入密码：</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="updateFirstPassword" placeholder="请输入密码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="secondPassword" class="col-sm-2 col-form-label">请确认密码：</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="updateSecondPassword" placeholder="请确认密码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">用户权限：</label>
+                                            <div class="col-sm-10">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="radioPower" id="updatePower1" value="1">
+                                                    <label class="form-check-label" for="radioPower1">系统管理权限</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="radioPower" id="updatePower2" value="2">
+                                                    <label class="form-check-label" for="radioPower2">公社管理权限</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" id="updateAdmin">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end 修改用户 Modal -->
+
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="sureDeleteModal" tabindex="-1" role="dialog" aria-labelledby="sureDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="sureDeleteModalLabel">删除</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    是否删除？
+                                    <input type="text" id="hidDeleteId" value="" hidden="hidden" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" name="cancel" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" onclick="deleteAdminById(id)">确定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end Delete Modal -->
                 </div>
             </div>
             <!-- END container-fluid -->
@@ -61,47 +195,162 @@
 
     <script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
     <script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+    <script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
     <script type="text/javascript" src="../../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
     <script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js" th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
     <script>
-        $(function () {
+
+        var userName;
+        var userPassword;
+        var firstPassword;
+        var power;
+        var setTable;
+
+        rootSetTable();
+        /**
+         * 表格生成
+         */
+        function rootSetTable(){
+            setTable = $("#rootSetTable").dataTable({
+                "processing": true,
+                // "serverSide": true,
+                "retrieve": true,
+                "destroy": true,
+                "ajax": {
+                    "url": "/stu-hostel-sys/getAdminList",
+                    "type": "POST"
+                },
+                "columns": [{
+                    "title": "id",
+                    "data": "id"
+                },
+                    {
+                        "title": "用户名",
+                        "data": "userName"
+                    },
+                    {
+                        "title": "权限",
+                        "data":"power",
+                        "render": function (data, type,row) {
+                            if(row.power == "1") {
+                                return "<span style='color: red'>系统管理员</span>";
+                            } else {
+                                return "<span>公社管理员</span>";
+                            }
+                        }
+                    },
+                    {
+                        "title": "操作",
+                        // 定义操作列,######以下是重点########
+                        "targets" : 3,//操作按钮目标列
+                        "data" : null,
+                        "render" : function(data, type,row) {
+                            var id = row.id;
+                            return "<a class='up btn btn-default btn-xs' onclick='selectAdminById("+id+")' style='color: blue'>编辑</a>" +
+                                "<a class='down btn btn-default btn-xs' onclick='showDeleteModal("+id+")' data-value='"+id+"' style='color: blue'>删除</a>";
+                        }
+                    }
+                ]
+            });
+        }
+
+        /**
+         * 保存&校验
+         */
+        function saveAdmin(){
+            userName = $('#inputUserName').val();
+            userPassword = $('#secondPassword').val();
+            firstPassword = $('#firstPassword').val();
+            power = $('name[radioPower]').val();
+
+            if(userName == null || userName == "" ){
+                alert("用户名为空");
+            } else if((userPassword == null || userPassword == "") && (firstPassword == null || firstPassword == "")){
+                alert("密码为空");
+            } else if(userPassword != firstPassword){
+                alert("密码不一致");
+            } else if(power == "" || power == null){
+                power = "0";
+            } else {
+                $.post("/stu-hostel-sys/saveAdmin",{"userName": userName,"userPassword":userPassword,"power":power},function (r) {
+                    if(r.data == "0") {
+                        $("#addAdminModal").modal('hide');
+                        alert("保存成功！");
+                        setTable.fnClearTable();
+                        setTable.fnDestroy(); //还原初始化了的datatable
+                        rootSetTable();
+                    } else {
+                        alert(r.error);
+                    }
+                });
+            }
+        };
 
 
-                        $("#rootSetTable").dataTable({
-                            "processing": true,
-                            // "serverSide": true,
-                            "ajax": {
-                                "url": "/stu-hostel-sys/getAdminList",
-                                "type": "POST"
-                            },
-                            "columns": [{
-                                "title": "id",
-                                "data": "id"
-                            },
-                                {
-                                    "title": "用户名",
-                                    "data": "userName"
-                                },
-                                {
-                                    "title": "权限",
-                                    "data":"power"
-                                },
-                                {
-                                    "title": "操作",
-                                    // 定义操作列,######以下是重点########
-                                    "targets" : 3,//操作按钮目标列
-                                    "data" : null,
-                                    "render" : function(data, type,row) {
-                                        var id = '"' + row.id + '"';
-                                        var html = "<a href='javascript:void(0);'  class='delete btn btn-default btn-xs'  ><i class='fa fa-times'></i> 查看</a>"
-                                        html += "<a href='javascript:void(0);' class='up btn btn-default btn-xs'><i class='fa fa-arrow-up'></i> 编辑</a>"
-                                        html += "<a href='javascript:void(0);'   onclick='deleteThisRowPapser("+ id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 删除</a>"
-                                        return html;}
-                                }
-                            ]
-                        });
+        /**
+         * 查一条Admin
+         * @param id
+         */
+        function selectAdminById(id) {
+            $.post("/stu-hostel-sys/findAdminById",{"id": id},function (r) {
+                var rs = r.admin[0];
+                if(rs != "" && rs != null){
+                    $("#updateAdminModal").modal('show');
+                    $("#updateUserName").val(rs.userName);
+                    if(rs.power == "1"){
+                        $("#radioPower1").attr("checked","checked");
+                    }else if(rs.power == "2"){
+                        $("#radioPower2").attr("checked","checked");
+                    }else {
+                        alert("无权限用户");
+                    }
+                }else{
+                    alert("报错了！");
+                }
+            });
+        }
 
-            })
+        /**
+         * 修改一条Admin
+         * @param id
+         */
+        function updateAdminById(id) {
+            $.post("/stu-hostel-sys/updateUserPassword",{"id": id,userName: userName,userPassword:userPassword,power:power},function (r) {
+                if(r.data == "0"){
+                    alert("修改成功")
+                } else {
+                    alert(r.data);
+                }
+            });
+        }
+
+        /**
+         * 删除模态框
+         */
+        function showDeleteModal(id) {
+            $("#sureDeleteModal").modal('show');
+            $("#hidDeleteId").val(id);
+        }
+
+        /**
+         * 删除一条Admin
+         * @param id
+         */
+        function deleteAdminById() {
+            var id = $("#hidDeleteId").val();
+            $.post("/stu-hostel-sys/deleteAdmin",{"id": parseInt(id)},function (r) {
+                if(r.data == "0") {
+                    $("#sureDeleteModal").modal('hide');
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    rootSetTable();
+                    alert("删除成功！");
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+
     </script>
 </body>
 

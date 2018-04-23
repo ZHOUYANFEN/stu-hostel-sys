@@ -23,10 +23,10 @@ public interface AdminInterface extends JpaRepository<Admin, Integer>, JpaSpecif
      * @param userName
      * @param userPassword
      */
-    @Query("UPDATE Admin b SET b.userPassword=?2, b.power=?3 WHERE b.userName=?1")
+    @Query("UPDATE Admin b SET b.userPassword=?2, b.power=?3 WHERE b.userName=?1 AND b.id =?4")
     @Modifying
     @Transactional
-    void updateUserPassword(String userName, String userPassword, String power);
+    void updateUserPassword(String userName, String userPassword, String power, Integer id);
 
     /**
      * 根据ID查用户信息
