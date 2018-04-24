@@ -1,6 +1,7 @@
 package com.study.stuhostelsys.dao;
 
 import com.study.stuhostelsys.model.Develop;
+import net.sf.json.JSONArray;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,12 @@ public interface DevelopInterface extends JpaRepository<Develop, Integer> {
     @Modifying
     @Transactional
     void updateDevelop(Integer id, String devName, String url, String remark);
+
+    /**
+     * 根据ID查用户信息
+     * @param id
+     * @return
+     */
+    @Query("SELECT d FROM Develop d WHERE d.id=?1")
+    JSONArray findAllById(Integer id);
 }

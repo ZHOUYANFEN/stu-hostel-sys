@@ -1,12 +1,357 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Develop Setting</title>
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../../static/css/dataTables.bootstrap4.min.css" th:href="@{css/dataTables.bootstrap4.min.css}" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"/>
 </head>
 <body>
-    <h1>Develop</h1>
+<div class="content-page">
+
+    <!-- Start content -->
+    <div class="content">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb-holder">
+                        <h1 class="main-title float-left">
+                            第三方管理
+
+                            <!-- 新增Dev trigger modal -->
+                            <button data-toggle="modal" data-target="#addDevModal" title="新增第三方服务">
+                                <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
+                            </button>
+                        </h1>
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item">Sys</li>
+                            <li class="breadcrumb-item active">第三方管理</li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+
+                <table id="devSetTable" class="table table-bordered table-hover display" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>devName</th>
+                            <th>url</th>
+                            <th>remark</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <!-- 新增 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="addDevModal" tabindex="-1" role="dialog" aria-labelledby="addDevModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addDevModalLabel">新增第三方服务</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="inputDevName" class="col-sm-2 col-form-label">第三方服务名：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputDevName" placeholder="第三方服务名" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputDevUrl" class="col-sm-2 col-form-label">第三方服URL：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputDevUrl" placeholder="第三方服URL" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputDevRemark" class="col-sm-2 col-form-label">备注：</label>
+                                        <div class="col-sm-10">
+                                            <textarea  class="form-control" id="inputDevRemark" placeholder="备注" ></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" id="saveAdmin" onclick="addDevelop()">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 新增用户 Modal -->
+
+                <!-- 修改用户 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="updateDevModal" tabindex="-1" role="dialog" aria-labelledby="updatedminModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateAdminModalLabel">修改第三方服务</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="updateDevName" class="col-sm-2 col-form-label">第三方服务名：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateDevName" placeholder="第三方服务名" readonly>
+                                            <input type="text" id="hidUpdateDev" value="" hidden="hidden" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateDevUrl" class="col-sm-2 col-form-label">第三方服务URL：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateDevUrl" placeholder="请输入密码">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateDevRemark" class="col-sm-2 col-form-label">备注：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="updateDevRemark" placeholder="备注"></textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="updateDevById()">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 修改用户 Modal -->
+
+                <!-- Delete Modal -->
+                <div class="modal fade" id="sureDeleteModal" tabindex="-1" role="dialog" aria-labelledby="sureDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="sureDeleteModalLabel">删除</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                是否删除？
+                                <input type="text" id="hidDeleteId" value="" hidden="hidden" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" name="cancel" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="deleteDevById()">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end Delete Modal -->
+
+            </div>
+        </div>
+        <!-- END container-fluid -->
+    </div>
+    <!-- END content -->
+</div>
+<!-- END content-page -->
+
+<script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js" th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
+<script>
+    var id;
+    var devName;
+    var devUrl;
+    var remark;
+    var setTable;
+
+    devSetTable();
+    function devSetTable() {
+        setTable = $("#devSetTable").dataTable({
+            "processing": true,
+            // "serverSide": true,
+            "retrieve": true,
+            "destroy": true,
+            "language":{
+                "processing": "处理中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "search": "搜索:",
+                "url": "",
+                "emptyTable": "表中数据为空",
+                "loadingRecords": "载入中...",
+                "infoThousands": ",",
+                "paginate": {
+                    "first": "首页",
+                    "frevious": "上页",
+                    "next": "下页",
+                    "last": "末页"
+                },
+                "aria": {
+                    "sortAscending": ": 以升序排列此列",
+                    "sortDescending": ": 以降序排列此列"
+                }
+            },
+            "ajax": {
+                "url": "/stu-hostel-sys/getDevelopList",
+                "type": "POST"
+            },
+            "columns": [{
+                "title": "id",
+                "data": "id"
+            },
+            {
+                "title": "第三方名称",
+                "data": "devName"
+            },
+            {
+                "title": "url",
+                "data":"url"
+            },
+            {
+                "title": "备注",
+                "data":"remark"
+            },
+            {
+                "title": "操作",
+                "targets" : 4,//操作按钮目标列
+                "data" : null,
+                "render" : function(data, type,row) {
+                    var id = row.id;
+                    return "<a class='up btn btn-default btn-xs' onclick='selectDevById("+id+")' style='color: blue'>编辑</a>" +
+                        "<a class='down btn btn-default btn-xs' onclick='showDelModal("+id+")' data-value='"+id+"' style='color: blue'>删除</a>";
+                }
+            }
+            ]
+        });
+    }
+
+    /**
+     * 新增Dev
+     */
+    function addDevelop() {
+        devName = $("#inputDevName").val();
+        devUrl = $("#inputDevUrl").val();
+        remark = $("#inputDevRemark").val();
+
+        if(devName != "" && devName != null && devUrl != "" && devUrl != null){
+            $.post("/stu-hostel-sys/saveDevelop", {"devName":devName, "url":devUrl,"remark":remark},function (r) {
+                if(r.data == "0"){
+                    $("#addDevModal").modal("hide");
+                    alert("保存成功");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    devSetTable();
+                }else{
+                    alert(r.error);
+                }
+            });
+        } else {
+            alert("第三方名称 / URL未填写！");
+        }
+    }
+
+    /**
+     * 清空addDevModal数据
+     */
+    $("#addDevModal").on("hidden.bs.modal", function() {
+        $("#inputDevName").val("");
+        $("#inputDevUrl").val("");
+        $("#inputDevRemark").val("");
+    });
+
+    /**
+     * 查一条Dev
+     * @param id
+     */
+    function selectDevById(id) {
+        $.post("/stu-hostel-sys/findDevelopById",{"id": id},function (r) {
+            var rs = r.develop[0];
+            $("#hidUpdateDev").val(id);
+            if(rs != "" && rs != null){
+                $("#updateDevName").val(rs.devName);
+                $("#updateDevUrl").val(rs.url);
+                $("#updateDevRemark").val(rs.remark);
+                $("#updateDevModal").modal('show');
+            }else{
+                alert("报错了！");
+            }
+        });
+    }
+
+    /**
+     * 修改一条Admin
+     * @param id
+     */
+    function updateDevById() {
+        id = $("#hidUpdateDev").val();
+        devName = $("#updateDevName").val();
+        devUrl = $("#updateDevUrl").val();
+        remark = $("#updateDevRemark").val();
+        if(devName != "" && devName != null && devUrl != "" && devUrl != null){
+            $.post("/stu-hostel-sys/updateDevelop",{"id": id,"devName":devName, "url":devUrl,"remark":remark},function (r) {
+                if(r.data == "0") {
+                    $("#updateDevModal").modal('hide');
+                    alert("修改成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    devSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }else{
+            alert("第三方名称 / URL未填写！");
+        }
+    }
+
+    /**
+     * 打开删除Dev的modal
+     * @param id
+     */
+    function showDelModal(id) {
+        $("#sureDeleteModal").modal("show");
+        $("#hidDeleteId").val(id);
+    }
+    
+    function deleteDevById() {
+        var id = $("#hidDeleteId").val();
+        $.post("/stu-hostel-sys/deleteDevelop",{"id": parseInt(id)},function (r) {
+            if(r.data == "0") {
+                $("#sureDeleteModal").modal('hide');
+                setTable.fnClearTable();
+                setTable.fnDestroy(); //还原初始化了的datatable
+                devSetTable();
+                alert("删除成功！");
+            } else {
+                alert(r.error);
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
