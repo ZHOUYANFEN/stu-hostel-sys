@@ -107,5 +107,39 @@
  * 嵌套页面的切换和方法调用
  * 后台映射key值到前台
  
+ ## 2018-04-24 表设计变更
+ * community管理公寓和管理员，flat是community的detail。
+   * 在community里增删改查公社公寓信息，每个公寓对应一个admin_id和一个admin_name;
+   * 在flat里增删改查公寓住户信息，每个公寓住户信息对应一个admin_id和一个admin_name,flat里不可见，且不能修改admin;
+   * 在flat里，查询需要根据admin_id，获取数据；
+   * 在flat里，增/改需要根据admin_id在community里选择公寓，自动查出地址；
+ * 修改community表设计
+   * community - 公社公寓表
+ 
+ | 列       | 数据类型     | 可否为null | 备注   |
+ | -------- | ------------ | ---------- | ------ |
+ | id       | int          | NO         | 唯一键 |
+ | community_name| varchar(255) | YES   | 公社名 |
+ | flat_name| varchar(255) | YES        | 公寓名 |
+ | address  | varchar(255) | YES        | 地址   |
+ | admin_id | int          | YES        | 管理员id |
+ | admin_name | varchar(255) | YES     | 管理员名称 |
+ | remark   | varchar(255) | YES        | 备注   |
+ 
+ * 修改flat表设计
+   * flat - 公寓详情表
+  
+ | 列       | 数据类型     | 可否为null | 备注   |
+ | -------- | ------------ | ---------- | ------ |
+ | id       | int          | NO         | 唯一键 |
+ | admin_id | int          | YES        | 管理员id |
+ | admin_name | varchar(255) | YES     | 管理员名称 |
+ | flat_name| varchar(255) | YES        | 公寓名 |
+ | flat_user| varchar(255) | YES        | 住户姓名|
+ | flat_user_id| varchar(255) | YES     | 住户身份证 |
+ | flat_user_tel| varchar(255) | YES    | 住户电话 |
+ | remark   | varchar(255) | YES        | 备注 - ${admin} |
+  
+ 
    
  

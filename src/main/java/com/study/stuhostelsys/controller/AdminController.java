@@ -62,7 +62,7 @@ public class AdminController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            result.put("error", e.getMessage());
+            result.put("error", e);
         }
         return result;
     }
@@ -196,11 +196,6 @@ public class AdminController {
     @GetMapping("/root")
     public ModelAndView root(){
         ModelAndView root = new ModelAndView("sys_manage/root");
-        return root;
-    }
-    @GetMapping("/develop")
-    public ModelAndView develop(){
-        ModelAndView root = new ModelAndView("sys_manage/develop");
         return root;
     }
 }

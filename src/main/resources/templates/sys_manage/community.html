@@ -1,12 +1,450 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Community Setting</title>
+
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/dataTables.bootstrap4.min.css"
+          th:href="@{css/dataTables.bootstrap4.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+
 </head>
 <body>
-    
+    <div class="content-page">
+
+        <!-- Start content -->
+        <div class="content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="breadcrumb-holder">
+                            <h1 class="main-title float-left">
+                                公社公寓管理
+                                <button data-toggle="modal" data-target="#addCommModal" title="新增公社">
+                                    <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
+                                </button>
+                                <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCommModal">-->
+
+                                <!--</button>-->
+                            </h1>
+                            <ol class="breadcrumb float-right">
+                                <li class="breadcrumb-item">Sys</li>
+                                <li class="breadcrumb-item active">公社公寓管理</li>
+                            </ol>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+
+                <div class="row">
+                    <!-- 新增公社 trigger modal -->
+
+
+                    <table id="rootSetTable" class="table table-bordered table-hover display" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>community</th>
+                                <th>adminName</th>
+                                <th>flatName</th>
+                                <th>address</th>
+                                <th>remark</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    <!-- 新增公社 Modal -->
+                    <div class="modal fade bd-example-modal-lg" id="addCommModal" tabindex="-1" role="dialog"
+                         aria-labelledby="addCommModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addCommModalLabel">新增公社</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" title="关闭">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group row">
+                                            <label for="inputUserName" class="col-sm-2 col-form-label">公社名：</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputUserName"
+                                                       placeholder="公社名">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="firstPassword" class="col-sm-2 col-form-label">请输入密码：</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="firstPassword"
+                                                       placeholder="请输入密码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="secondPassword" class="col-sm-2 col-form-label">请确认密码：</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="secondPassword"
+                                                       placeholder="请确认密码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="" class="col-sm-2 col-form-label">公社权限：</label>
+                                            <div class="col-sm-10">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="radioPower"
+                                                           id="radioPower1" value="1">
+                                                    <label class="form-check-label" for="radioPower1">系统管理权限</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="radioPower"
+                                                           id="radioPower2" value="2">
+                                                    <label class="form-check-label" for="radioPower2">公社管理权限</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="saveComm" onclick="saveComm()">保存
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end 新增公社 Modal -->
+
+                    <!-- 修改公社 Modal -->
+                    <div class="modal fade bd-example-modal-lg" id="updateCommModal" tabindex="-1" role="dialog"
+                         aria-labelledby="updatedminModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateCommModalLabel">修改公社</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" title="关闭">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group row">
+                                            <label for="updateUserName" class="col-sm-2 col-form-label">公社名：</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="updateUserName"
+                                                       placeholder="公社名" readonly>
+                                                <input type="text" id="hidUpdateComm" value="" hidden="hidden"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="updateFirstPassword" class="col-sm-2 col-form-label">请输入密码：</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="updateFirstPassword"
+                                                       placeholder="请输入密码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="updateSecondPassword" class="col-sm-2 col-form-label">请确认密码：</label>
+                                            <div class="col-sm-10">
+                                                <input type="password" class="form-control" id="updateSecondPassword"
+                                                       placeholder="请确认密码">
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" onclick="updateCommById()">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end 修改公社 Modal -->
+
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="sureDeleteModal" tabindex="-1" role="dialog"
+                         aria-labelledby="sureDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="sureDeleteModalLabel">删除</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    是否删除？
+                                    <input type="text" id="hidDeleteId" value="" hidden="hidden"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" name="cancel" data-dismiss="modal">取消
+                                    </button>
+                                    <button type="button" class="btn btn-primary" onclick="deleteCommById()">确定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end Delete Modal -->
+                </div>
+            </div>
+            <!-- END container-fluid -->
+        </div>
+        <!-- END content -->
+    </div>
+    <!-- END content-page -->
+    <script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+    <script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+    <script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/jquery.dataTables.min.js"
+            th:src="@{js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js"
+            th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
+    <script>
+
+        var userName;
+        var userPassword;
+        var firstPassword;
+        var power;
+        var setTable;
+
+        rootSetTable();
+
+        /**
+         * 表格生成
+         */
+        function rootSetTable() {
+            setTable = $("#rootSetTable").dataTable({
+                "processing": true,
+                // "serverSide": true,
+                "retrieve": true,
+                "destroy": true,
+                "language": {
+                    "processing": "处理中...",
+                    "lengthMenu": "显示 _MENU_ 项结果",
+                    "zeroRecords": "没有匹配结果",
+                    "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "infoPostFix": "",
+                    "search": "搜索:",
+                    "url": "",
+                    "emptyTable": "表中数据为空",
+                    "loadingRecords": "载入中...",
+                    "infoThousands": ",",
+                    "paginate": {
+                        "first": "首页",
+                        "frevious": "上页",
+                        "next": "下页",
+                        "last": "末页"
+                    },
+                    "aria": {
+                        "sortAscending": ": 以升序排列此列",
+                        "sortDescending": ": 以降序排列此列"
+                    }
+                },
+                "ajax": {
+                    "url": "/stu-hostel-sys/getCommList",
+                    "type": "POST"
+                },
+                "columns": [{
+                    "title": "id",
+                    "data": "id"
+                },
+                    {
+                        "title": "公社名",
+                        "data": "userName"
+                    },
+                    {
+                        "title": "权限",
+                        "data": "power",
+                        "render": function (data, type, row) {
+                            if (row.power == "1") {
+                                return "<span style='color: red'>系统管理员</span>";
+                            } else {
+                                return "<span>公社管理员</span>";
+                            }
+                        }
+                    },
+                    {
+                        "title": "操作",
+                        // 定义操作列,######以下是重点########
+                        "targets": 3,//操作按钮目标列
+                        "data": null,
+                        "render": function (data, type, row) {
+                            var id = row.id;
+                            return "<a class='up btn btn-default btn-xs' onclick='selectCommById(" + id + ")' style='color: blue'>编辑</a>" +
+                                "<a class='down btn btn-default btn-xs' onclick='showDeleteModal(" + id + ")' data-value='" + id + "' style='color: blue'>删除</a>";
+                        }
+                    }
+                ]
+            });
+        }
+
+        /**
+         * 保存&校验
+         */
+        function saveComm() {
+            userName = $('#inputUserName').val();
+            userPassword = $('#secondPassword').val();
+            firstPassword = $('#firstPassword').val();
+            power = $('name[radioPower]').val();
+
+            if (userName == null || userName == "") {
+                alert("公社名为空");
+            } else if ((userPassword == null || userPassword == "") && (firstPassword == null || firstPassword == "")) {
+                alert("密码为空");
+            } else if (userPassword != firstPassword) {
+                alert("密码不一致");
+            } else {
+                if (power == "" || power == null) {
+                    power = "2";
+                }
+                $.post("/stu-hostel-sys/saveComm", {
+                    "userName": userName,
+                    "userPassword": userPassword,
+                    "power": power
+                }, function (r) {
+                    if (r.data == "0") {
+                        $("#addCommModal").modal('hide');
+                        alert("保存成功！");
+                        setTable.fnClearTable();
+                        setTable.fnDestroy(); //还原初始化了的datatable
+                        rootSetTable();
+                    } else {
+                        alert(r.error);
+                    }
+                });
+            }
+        };
+
+        /**
+         * 清空addCommModal数据
+         */
+        $("#addCommModal").on("hidden.bs.modal", function () {
+            $('#inputUserName').val("");
+            $('#secondPassword').val("");
+            $('#firstPassword').val("");
+            $('name[radioPower]').val("");
+        });
+
+        /**
+         * 查一条Comm
+         * @param id
+         */
+        function selectCommById(id) {
+            $.post("/stu-hostel-sys/findCommById", {"id": id}, function (r) {
+                var rs = r.admin[0];
+                $("#hidUpdateComm").val(id);
+                if (rs != "" && rs != null) {
+                    $("#updateUserName").val(rs.userName);
+                    if (rs.power == "1") {
+                        $("#updateCommModal").modal('show');
+                        $("#updatePower1").attr("checked", "checked");
+                        $("#updatePower2").removeAttr("checked");
+                    } else if (rs.power == "2") {
+                        $("#updateCommModal").modal('show');
+                        $("#updatePower2").attr("checked", "checked");
+                        $("#updatePower1").removeAttr("checked");
+                    } else {
+                        alert("无权限公社");
+                        $("#updateCommModal").modal('show');
+                    }
+                } else {
+                    alert("报错了！");
+                }
+            });
+        }
+
+        $("#updateCommModal").on("hidden.bs.modal", function () {
+            $("#hidUpdateComm").val("");
+            $("#updateUserName").val("");
+            $("#updateSecondPassword").val("")
+            $("#updateFirstPassword").val("")
+            $("#updatePower2").removeAttr("checked");
+            $("#updatePower1").removeAttr("checked");
+        });
+
+        /**
+         * 修改一条Comm
+         * @param id
+         */
+        function updateCommById() {
+            id = $("#hidUpdateComm").val();
+            userName = $("#updateUserName").val();
+            userPassword = $("#updateSecondPassword").val();
+            firstPassword = $("#updateFirstPassword").val();
+            power = $("name[updatePower]:checked").val();
+            if (userName == null || userName == "") {
+                alert("公社名为空");
+            } else if ((userPassword == null || userPassword == "") && (firstPassword == null || firstPassword == "")) {
+                alert("密码为空");
+            } else if (userPassword != firstPassword) {
+                alert("密码不一致");
+            } else {
+                if (power == "" || power == null) {
+                    power = "2";
+                }
+                $.post("/stu-hostel-sys/updateUserPassword", {
+                    "id": id,
+                    "userName": userName,
+                    "userPassword": userPassword,
+                    "power": power
+                }, function (r) {
+                    if (r.data == "0") {
+                        $("#updateCommModal").modal('hide');
+                        alert("修改成功！");
+                        setTable.fnClearTable();
+                        setTable.fnDestroy(); //还原初始化了的datatable
+                        rootSetTable();
+                    } else {
+                        alert(r.error);
+                    }
+                });
+            }
+        }
+
+        /**
+         * 删除模态框
+         */
+        function showDeleteModal(id) {
+            $("#sureDeleteModal").modal('show');
+            $("#hidDeleteId").val(id);
+        }
+
+        /**
+         * 删除一条Comm
+         * @param id
+         */
+        function deleteCommById() {
+            var id = $("#hidDeleteId").val();
+            $.post("/stu-hostel-sys/deleteComm", {"id": parseInt(id)}, function (r) {
+                if (r.data == "0") {
+                    $("#sureDeleteModal").modal('hide');
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    rootSetTable();
+                    alert("删除成功！");
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+
+    </script>
 </body>
 </html>

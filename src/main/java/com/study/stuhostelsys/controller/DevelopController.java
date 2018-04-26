@@ -8,10 +8,8 @@ import com.study.stuhostelsys.model.Develop;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -20,6 +18,12 @@ public class DevelopController {
 
     @Autowired
     private DevelopInterface developInterface;
+
+    @GetMapping("/develop")
+    public ModelAndView develop(){
+        ModelAndView root = new ModelAndView("sys_manage/develop");
+        return root;
+    }
 
     /**
      * 增加第三方信息
