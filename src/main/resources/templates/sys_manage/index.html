@@ -25,7 +25,7 @@
             <!-- LOGO -->
             <div class="headerbar-left">
                 <a href="index.html" class="logo">
-                    <img alt="Logo" src="assets/images/logo.png" />
+                    <img alt="Logo" th:src="@{images/logo.png}" />
                     <span>Admin</span>
                 </a>
             </div>
@@ -33,177 +33,11 @@
             <nav class="navbar-custom">
 
                 <ul class="list-inline float-right mb-0">
-                    <li class="list-inline-item dropdown notif">
-                        <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <i class="fa fa-fw fa-question-circle"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-arrow-success dropdown-lg">
-                            <!-- item-->
-                            <div class="dropdown-item noti-title">
-                                <h5>
-                                    <small>Help and Support</small>
-                                </h5>
-                            </div>
-
-                            <!-- item-->
-                            <a target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item">
-                                <p class="notify-details ml-0">
-                                    <b>Do you want custom development to integrate this theme?</b>
-                                    <span>Contact Us</span>
-                                </p>
-                            </a>
-
-                            <!-- item-->
-                            <a target="_blank" href="https://www.pikeadmin.com/pike-admin-pro" class="dropdown-item notify-item">
-                                <p class="notify-details ml-0">
-                                    <b>Do you want PHP version of the theme that save dozens of hours of work?</b>
-                                    <span>Try Pike Admin PRO</span>
-                                </p>
-                            </a>
-
-                            <!-- All-->
-                            <a title="Clcik to visit Pike Admin Website" target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item notify-all">
-                                <i class="fa fa-link"></i> Visit Pike Admin Website
-                            </a>
-                        </div>
-                    </li>
-                    <li class="list-inline-item dropdown notif">
-                        <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <i class="fa fa-fw fa-envelope-o"></i>
-                            <span class="notif-bullet"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-arrow-success dropdown-lg">
-                            <!-- item-->
-                            <div class="dropdown-item noti-title">
-                                <h5>
-                                    <small>
-                                        <span class="label label-danger pull-xs-right">12</span>Contact Messages</small>
-                                </h5>
-                            </div>
-
-                            <!-- item-->
-                            <a href="#" class="dropdown-item notify-item">
-                                <p class="notify-details ml-0">
-                                    <b>Jokn Doe</b>
-                                    <span>New message received</span>
-                                    <small class="text-muted">2 minutes ago</small>
-                                </p>
-                            </a>
-
-                            <!-- item-->
-                            <a href="#" class="dropdown-item notify-item">
-                                <p class="notify-details ml-0">
-                                    <b>Michael Jackson</b>
-                                    <span>New message received</span>
-                                    <small class="text-muted">15 minutes ago</small>
-                                </p>
-                            </a>
-
-                            <!-- item-->
-                            <a href="#" class="dropdown-item notify-item">
-                                <p class="notify-details ml-0">
-                                    <b>Foxy Johnes</b>
-                                    <span>New message received</span>
-                                    <small class="text-muted">Yesterday, 13:30</small>
-                                </p>
-                            </a>
-
-                            <!-- All-->
-                            <a href="#" class="dropdown-item notify-item notify-all">
-                                View All
-                            </a>
-
-                        </div>
-                    </li>
-
-                    <li class="list-inline-item dropdown notif">
-                        <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <i class="fa fa-fw fa-bell-o"></i>
-                            <span class="notif-bullet"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-lg">
-                            <!-- item-->
-                            <div class="dropdown-item noti-title">
-                                <h5>
-                                    <small>
-                                        <span class="label label-danger pull-xs-right">5</span>Allerts</small>
-                                </h5>
-                            </div>
-
-                            <!-- item-->
-                            <a href="#" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-faded">
-                                    <img src="assets/images/avatars/avatar2.png" alt="img" class="rounded-circle img-fluid">
-                                </div>
-                                <p class="notify-details">
-                                    <b>John Doe</b>
-                                    <span>User registration</span>
-                                    <small class="text-muted">3 minutes ago</small>
-                                </p>
-                            </a>
-
-                            <!-- item-->
-                            <a href="#" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-faded">
-                                    <img src="assets/images/avatars/avatar3.png" alt="img" class="rounded-circle img-fluid">
-                                </div>
-                                <p class="notify-details">
-                                    <b>Michael Cox</b>
-                                    <span>Task 2 completed</span>
-                                    <small class="text-muted">12 minutes ago</small>
-                                </p>
-                            </a>
-
-                            <!-- item-->
-                            <a href="#" class="dropdown-item notify-item">
-                                <div class="notify-icon bg-faded">
-                                    <img src="assets/images/avatars/avatar4.png" alt="img" class="rounded-circle img-fluid">
-                                </div>
-                                <p class="notify-details">
-                                    <b>Michelle Dolores</b>
-                                    <span>New job completed</span>
-                                    <small class="text-muted">35 minutes ago</small>
-                                </p>
-                            </a>
-
-                            <!-- All-->
-                            <a href="#" class="dropdown-item notify-item notify-all">
-                                View All Allerts
-                            </a>
-
-                        </div>
-                    </li>
 
                     <li class="list-inline-item dropdown notif">
                         <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="assets/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
+                            <img  th:src="@{images/avatars/admin.png}" alt="Profile image" class="avatar-rounded">
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                            <!-- item-->
-                            <div class="dropdown-item noti-title">
-                                <h5 class="text-overflow">
-                                    <small>Hello, admin</small>
-                                </h5>
-                            </div>
-
-                            <!-- item-->
-                            <a href="pro-profile.html" class="dropdown-item notify-item">
-                                <i class="fa fa-user"></i>
-                                <span>Profile</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="#" class="dropdown-item notify-item">
-                                <i class="fa fa-power-off"></i>
-                                <span>Logout</span>
-                            </a>
-
-                            <!-- item-->
-                            <a target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item">
-                                <i class="fa fa-external-link"></i>
-                                <span>Pike Admin</span>
-                            </a>
-                        </div>
                     </li>
                 </ul>
 
@@ -219,7 +53,6 @@
         </div>
         <!-- End Navigation -->
 
-
         <!-- Left Sidebar -->
         <div class="left main-sidebar">
             <div class="sidebar-inner leftscroll">
@@ -227,169 +60,25 @@
 
                     <ul>
                         <li class="submenu">
-                            <a class="active" href="index.html">
+                            <a class="active" onclick="goSrc('adminPage')">
                                 <i class="fa fa-fw fa-bars"></i>
                                 <span> Admin分配 </span>
                             </a>
                         </li>
 
                         <li class="submenu">
-                            <a onclick="goSrc('1')">
+                            <a onclick="goSrc('developPage')">
                                 <i class="fa fa-fw fa-area-chart"></i>
                                 <span> 第三方管理 </span>
                             </a>
                         </li>
 
                         <li class="submenu">
-                            <a href="#">
+                            <a onclick="goSrc('communityPage')">
                                 <i class="fa fa-fw fa-table"></i>
                                 <span> 公社管理 </span>
-                                <span class="menu-arrow"></span>
                             </a>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="tables-basic.html">Basic Tables</a>
-                                </li>
-                                <li>
-                                    <a href="tables-datatable.html">Data Tables</a>
-                                </li>
-                            </ul>
                         </li>
-
-                        <li class="submenu">
-                            <a href="#">
-                                <i class="fa fa-fw fa-tv"></i>
-                                <span> User Interface </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="ui-alerts.html">Alerts</a>
-                                </li>
-                                <li>
-                                    <a href="ui-buttons.html">Buttons</a>
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#">
-                                <i class="fa fa-fw fa-file-text-o"></i>
-                                <span> Forms </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="forms-general.html">General Elements</a>
-                                </li>
-                                <li>
-                                    <a href="forms-select2.html">Select2</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#">
-                                <i class="fa fa-fw fa-th"></i>
-                                <span> Plugins </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="star-rating.html">Star Rating</a>
-                                </li>
-                                <li>
-                                    <a href="range-sliders.html">Range Sliders</a>
-                                </li>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#">
-                                <i class="fa fa-fw fa-image"></i>
-                                <span> Images and Galleries </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="media-fancybox.html">
-                                        <span class="label radius-circle bg-danger float-right">cool</span> Fancybox </a>
-                                </li>
-                                <li>
-                                    <a href="media-masonry.html">Masonry</a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#">
-                                <span class="label radius-circle bg-danger float-right">20</span>
-                                <i class="fa fa-fw fa-copy"></i>
-                                <span> Example Pages </span>
-                            </a>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="page-pricing-tables.html">Pricing Tables</a>
-                                </li>
-                                <li>
-                                    <a target="_blank" href="page-coming-soon.html">Countdown</a>
-                                </li>
-                                <li>
-                                    <a href="page-invoice.html">Invoice</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#">
-                                <span class="label radius-circle bg-primary float-right">9</span>
-                                <i class="fa fa-fw fa-indent"></i>
-                                <span> Menu Levels </span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <span>Second Level</span>
-                                    </a>
-                                </li>
-                                <li class="submenu">
-                                    <a href="#">
-                                        <span>Third Level</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <ul style="">
-                                        <li>
-                                            <a href="#">
-                                                <span>Third Level Item</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span>Third Level Item</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a class="pro" href="#">
-                                <i class="fa fa-fw fa-star"></i>
-                                <span> Pike Admin PRO </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a target="_blank" href="https://www.pikeadmin.com/pike-admin-pro">Admin PRO features</a>
-                                </li>
-                                <li>
-                                    <a href="pro-settings.html">Settings</a>
-                                </li>
-                            </ul>
-                        </li>
-
                     </ul>
 
                     <div class="clearfix"></div>
@@ -399,7 +88,7 @@
         </div>
         <!-- End Sidebar -->
 
-        <iframe class="" id="iframe" src="root.html" th:src="@{/develop}" frameborder="0" width="100%" height="900px"></iframe>
+        <iframe class="" id="iframe" src="root.html" th:src="@{/community}" frameborder="0" width="100%" height="900px"></iframe>
 
         <footer class="footer">
             <span class="text-right">
@@ -426,11 +115,18 @@
     <script src="../../static/js/jquery.nicescroll.js" th:src="@{js/jquery.nicescroll.js}"></script>
     <script src="../../static/js/pikeadmin.js" th:src="@{js/pikeadmin.js}"></script>
     <script>
+        /**
+         * 页面切换
+         * @param url
+         */
         function goSrc(url) {
-
-            document.getElementById('iframe').src = "root";
-            document.getElementById('iframe').src = "develop";
-
+            if (url == "adminPage") {
+                document.getElementById('iframe').src = "root";
+            }else if(url == "developPage"){
+                document.getElementById('iframe').src = "develop";
+            } else if(url == "communityPage") {
+                document.getElementById('iframe').src = "community";
+            }
         }
     </script>
 </body>

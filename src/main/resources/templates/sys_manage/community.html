@@ -50,7 +50,7 @@
                     <!-- 新增公社 trigger modal -->
 
 
-                    <table id="rootSetTable" class="table table-bordered table-hover display" width="100%">
+                    <table id="commSetTable" class="table table-bordered table-hover display" width="100%">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -80,39 +80,38 @@
                                 <div class="modal-body">
                                     <form>
                                         <div class="form-group row">
-                                            <label for="inputUserName" class="col-sm-2 col-form-label">公社名：</label>
+                                            <label for="inputUserName" class="col-sm-2 col-form-label">管理员：</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputUserName"
-                                                       placeholder="公社名">
+                                                <select class="form-control" id="inputUserName">
+                                                    <option value="0">请选择管理员</option>
+                                                    <option  th:each="admin: ${admin}" th:value="${admin.id}" th:data-value="${admin.userName}" th:text="${admin.userName }"></option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="firstPassword" class="col-sm-2 col-form-label">请输入密码：</label>
+                                            <label for="inputCommName" class="col-sm-2 col-form-label">公社名：</label>
                                             <div class="col-sm-10">
-                                                <input type="password" class="form-control" id="firstPassword"
-                                                       placeholder="请输入密码">
+                                                <input type="text" class="form-control" id="inputCommName"
+                                                       placeholder="公社名" value="DJ" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="secondPassword" class="col-sm-2 col-form-label">请确认密码：</label>
+                                            <label for="inputFlatName" class="col-sm-2 col-form-label">公寓名：</label>
                                             <div class="col-sm-10">
-                                                <input type="password" class="form-control" id="secondPassword"
-                                                       placeholder="请确认密码">
+                                                <input type="text" class="form-control" id="inputFlatName"
+                                                       placeholder="公寓名">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="" class="col-sm-2 col-form-label">公社权限：</label>
+                                            <label for="inputAddress" class="col-sm-2 col-form-label">公寓地址：</label>
                                             <div class="col-sm-10">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radioPower"
-                                                           id="radioPower1" value="1">
-                                                    <label class="form-check-label" for="radioPower1">系统管理权限</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radioPower"
-                                                           id="radioPower2" value="2">
-                                                    <label class="form-check-label" for="radioPower2">公社管理权限</label>
-                                                </div>
+                                                <textarea class="form-control" id="inputAddress" placeholder="公寓地址"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputRemark" class="col-sm-2 col-form-label">备注：</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" id="inputRemark" placeholder="备注"></textarea>
                                             </div>
                                         </div>
 
@@ -143,25 +142,40 @@
                                 <div class="modal-body">
                                     <form>
                                         <div class="form-group row">
-                                            <label for="updateUserName" class="col-sm-2 col-form-label">公社名：</label>
+                                            <label for="updateUserName" class="col-sm-2 col-form-label">管理员：</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="updateUserName"
-                                                       placeholder="公社名" readonly>
-                                                <input type="text" id="hidUpdateComm" value="" hidden="hidden"/>
+                                                <select class="form-control" id="updateUserName">
+                                                    <option value="0">请选择管理员</option>
+                                                    <option  th:each="admin: ${admin}" th:value="${admin.id}" th:data-value="${admin.userName}" th:text="${admin.userName }"></option>
+                                                </select>
+                                                <input type="text" id="hidUpdateComm" value="" hidden="hidden" />
+
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="updateFirstPassword" class="col-sm-2 col-form-label">请输入密码：</label>
+                                            <label for="updateCommName" class="col-sm-2 col-form-label">公社名：</label>
                                             <div class="col-sm-10">
-                                                <input type="password" class="form-control" id="updateFirstPassword"
-                                                       placeholder="请输入密码">
+                                                <input type="text" class="form-control" id="updateCommName"
+                                                       placeholder="公社名" value="DJ" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="updateSecondPassword" class="col-sm-2 col-form-label">请确认密码：</label>
+                                            <label for="updateFlatName" class="col-sm-2 col-form-label">公寓名：</label>
                                             <div class="col-sm-10">
-                                                <input type="password" class="form-control" id="updateSecondPassword"
-                                                       placeholder="请确认密码">
+                                                <input type="text" class="form-control" id="updateFlatName"
+                                                       placeholder="公寓名">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="updateAddress" class="col-sm-2 col-form-label">公寓地址：</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" id="updateAddress" placeholder="公寓地址"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="updateRemark" class="col-sm-2 col-form-label">备注：</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" id="updateRemark" placeholder="备注"></textarea>
                                             </div>
                                         </div>
 
@@ -216,19 +230,21 @@
             th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
     <script>
 
+        var id;
         var userName;
-        var userPassword;
-        var firstPassword;
-        var power;
-        var setTable;
+        var userId;
+        var commName;
+        var flatName;
+        var address;
+        var remark;
 
-        rootSetTable();
+        commSetTable();
 
         /**
          * 表格生成
          */
-        function rootSetTable() {
-            setTable = $("#rootSetTable").dataTable({
+        function commSetTable() {
+            setTable = $("#commSetTable").dataTable({
                 "processing": true,
                 // "serverSide": true,
                 "retrieve": true,
@@ -258,39 +274,44 @@
                     }
                 },
                 "ajax": {
-                    "url": "/stu-hostel-sys/getCommList",
+                    "url": "/stu-hostel-sys/getCommunityList",
                     "type": "POST"
                 },
                 "columns": [{
                     "title": "id",
                     "data": "id"
                 },
-                    {
-                        "title": "公社名",
-                        "data": "userName"
-                    },
-                    {
-                        "title": "权限",
-                        "data": "power",
-                        "render": function (data, type, row) {
-                            if (row.power == "1") {
-                                return "<span style='color: red'>系统管理员</span>";
-                            } else {
-                                return "<span>公社管理员</span>";
-                            }
-                        }
-                    },
-                    {
-                        "title": "操作",
-                        // 定义操作列,######以下是重点########
-                        "targets": 3,//操作按钮目标列
-                        "data": null,
-                        "render": function (data, type, row) {
-                            var id = row.id;
-                            return "<a class='up btn btn-default btn-xs' onclick='selectCommById(" + id + ")' style='color: blue'>编辑</a>" +
-                                "<a class='down btn btn-default btn-xs' onclick='showDeleteModal(" + id + ")' data-value='" + id + "' style='color: blue'>删除</a>";
-                        }
+                {
+                    "title": "公社名",
+                    "data": "communityName"
+                },
+                {
+                    "title": "公寓名",
+                    "data": "flatName"
+                },
+                {
+                    "title": "地址",
+                    "data": "address"
+                },
+                {
+                    "title": "管理员",
+                    "data": "adminName"
+                },
+                {
+                    "title": "备注",
+                    "data": "remark"
+                },
+                {
+                    "title": "操作",
+                    // 定义操作列,######以下是重点########
+                    "targets": 3,//操作按钮目标列
+                    "data": null,
+                    "render": function (data, type, row) {
+                        var id = row.id;
+                        return "<a class='up btn btn-default btn-xs' onclick='selectCommById(" + id + ")' style='color: blue'>编辑</a>" +
+                            "<a class='down btn btn-default btn-xs' onclick='showDeleteModal(" + id + ")' data-value='" + id + "' style='color: blue'>删除</a>";
                     }
+                }
                 ]
             });
         }
@@ -299,32 +320,36 @@
          * 保存&校验
          */
         function saveComm() {
-            userName = $('#inputUserName').val();
-            userPassword = $('#secondPassword').val();
-            firstPassword = $('#firstPassword').val();
-            power = $('name[radioPower]').val();
+            userId = $('#inputUserName').val();
+            userName = $('#inputUserName option:selected').text();
+            flatName = $('#inputFlatName').val();
+            commName = $('#inputCommName').val();
+            address = $('#inputAddress').val();
+            remark = $('#inputRemark').val();
 
-            if (userName == null || userName == "") {
+            if (commName == null || commName == "") {
                 alert("公社名为空");
-            } else if ((userPassword == null || userPassword == "") && (firstPassword == null || firstPassword == "")) {
-                alert("密码为空");
-            } else if (userPassword != firstPassword) {
-                alert("密码不一致");
-            } else {
-                if (power == "" || power == null) {
-                    power = "2";
-                }
-                $.post("/stu-hostel-sys/saveComm", {
-                    "userName": userName,
-                    "userPassword": userPassword,
-                    "power": power
+            } else if (userId == "0") {
+                alert("管理员为空");
+            } else if (flatName == null || flatName == "") {
+                alert("公寓为空");
+            } else if (address == null || address == "") {
+                alert("地址为空");
+            }else {
+                $.post("/stu-hostel-sys/saveCommunity", {
+                    "adminId": userId,
+                    "adminName": userName,
+                    "flatName": flatName,
+                    "communityName": commName,
+                    "address": address,
+                    "remark": remark
                 }, function (r) {
                     if (r.data == "0") {
                         $("#addCommModal").modal('hide');
                         alert("保存成功！");
                         setTable.fnClearTable();
                         setTable.fnDestroy(); //还原初始化了的datatable
-                        rootSetTable();
+                        commSetTable();
                     } else {
                         alert(r.error);
                     }
@@ -337,9 +362,11 @@
          */
         $("#addCommModal").on("hidden.bs.modal", function () {
             $('#inputUserName').val("");
-            $('#secondPassword').val("");
-            $('#firstPassword').val("");
-            $('name[radioPower]').val("");
+            $('#inputUserName option:selected').text("");
+            $('#inputFlatName').val("");
+            $('#inputCommName').val("");
+            $('#inputAddress').val("");
+            $('#inputRemark').val("");
         });
 
         /**
@@ -348,22 +375,16 @@
          */
         function selectCommById(id) {
             $.post("/stu-hostel-sys/findCommById", {"id": id}, function (r) {
-                var rs = r.admin[0];
+                var rs = r.comm[0];
                 $("#hidUpdateComm").val(id);
+                userId = $('#updateUserName').val(rs.adminId);
+                userName = $('#updateUserName option:selected').text(rs.adminName);
+                flatName = $('#updateFlatName').val(rs.flatName);
+                commName = $('#updateCommName').val(rs.communityName);
+                address = $('#updateAddress').val(rs.address);
+                remark = $('#updateRemark').val(rs.remark);
                 if (rs != "" && rs != null) {
-                    $("#updateUserName").val(rs.userName);
-                    if (rs.power == "1") {
-                        $("#updateCommModal").modal('show');
-                        $("#updatePower1").attr("checked", "checked");
-                        $("#updatePower2").removeAttr("checked");
-                    } else if (rs.power == "2") {
-                        $("#updateCommModal").modal('show');
-                        $("#updatePower2").attr("checked", "checked");
-                        $("#updatePower1").removeAttr("checked");
-                    } else {
-                        alert("无权限公社");
-                        $("#updateCommModal").modal('show');
-                    }
+                    $("#updateCommModal").modal('show');
                 } else {
                     alert("报错了！");
                 }
@@ -371,12 +392,12 @@
         }
 
         $("#updateCommModal").on("hidden.bs.modal", function () {
-            $("#hidUpdateComm").val("");
-            $("#updateUserName").val("");
-            $("#updateSecondPassword").val("")
-            $("#updateFirstPassword").val("")
-            $("#updatePower2").removeAttr("checked");
-            $("#updatePower1").removeAttr("checked");
+            $('#updateUserName').val("");
+            $('#updateUserName option:selected').text("");
+            $('#updateFlatName').val("");
+            $('#updateCommName').val("");
+            $('#updateAddress').val("");
+            $('#updateRemark').val("");
         });
 
         /**
@@ -385,32 +406,36 @@
          */
         function updateCommById() {
             id = $("#hidUpdateComm").val();
-            userName = $("#updateUserName").val();
-            userPassword = $("#updateSecondPassword").val();
-            firstPassword = $("#updateFirstPassword").val();
-            power = $("name[updatePower]:checked").val();
-            if (userName == null || userName == "") {
+            userId = $('#updateUserName').val();
+            userName = $('#updateUserName option:selected').text();
+            flatName = $('#updateFlatName').val();
+            commName = $('#updateCommName').val();
+            address = $('#updateAddress').val();
+            remark = $('#updateRemark').val();
+            if (commName == null || commName == "") {
                 alert("公社名为空");
-            } else if ((userPassword == null || userPassword == "") && (firstPassword == null || firstPassword == "")) {
-                alert("密码为空");
-            } else if (userPassword != firstPassword) {
-                alert("密码不一致");
-            } else {
-                if (power == "" || power == null) {
-                    power = "2";
-                }
-                $.post("/stu-hostel-sys/updateUserPassword", {
-                    "id": id,
-                    "userName": userName,
-                    "userPassword": userPassword,
-                    "power": power
+            } else if (userId == "0") {
+                alert("管理员为空");
+            } else if (flatName == null || flatName == "") {
+                alert("公寓为空");
+            } else if (address == null || address == "") {
+                alert("地址为空");
+            }else {
+                $.post("/stu-hostel-sys/updateCommunity", {
+                    "id": parseInt(id),
+                    "adminId": userId,
+                    "adminName": userName,
+                    "flatName": flatName,
+                    "communityName": commName,
+                    "address": address,
+                    "remark": remark
                 }, function (r) {
                     if (r.data == "0") {
                         $("#updateCommModal").modal('hide');
                         alert("修改成功！");
                         setTable.fnClearTable();
                         setTable.fnDestroy(); //还原初始化了的datatable
-                        rootSetTable();
+                        commSetTable();
                     } else {
                         alert(r.error);
                     }
@@ -432,12 +457,12 @@
          */
         function deleteCommById() {
             var id = $("#hidDeleteId").val();
-            $.post("/stu-hostel-sys/deleteComm", {"id": parseInt(id)}, function (r) {
+            $.post("/stu-hostel-sys/deleteCommunity", {"id": parseInt(id)}, function (r) {
                 if (r.data == "0") {
                     $("#sureDeleteModal").modal('hide');
                     setTable.fnClearTable();
                     setTable.fnDestroy(); //还原初始化了的datatable
-                    rootSetTable();
+                    commSetTable();
                     alert("删除成功！");
                 } else {
                     alert(r.error);

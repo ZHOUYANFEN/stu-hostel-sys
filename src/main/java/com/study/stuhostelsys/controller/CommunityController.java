@@ -3,6 +3,7 @@ package com.study.stuhostelsys.controller;
 /**
  * 公社表
  */
+import com.study.stuhostelsys.dao.AdminInterface;
 import com.study.stuhostelsys.dao.CommunityInterface;
 import com.study.stuhostelsys.model.Community;
 import net.sf.json.JSONObject;
@@ -22,27 +23,41 @@ public class CommunityController {
     @Autowired
     private CommunityInterface communityInterface;
 
+    @Autowired
+    private AdminInterface adminInterface;
+
     @GetMapping("/community")
-    public ModelAndView community(){
+    public ModelAndView community(Model model){
+        model.addAttribute("admin", adminInterface.findAll());
         return new ModelAndView("sys_manage/community");
     }
 
     /**
      * 增加公社信息
-     * @param community
+     * @param adminId
+     * @param adminName
+     * @param flatName
+     * @param address
+     * @param remark
+     * @param communityName
      * @return
      */
     @PostMapping("/saveCommunity")
-    public @ResponseBody JSONObject saveCommunity(@RequestParam Map<String, Object> community){
+    public @ResponseBody JSONObject saveCommunity(@RequestParam Integer adminId,
+                                                  @RequestParam String adminName,
+                                                  @RequestParam String flatName,
+                                                  @RequestParam String address,
+                                                  @RequestParam String remark,
+                                                  @RequestParam String communityName){
         JSONObject r = new JSONObject();
         Community com = new Community();
         try {
-            com.setAdminId(Integer.parseInt(community.get("adminId").toString())); // admin_id
-            com.setAdminName(community.get("adminName").toString()); // admin_name
-            com.setFlatName(community.get("flatName").toString()); // flat_name;
-            com.setAddress(community.get("address").toString()); // address
-            com.setRemark(community.get("remark").toString()); // remark
-            com.setCommunityName(community.get("communityName").toString()); //community_name
+            com.setAdminId(adminId); // admin_id
+            com.setAdminName(adminName); // admin_name
+            com.setFlatName(flatName); // flat_name;
+            com.setAddress(address); // address
+            com.setRemark(remark); // remark
+            com.setCommunityName(communityName); //community_name
             communityInterface.save(com);
             r.put("data", "0");
         } catch (Exception e) {
@@ -59,7 +74,7 @@ public class CommunityController {
      * @param id
      * @return
      */
-    @PostMapping("/deletCommunity")
+    @PostMapping("/deleteCommunity")
     public @ResponseBody JSONObject deleteCommunity(@RequestParam Integer id){
         JSONObject r = new JSONObject();
         try {
@@ -80,22 +95,27 @@ public class CommunityController {
 
     /**
      * 修改公社信息
-     * @param community
+     * @param id
+     * @param adminId
+     * @param adminName
+     * @param flatName
+     * @param address
+     * @param remark
+     * @param communityName
      * @return
      */
     @PostMapping("/updateCommunity")
-    public @ResponseBody JSONObject updateCommunity(@RequestParam Map<String, Object> community){
+    public @ResponseBody JSONObject updateCommunity(@RequestParam Integer id,
+                                                    @RequestParam Integer adminId,
+                                                    @RequestParam String adminName,
+                                                    @RequestParam String flatName,
+                                                    @RequestParam String address,
+                                                    @RequestParam String remark,
+                                                    @RequestParam String communityName){
         JSONObject r = new JSONObject();
         try {
-            if (community != null){
-                communityInterface.updateDevelop(
-                        Integer.parseInt(community.get("id").toString()),
-                        community.get("communityName").toString(),
-                        community.get("address").toString(),
-                        Integer.parseInt(community.get("adminId").toString()),
-                        community.get("remark").toString(),
-                        community.get("adminName").toString(),
-                        community.get("flatName").toString());
+            if (id != null){
+                communityInterface.updateDevelop(id,communityName, address,adminId,remark,adminName,flatName);
                 r.put("data", "0");
             } else {
                 r.put("data", "-1");
@@ -128,5 +148,18 @@ public class CommunityController {
         return obj;
     }
 
+    /**
+     * 根据Id查Community
+     * @param id
+     * @param model
+     * @return
+     */
+    @PostMapping("/findCommById")
+    public JSONObject findCommById(@RequestParam Integer id, Model model){
+        JSONObject r = new JSONObject();
+        r.put("comm", communityInterface.findAllById(id));
+        model.addAttribute("comm", r);
+        return r;
+    }
 
 }
