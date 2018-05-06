@@ -6,11 +6,11 @@
     <title>HOSTEL Setting</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"/>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}">
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{css/style.css}">
     <!-- BEGIN CSS for this page -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
     <!-- END CSS for this page -->
@@ -26,7 +26,7 @@
         <div class="headerbar-left">
             <a href="index.html" class="logo">
                 <img alt="Logo" th:src="@{images/logo.png}" />
-                <span>Admin</span>
+                <span>HOSTEL</span>
             </a>
         </div>
 
@@ -60,25 +60,41 @@
 
                 <ul>
                     <li class="submenu">
-                        <a class="active" onclick="goSrc('adminPage')">
+                        <a class="active" onclick="goSrc('flatPage')">
                             <i class="fa fa-fw fa-bars"></i>
-                            <span> Admin分配 </span>
+                            <span> 公寓管理 </span>
                         </a>
                     </li>
 
                     <li class="submenu">
-                        <a onclick="goSrc('developPage')">
+                        <a onclick="goSrc('servePage')">
                             <i class="fa fa-fw fa-area-chart"></i>
-                            <span> 第三方管理 </span>
+                            <span> 服务管理 </span>
                         </a>
                     </li>
 
                     <li class="submenu">
-                        <a onclick="goSrc('communityPage')">
+                        <a onclick="goSrc('HRPage')">
                             <i class="fa fa-fw fa-table"></i>
-                            <span> 公社管理 </span>
+                            <span> 公社行政管理 </span>
                         </a>
                     </li>
+
+                    <li class="submenu">
+                        <a href="#">
+                            <span class="label radius-circle bg-danger float-right">3</span>
+                            <i class="fa fa-fw fa-copy"></i>
+                            <span> 第三方服务 </span>
+                        </a>
+                        <ul class="list-unstyled">
+                            <li><a href="page-pricing-tables.html">天猫代购</a></li>
+                            <li><a target="_blank" href="page-coming-soon.html">百度知道</a></li>
+                            <li><a href="page-invoice.html">Invoice</a></li>
+                            <li><a href="page-login.html">Login / Register</a></li>
+                            <li><a href="page-blank.html">Blank Page</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
 
                 <div class="clearfix"></div>
@@ -88,7 +104,7 @@
     </div>
     <!-- End Sidebar -->
 
-    <iframe class="" id="iframe" src="root.html" th:src="@{/community}" frameborder="0" width="100%" height="900px"></iframe>
+    <iframe class="" id="iframe" src="serve.html" th:src="@{/serve}" frameborder="0" width="100%" height="900px"></iframe>
 
     <footer class="footer">
             <span class="text-right">
@@ -120,12 +136,14 @@
      * @param url
      */
     function goSrc(url) {
-        if (url == "adminPage") {
-            document.getElementById('iframe').src = "root";
-        }else if(url == "developPage"){
-            document.getElementById('iframe').src = "develop";
-        } else if(url == "communityPage") {
-            document.getElementById('iframe').src = "community";
+        var u = window.location.search;
+        var rl = u.split("id=")[1];
+        if (url == "flatPage") {
+            document.getElementById('iframe').src = "flat";
+        }else if(url == "servePage"){
+            document.getElementById('iframe').src = "serve";
+        } else if(url == "developPage") {
+            document.getElementById('iframe').src = "developPage";
         }
     }
 </script>

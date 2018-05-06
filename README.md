@@ -140,6 +140,43 @@
  | flat_user_tel| varchar(255) | YES    | 住户电话 |
  | remark   | varchar(255) | YES        | 备注 - ${admin} |
   
+## 2018-05-03 需求变更
+ * serve - 公共服务表变更：
+   * 只作为服务登记使用；
+   * 记录需要服务的公寓及地址，用户、电话，所需何种服务；
+   * 记录来服务的服务者、电话、服务时间；
+   * 与管理员无关。
+   
+ | 列       | 数据类型     | 可否为null | 备注   |
+ | -------- | ------------ | ---------- | ------ |
+ | id       | int          | NO         | 唯一键 |
+ | flat_name| varchar(255) | YES        | 公寓名 |
+ | flat_address| varchar(255) | YES     | 公寓地址 |
+ | flat_user| varchar(255) | YES        | 住户姓名|
+ | flat_user_tel| varchar(255) | YES    | 住户电话 |
+ | type     | varchar(255) | YES    | 服务类型 clean(卫生)/repair(保修) |
+ | time    | varchar(255) | YES    | 服务时间 |
+ | serve    | varchar(255) | YES    | 服务者 |
+ | serve_id | varchar(255) | YES    | 服务者ID |
+ | serve_tel| varchar(255) | YES    | 服务者电话 |
+ | remark   | varchar(255) | YES        | 备注 - ${admin} |
  
+ * flat - 公寓管理表变更：
+   * 增加 type - 类型字段，自住|待租|已租 ；
+   * 用Tab展示管理员ID、公寓ID下的房间信息；
+   * 增加房间号，以房间号排序，方便分组变更，让一个房间的住户统一管理；
+   
+  | 列       | 数据类型     | 可否为null | 备注   |
+  | -------- | ------------ | ---------- | ------ |
+  | id       | int          | NO         | 唯一键 |
+  | admin_id | int          | YES        | 管理员id |
+  | admin_name | varchar(255) | YES     | 管理员名称 |
+  | flat_name| varchar(255) | YES        | 公寓名 |
+  | flat_num | varchar(255) | YES        | 房间号 |
+  | flat_user| varchar(255) | YES        | 住户姓名|
+  | flat_user_id| varchar(255) | YES     | 住户身份证 |
+  | flat_user_tel| varchar(255) | YES    | 住户电话 |
+  | type     | varchar(255) | YES    | 类型 p(自住)/o(已租)/l（待租）|
+  | remark   | varchar(255) | YES        | 备注 - ${admin} |
    
  

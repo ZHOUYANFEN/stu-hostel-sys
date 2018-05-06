@@ -8,12 +8,35 @@ public class Serve {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // 服务id
-    private String flat_name; // 公寓名
-    private String flat_user; // 住户姓名
-    private String flat_user_id; // 住户身份证
-    private String flat_user_tel; // 住户电话
+
+    @Column(name = "flat_name")
+    private String flatName; // 公寓
+
+    @Column(name = "flat_address")
+    private String flatAddress; // 公寓地址
+
+    @Column(name = "flat_user")
+    private String flatUser; // 住户姓名
+
+    @Column(name = "flat_user_tel")
+    private String flatUserTel; // 住户电话
+
+    @Column(name = "type")
     private String type; // 服务类型
-    private String money; // 金额
+
+    @Column(name = "time")
+    private String time; // 服务时间
+
+    @Column(name = "serve")
+    private String serve; // 服务服务者
+
+    @Column(name = "serve_id")
+    private String serveId; // 服务服务者
+
+    @Column(name = "serve_tel")
+    private String serveTel; // 服务服务者电话
+
+    @Column(name = "remark")
     private String remark; // 备注 - admin标记
 
     public Serve(){
@@ -27,36 +50,36 @@ public class Serve {
         this.id = id;
     }
 
-    public String getFlat_name() {
-        return flat_name;
+    public String getFlatName() {
+        return flatName;
     }
 
-    public void setFlat_name(String flat_name) {
-        this.flat_name = flat_name;
+    public void setFlatName(String flatName) {
+        this.flatName = flatName;
     }
 
-    public String getFlat_user() {
-        return flat_user;
+    public String getFlatAddress() {
+        return flatAddress;
     }
 
-    public void setFlat_user(String flat_user) {
-        this.flat_user = flat_user;
+    public void setFlatAddress(String flatAddress) {
+        this.flatAddress = flatAddress;
     }
 
-    public String getFlat_user_id() {
-        return flat_user_id;
+    public String getFlatUser() {
+        return flatUser;
     }
 
-    public void setFlat_user_id(String flat_user_id) {
-        this.flat_user_id = flat_user_id;
+    public void setFlatUser(String flatUser) {
+        this.flatUser = flatUser;
     }
 
-    public String getFlat_user_tel() {
-        return flat_user_tel;
+    public String getFlatUserTel() {
+        return flatUserTel;
     }
 
-    public void setFlat_user_tel(String flat_user_tel) {
-        this.flat_user_tel = flat_user_tel;
+    public void setFlatUserTel(String flatUserTel) {
+        this.flatUserTel = flatUserTel;
     }
 
     public String getType() {
@@ -67,12 +90,36 @@ public class Serve {
         this.type = type;
     }
 
-    public String getMoney() {
-        return money;
+    public String getTime() {
+        return time;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getServe() {
+        return serve;
+    }
+
+    public void setServe(String serve) {
+        this.serve = serve;
+    }
+
+    public String getServeId() {
+        return serveId;
+    }
+
+    public void setServeId(String serveId) {
+        this.serveId = serveId;
+    }
+
+    public String getServeTel() {
+        return serveTel;
+    }
+
+    public void setServeTel(String serveTel) {
+        this.serveTel = serveTel;
     }
 
     public String getRemark() {

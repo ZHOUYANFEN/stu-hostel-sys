@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Serve Setting</title>
+
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/dataTables.bootstrap4.min.css" th:href="@{css/dataTables.bootstrap4.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/daterangepicker.css" th:href="@{css/daterangepicker.css}"/>
+    <style>
+        .daterangepicker.dropdown-menu {
+            max-width: none;
+            background-color: transparent;
+            border: 0;
+            z-index: 1100 !important;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="content-page">
+
+    <!-- Start content -->
+    <div class="content">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb-holder">
+                        <h1 class="main-title float-left">
+                            公寓服务管理
+                            <button data-toggle="modal" data-target="#addServeModal" title="新增服务">
+                                <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
+                            </button>
+                            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addServeModal">-->
+
+                            <!--</button>-->
+                        </h1>
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item">HOSTEL</li>
+                            <li class="breadcrumb-item active">公寓服务管理</li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+                <!-- 新增服务 trigger modal -->
+
+                <table id="serSetTable" class="table table-bordered table-hover display" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>userName</th>
+                        <th>power</th>
+                        <th>操作</th>
+                        <th>操作</th>
+                        <th>操作</th>
+                        <th>操作</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <!-- 新增服务 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="addServeModal" tabindex="-1" role="dialog"
+                     aria-labelledby="addServeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addServeModalLabel">新增服务</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="inputFlatName" class="col-sm-2 col-form-label">地址：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="inputFlatName">
+                                                <option value="0">请选择公寓</option>
+                                                <option  th:each="comm: ${comm}" th:value="${comm.flatName}" th:text="${comm.address }"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatUser" class="col-sm-2 col-form-label">甲方：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatUser"
+                                                   placeholder="住户姓名">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatUserTel" class="col-sm-2 col-form-label">甲方电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatUserTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputTime" class="col-sm-2 col-form-label">服务时间：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputTime"
+                                                   placeholder="服务时间">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-2 col-form-label">服务类型：</label>
+                                        <div class="col-sm-10">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="radioType"
+                                                       id="radioType1" value="clean">
+                                                <label class="form-check-label" for="radioType1">卫生</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="radioType"
+                                                       id="radioType2" value="repair">
+                                                <label class="form-check-label" for="radioType2">保修</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-2 col-form-label">备注：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputRemark" placeholder="备注"></textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="saveServe" onclick="saveServe()">保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 新增服务 Modal -->
+
+                <!-- 修改服务 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="updateServeModal" tabindex="-1" role="dialog"
+                     aria-labelledby="updatedminModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateServeModalLabel">修改服务</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="updateUserName" class="col-sm-2 col-form-label">服务名：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateUserName"
+                                                   placeholder="服务名" readonly>
+                                            <input type="text" id="hidUpdateServe" value="" hidden="hidden"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateFirstPassword" class="col-sm-2 col-form-label">请输入密码：</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="updateFirstPassword"
+                                                   placeholder="请输入密码">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateSecondPassword" class="col-sm-2 col-form-label">请确认密码：</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="updateSecondPassword"
+                                                   placeholder="请确认密码">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-2 col-form-label">服务权限：</label>
+                                        <div class="col-sm-10">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="updatePower"
+                                                       id="updatePower1" value="1">
+                                                <label class="form-check-label" for="updatePower1">系统管理权限</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="updatePower"
+                                                       id="updatePower2" value="2">
+                                                <label class="form-check-label" for="updatePower2">公社管理权限</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="updateServeById()">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 修改服务 Modal -->
+
+            </div>
+        </div>
+        <!-- END container-fluid -->
+    </div>
+    <!-- END content -->
+</div>
+<!-- END content-page -->
+
+<script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js" th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
+<script type="text/javascript" src="../../static/js/moment.min.js" th:src="@{js/moment.min.js}"></script>
+<script type="text/javascript" src="../../static/js/daterangepicker.js" th:src="@{js/daterangepicker.js}"></script>
+<script>
+
+    $('#inputTime').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    });
+
+    var id;
+    var flatName;
+    var flatAddress;
+    var flatUser;
+    var flatUserTel;
+    var type;
+    var time;
+    var serve;
+    var serveId;
+    var serveTel;
+    var remark;
+
+    serSetTable();
+
+    /**
+     * 表格生成
+     */
+    function serSetTable() {
+        setTable = $("#serSetTable").dataTable({
+            "processing": true,
+            // "serverSide": true,
+            "retrieve": true,
+            "destroy": true,
+            "language": {
+                "processing": "处理中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "search": "搜索:",
+                "url": "",
+                "emptyTable": "表中数据为空",
+                "loadingRecords": "载入中...",
+                "infoThousands": ",",
+                "paginate": {
+                    "first": "首页",
+                    "frevious": "上页",
+                    "next": "下页",
+                    "last": "末页"
+                },
+                "aria": {
+                    "sortAscending": ": 以升序排列此列",
+                    "sortDescending": ": 以降序排列此列"
+                }
+            },
+            "ajax": {
+                "url": "/stu-hostel-sys/getServeList",
+                "type": "POST"
+            },
+            "columns": [{
+                "title": "id",
+                "data": "id"
+            }, {
+                "title": "公寓",
+                "data": "flatName"
+            }, {
+                "title": "地址",
+                "data": "flatAddress"
+            }, {
+                "title": "甲方",
+                "data": "flatUser"
+            }, {
+                "title": "甲方电话",
+                "data": "flatUserTel"
+            }, {
+                "title": "服务类型",
+                "data": "type",
+                "render": function(data, type, row){
+                    if(row.type == "clean"){
+                        return "<span style='color: red'>卫生</span>"
+                    } else {
+                        return "<span>保修</span>";
+                    }
+                }
+            }, {
+                "title": "服务时间",
+                "data": "time"
+            }, {
+                "title": "操作",
+                // 定义操作列,######以下是重点########
+                "targets": 7,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    var id = row.id;
+                    return "<a class='up btn btn-default btn-xs' onclick='selectServeById(" + id + ")' style='color: blue'>上门服务登记</a>"
+                }
+            }
+            ]
+        });
+    }
+
+    /**
+     * 保存&校验
+     */
+    function saveServe() {
+        flatName = $("#inputFlatName").val();
+        flatAddress = $("#inputFlatName option:selected").text();
+        flatUser = $("#inputFlatUser").val();
+        flatUserTel = $("#inputFlatUserTel").val();
+        type = $('input[name="radioType"]:checked').val();
+        time = $("#inputTime").val();
+        remark = $("#inputRemark").val();
+
+        if (flatName == null || flatName == "") {
+            alert("公寓名为空");
+        } else if (flatAddress == null || flatAddress == "") {
+            alert("地址为空");
+        } else if (flatUser == "" || flatUser == null) {
+            alert("住户为空");
+        }else if (flatUserTel == "" || flatUserTel == null) {
+            alert("住户电话为空");
+        } else {
+            $.post("/stu-hostel-sys/saveServe", {
+                "flatName": flatName,
+                "flatAddress": flatAddress,
+                "flatUser": flatUser,
+                "flatUserTel": flatUserTel,
+                "type": type,
+                "time": time,
+                "serve": serve,
+                "serveId": serveId,
+                "serveTel": serveTel,
+                "remark": remark
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#addServeModal").modal('hide');
+                    alert("保存成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    serSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    };
+
+    /**
+     * 清空addServeModal数据
+     */
+    $("#addServeModal").on("hidden.bs.modal", function () {
+
+    });
+
+    /**
+     * 查一条Serve
+     * @param id
+     */
+    function selectServeById(id) {
+        $.post("/stu-hostel-sys/findServeById", {"id": id}, function (r) {
+            var rs = r.admin[0];
+            $("#hidUpdateServe").val(id);
+            if (rs != "" && rs != null) {
+                $("#updateUserName").val(rs.userName);
+                if (rs.power == "1") {
+                    $("#updateServeModal").modal('show');
+                    $("#updatePower1").attr("checked", "checked");
+                    $("#updatePower2").removeAttr("checked");
+                } else if (rs.power == "2") {
+                    $("#updateServeModal").modal('show');
+                    $("#updatePower2").attr("checked", "checked");
+                    $("#updatePower1").removeAttr("checked");
+                } else {
+                    alert("无权限服务");
+                    $("#updateServeModal").modal('show');
+                }
+            } else {
+                alert("报错了！");
+            }
+        });
+    }
+
+    $("#updateServeModal").on("hidden.bs.modal", function () {
+        $("#hidUpdateServe").val("");
+        $("#updateUserName").val("");
+        $("#updateSecondPassword").val("")
+        $("#updateFirstPassword").val("")
+        $("#updatePower2").removeAttr("checked");
+        $("#updatePower1").removeAttr("checked");
+    });
+
+    /**
+     * 修改一条Serve
+     * @param id
+     */
+    function updateServeById() {
+        id = $("#hidUpdateServe").val();
+        userName = $("#updateUserName").val();
+        userPassword = $("#updateSecondPassword").val();
+        firstPassword = $("#updateFirstPassword").val();
+        power = $("name[updatePower]:checked").val();
+        if (userName == null || userName == "") {
+            alert("服务名为空");
+        } else if ((userPassword == null || userPassword == "") && (firstPassword == null || firstPassword == "")) {
+            alert("密码为空");
+        } else if (userPassword != firstPassword) {
+            alert("密码不一致");
+        } else {
+            if (power == "" || power == null) {
+                power = "2";
+            }
+            $.post("/stu-hostel-sys/updateUserPassword", {
+                "id": id,
+                "userName": userName,
+                "userPassword": userPassword,
+                "power": power
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#updateServeModal").modal('hide');
+                    alert("修改成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    serSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    }
+
+</script>
+</body>
+
+</html>

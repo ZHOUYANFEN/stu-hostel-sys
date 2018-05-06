@@ -294,7 +294,7 @@
             userName = $('#inputUserName').val();
             userPassword = $('#secondPassword').val();
             firstPassword = $('#firstPassword').val();
-            power = $('name[radioPower]').val();
+            power = $('input[name="radioPower"]:checked').val();
 
             if(userName == null || userName == "" ){
                 alert("用户名为空");
@@ -342,12 +342,12 @@
                     $("#updateUserName").val(rs.userName);
                     if(rs.power == "1"){
                         $("#updateAdminModal").modal('show');
-                        $("#updatePower1").attr("checked","checked");
-                        $("#updatePower2").removeAttr("checked");
+                        // $("#updatePower1").attr("checked","checked");
+                        // $("#updatePower2").removeAttr("checked");
                     }else if(rs.power == "2"){
                         $("#updateAdminModal").modal('show');
-                        $("#updatePower2").attr("checked","checked");
-                        $("#updatePower1").removeAttr("checked");
+                        // $("#updatePower2").attr("checked","checked");
+                        // $("#updatePower1").removeAttr("checked");
                     }else {
                         alert("无权限用户");
                         $("#updateAdminModal").modal('show');
@@ -361,10 +361,10 @@
         $("#updateAdminModal").on("hidden.bs.modal", function() {
             $("#hidUpdateAdmin").val("");
             $("#updateUserName").val("");
-            $("#updateSecondPassword").val("")
-            $("#updateFirstPassword").val("")
-            $("#updatePower2").removeAttr("checked");
-            $("#updatePower1").removeAttr("checked");
+            $("#updateSecondPassword").val("");
+            $("#updateFirstPassword").val("");
+            // $("#updatePower2").removeAttr("checked");
+            // $("#updatePower1").removeAttr("checked");
         });
 
         /**
@@ -376,7 +376,7 @@
             userName = $("#updateUserName").val();
             userPassword = $("#updateSecondPassword").val();
             firstPassword = $("#updateFirstPassword").val();
-            power = $("name[updatePower]:checked").val();
+            power = $('input[name="radioPower"]:checked').val();
             if(userName == null || userName == "" ){
                 alert("用户名为空");
             } else if((userPassword == null || userPassword == "") && (firstPassword == null || firstPassword == "")){

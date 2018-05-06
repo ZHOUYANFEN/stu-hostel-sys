@@ -59,6 +59,8 @@ public class AdminController {
                 result.put("data", "用户名 / 密码错误！");
             } else {
                 result.put("power", admin.getPower());
+                result.put("id", admin.getId());
+                model.addAttribute("userId", admin.getId());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,10 +188,10 @@ public class AdminController {
      * @return
      */
     @PostMapping("/findAdminById")
-    public JSONObject findAdminById(@RequestParam Integer id, Model model){
+    public @ResponseBody JSONObject findAdminById(@RequestParam Integer id, Model model){
         JSONObject result = new JSONObject();
         result.put("admin",adminInterface.findAllById(id));
-        model.addAttribute("admin", result);
+//        model.addAttribute("admin", result);
         return result;
     }
 

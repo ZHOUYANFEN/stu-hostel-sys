@@ -41,6 +41,7 @@
 <script>
     $(function () {
         var power = 0;
+        var id;
         $("#login").click(function () {
             var user_name = $('#exampleInputUserName').val();
             var user_password = $('#exampleInputPassword').val();
@@ -50,18 +51,21 @@
                 'userPassword': user_password
             },function (e,n,r,i) {
                 console.log(e);
+                power = e.power;
+                id = e.id;
                 if(e.power == "1"){
-                    power = e.power;
-                    index(power);
-                } else {
+                    index(power,id);
+                } else if(e.power == "2"){
+                    index(power,id);
+                } else{
                     alert(e.data);
                 }
             });
         });
 
-        function index(power) {
+        function index(power,id) {
             $.get("/stu-hostel-sys/admin",{"power":power}, function (e,n,r,i) {
-                window.location.href = "/stu-hostel-sys/admin?power="+power;
+                window.location.href = "/stu-hostel-sys/admin?power="+power+"&id="+id;
             })
         }
     })
