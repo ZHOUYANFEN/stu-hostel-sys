@@ -153,4 +153,28 @@ public class ServeController {
         }
         return r;
     }
+
+    /**
+     * 删除服务信息
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteServe")
+    public @ResponseBody JSONObject deleteCommunity(@RequestParam Integer id){
+        JSONObject r = new JSONObject();
+        try {
+            if (id != null){
+                serveInterface.deleteById(id);
+                r.put("data", "0");
+            } else {
+                r.put("data", "-1");
+                r.put("error", "id不能为空！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            r.put("data", "-1");
+            r.put("error", e.getMessage());
+        }
+        return r;
+    }
 }

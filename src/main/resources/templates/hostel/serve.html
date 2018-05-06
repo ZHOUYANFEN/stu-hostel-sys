@@ -168,40 +168,29 @@
                             <div class="modal-body">
                                 <form>
                                     <div class="form-group row">
-                                        <label for="updateUserName" class="col-sm-2 col-form-label">服务名：</label>
+                                        <input type="text" id="hidUpdateServe" hidden="hidden" />
+                                        <label for="updateTime" class="col-sm-2 col-form-label">服务时间：</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="updateUserName"
-                                                   placeholder="服务名" readonly>
-                                            <input type="text" id="hidUpdateServe" value="" hidden="hidden"/>
+                                            <input type="text" class="form-control" id="updateTime"
+                                                   placeholder="服务时间">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="updateFirstPassword" class="col-sm-2 col-form-label">请输入密码：</label>
+                                        <label for="updateServe" class="col-sm-2 col-form-label">服务者：</label>
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="updateFirstPassword"
-                                                   placeholder="请输入密码">
+                                            <input type="text" class="form-control" id="updateServe" placeholder="服务者姓名">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="updateSecondPassword" class="col-sm-2 col-form-label">请确认密码：</label>
+                                        <label for="updateServeId" class="col-sm-2 col-form-label">身份证：</label>
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="updateSecondPassword"
-                                                   placeholder="请确认密码">
+                                            <input type="text" class="form-control" id="updateServeId" placeholder="服务者身份证">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="" class="col-sm-2 col-form-label">服务权限：</label>
+                                        <label for="updateServeTel" class="col-sm-2 col-form-label">电话：</label>
                                         <div class="col-sm-10">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="updatePower"
-                                                       id="updatePower1" value="1">
-                                                <label class="form-check-label" for="updatePower1">系统管理权限</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="updatePower"
-                                                       id="updatePower2" value="2">
-                                                <label class="form-check-label" for="updatePower2">公社管理权限</label>
-                                            </div>
+                                            <input type="text" class="form-control" id="updateServeTel" placeholder="服务者电话">
                                         </div>
                                     </div>
 
@@ -216,6 +205,28 @@
                 </div>
                 <!-- end 修改服务 Modal -->
 
+                <!-- Delete Modal -->
+                <div class="modal fade" id="sureDeleteModal" tabindex="-1" role="dialog" aria-labelledby="sureDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="sureDeleteModalLabel">删除</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                是否删除？
+                                <input type="text" id="hidDeleteId" value="" hidden="hidden" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" name="cancel" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="deleteAdminById()">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end Delete Modal -->
             </div>
         </div>
         <!-- END container-fluid -->
@@ -234,6 +245,10 @@
 <script>
 
     $('#inputTime').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    });
+    $('#updateTime').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true
     });
@@ -324,7 +339,8 @@
                 "data": null,
                 "render": function (data, type, row) {
                     var id = row.id;
-                    return "<a class='up btn btn-default btn-xs' onclick='selectServeById(" + id + ")' style='color: blue'>上门服务登记</a>"
+                    return "<a class='up btn btn-default btn-xs' onclick='selectServeById(" + id + ")' style='color: blue'>上门服务登记</a>" +
+                        "<a class='up btn btn-default btn-xs' onclick='showDeleteModal(" + id + ")' style='color: blue'>取消服务</a>";
                 }
             }
             ]
@@ -359,9 +375,9 @@
                 "flatUserTel": flatUserTel,
                 "type": type,
                 "time": time,
-                "serve": serve,
-                "serveId": serveId,
-                "serveTel": serveTel,
+                "serve": "",
+                "serveId": "",
+                "serveTel": "",
                 "remark": remark
             }, function (r) {
                 if (r.data == "0") {
@@ -381,7 +397,13 @@
      * 清空addServeModal数据
      */
     $("#addServeModal").on("hidden.bs.modal", function () {
-
+        $("#inputFlatName").val("");
+        $("#inputFlatName option:selected").text("");
+        $("#inputFlatUser").val("");
+        $("#inputFlatUserTel").val("");
+        $('input[name="radioType"]:checked').val("");
+        $("#inputTime").val("");
+        $("#inputRemark").val("");
     });
 
     /**
@@ -390,22 +412,10 @@
      */
     function selectServeById(id) {
         $.post("/stu-hostel-sys/findServeById", {"id": id}, function (r) {
-            var rs = r.admin[0];
+            var rs = r.ser[0];
             $("#hidUpdateServe").val(id);
             if (rs != "" && rs != null) {
-                $("#updateUserName").val(rs.userName);
-                if (rs.power == "1") {
-                    $("#updateServeModal").modal('show');
-                    $("#updatePower1").attr("checked", "checked");
-                    $("#updatePower2").removeAttr("checked");
-                } else if (rs.power == "2") {
-                    $("#updateServeModal").modal('show');
-                    $("#updatePower2").attr("checked", "checked");
-                    $("#updatePower1").removeAttr("checked");
-                } else {
-                    alert("无权限服务");
-                    $("#updateServeModal").modal('show');
-                }
+                $("#updateServeModal").modal('show');
             } else {
                 alert("报错了！");
             }
@@ -413,12 +423,7 @@
     }
 
     $("#updateServeModal").on("hidden.bs.modal", function () {
-        $("#hidUpdateServe").val("");
-        $("#updateUserName").val("");
-        $("#updateSecondPassword").val("")
-        $("#updateFirstPassword").val("")
-        $("#updatePower2").removeAttr("checked");
-        $("#updatePower1").removeAttr("checked");
+
     });
 
     /**
@@ -427,25 +432,29 @@
      */
     function updateServeById() {
         id = $("#hidUpdateServe").val();
-        userName = $("#updateUserName").val();
-        userPassword = $("#updateSecondPassword").val();
-        firstPassword = $("#updateFirstPassword").val();
-        power = $("name[updatePower]:checked").val();
-        if (userName == null || userName == "") {
+        serve = $("#updateServe").val();
+        serveId = $("#updateServeId").val();
+        serveTel = $("#updateServeTel").val();
+        time = $("#updateTime").val();
+        if (serve == null || serve == "") {
             alert("服务名为空");
-        } else if ((userPassword == null || userPassword == "") && (firstPassword == null || firstPassword == "")) {
+        } else if (serveId == null || serveId == "") {
             alert("密码为空");
-        } else if (userPassword != firstPassword) {
+        } else if (serveTel == null || serveTel == "") {
             alert("密码不一致");
         } else {
-            if (power == "" || power == null) {
-                power = "2";
-            }
-            $.post("/stu-hostel-sys/updateUserPassword", {
+            $.post("/stu-hostel-sys/updateServe", {
                 "id": id,
-                "userName": userName,
-                "userPassword": userPassword,
-                "power": power
+                "flatName": "",
+                "flatAddress": "",
+                "flatUser": "",
+                "flatUserTel": "",
+                "type": "",
+                "time": time,
+                "serve": serve,
+                "serveId": serveId,
+                "serveTel": serveTel,
+                "remark": ""
             }, function (r) {
                 if (r.data == "0") {
                     $("#updateServeModal").modal('hide');
@@ -460,6 +469,44 @@
         }
     }
 
+    /**
+     * updateServeModal
+     */
+    $("#updateServeModal").on("hidden.bs.modal", function () {
+        $("#hidUpdateServe").val("");
+        $("#updateServe").val("");
+        $("#updateServeId").val("");
+        $("#updateServeTel").val("");
+        $("#updateTime").val("")
+    });
+
+
+    /**
+     * 删除模态框
+     */
+    function showDeleteModal(id) {
+        $("#sureDeleteModal").modal('show');
+        $("#hidDeleteId").val(id);
+    }
+
+    /**
+     * 删除一条Admin
+     * @param id
+     */
+    function deleteAdminById() {
+        var id = $("#hidDeleteId").val();
+        $.post("/stu-hostel-sys/deleteServe",{"id": parseInt(id)},function (r) {
+            if(r.data == "0") {
+                $("#sureDeleteModal").modal('hide');
+                setTable.fnClearTable();
+                setTable.fnDestroy(); //还原初始化了的datatable
+                serSetTable();
+                alert("删除成功！");
+            } else {
+                alert(r.error);
+            }
+        });
+    }
 </script>
 </body>
 
