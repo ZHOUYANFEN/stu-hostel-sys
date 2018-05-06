@@ -131,15 +131,17 @@
 <script src="../../static/js/jquery.nicescroll.js" th:src="@{js/jquery.nicescroll.js}"></script>
 <script src="../../static/js/pikeadmin.js" th:src="@{js/pikeadmin.js}"></script>
 <script>
+    var u = window.location.search;
+    var rl = u.split("id=")[1];
+    var index = "flatPage";
+    goSrc(index);
     /**
      * 页面切换
      * @param url
      */
     function goSrc(url) {
-        var u = window.location.search;
-        var rl = u.split("id=")[1];
         if (url == "flatPage") {
-            document.getElementById('iframe').src = "flat";
+            document.getElementById('iframe').src = "flat?id=" + rl;
         }else if(url == "servePage"){
             document.getElementById('iframe').src = "serve";
         } else if(url == "developPage") {
