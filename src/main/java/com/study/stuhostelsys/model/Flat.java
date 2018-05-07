@@ -33,6 +33,9 @@ public class Flat {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "size")
+    private String size;
+
     @Column(name = "remark")
     private String remark;
 
@@ -110,6 +113,14 @@ public class Flat {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getRemark() {

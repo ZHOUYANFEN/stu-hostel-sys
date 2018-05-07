@@ -179,4 +179,81 @@
   | type     | varchar(255) | YES    | 类型 p(自住)/o(已租)/l（待租）|
   | remark   | varchar(255) | YES        | 备注 - ${admin} |
    
- 
+ # 2018-05-07 
+  * 按需求：房型字段单间、两房、三方  
+  ###### flat表变更记录：
+    | 列       | 数据类型     | 可否为null | 备注   |
+    | -------- | ------------ | ---------- | ------ |
+    | id       | int          | NO         | 唯一键 |
+    | admin_id | int          | YES        | 管理员id |
+    | admin_name | varchar(255) | YES     | 管理员名称 |
+    | flat_name| varchar(255) | YES        | 公寓名 |
+    | flat_num | varchar(255) | YES        | 房间号 |
+    | flat_user| varchar(255) | YES        | 住户姓名|
+    | flat_user_id| varchar(255) | YES     | 住户身份证 |
+    | flat_user_tel| varchar(255) | YES    | 住户电话 |
+    | type     | varchar(255) | YES    | 类型 p(自住)/o(已租)/l（待租）|
+    | size     | varchar(255) | YES    | 大小 1(单间)/2(两房)/3(三房) |
+    | remark   | varchar(255) | YES        | 备注 - ${admin} |
+
+  * 访客登记：单独一个模块；
+  ###### interview表  
+    | 列       | 数据类型     | 可否为null | 备注   |
+    | -------- | ------------ | ---------- | ------ |
+    | id       | int          | NO         | 唯一键 |
+    | visit    | varchar(255) | YES        | 访客姓名 |
+    | visit_id | varchar(255) | YES        | 访客身份证 |
+    | visit_tel| varchar(255) | YES        | 访客电话 |
+    | flat_name| varchar(255) | YES        | 住户姓名 |
+    | flat_tel | varchar(255) | YES        | 住户电话 |
+    | flat_num | varchar(255) | YES        | 住户房间 |
+    | time     | varchar(255) | YES        | 访客时间 |
+    
+  * 服务管理：操作是修改删除，服务状态，服务者字段去除；
+  ###### serve表变更记录：     
+    | 列       | 数据类型     | 可否为null | 备注   |
+    | -------- | ------------ | ---------- | ------ |
+    | id       | int          | NO         | 唯一键 |
+    | flat_name| varchar(255) | YES        | 公寓名 |
+    | flat_address| varchar(255) | YES     | 公寓地址 |
+    | flat_user| varchar(255) | YES        | 住户姓名|
+    | flat_user_tel| varchar(255) | YES    | 住户电话 |
+    | type     | varchar(255) | YES    | 服务类型 clean(卫生)/repair(报修) |
+    | time     | varchar(255) | YES    | 服务时间 |
+    | status   | varchar(255) | YES    | 服务状态 |
+    | remark   | varchar(255) | YES        | 备注 - ${admin} |
+    
+  * 图书登记：增记录--姓名、身份证号、电话、书名、借阅时间、归还时间，修改电话、还书时间；
+  ###### library表
+    | 列       | 数据类型     | 可否为null | 备注   |
+    | -------- | ------------ | ---------- | ------ |
+    | id       | int          | NO         | 唯一键 |
+    | user_name| varchar(255) | YES        | 姓名   |
+    | user_id  | varchar(255) | YES        | 身份证号 |
+    | user_tel | varchar(255) | YES        | 电话   |
+    | book_name| varchar(255) | YES    | 书名 |
+    | borrow_time | varchar(255) | YES    | 借阅时间 |
+    | back_time| varchar(255) | YES    | 归还时间 |
+  
+  * 医疗登记：新增、修改 -- 个人信息等等等、是否就医；
+  ###### medical表
+    | 列       | 数据类型     | 可否为null | 备注   |
+    | -------- | ------------ | ---------- | ------ |
+    | id       | int          | NO         | 唯一键 |
+    | user_name| varchar(255) | YES        | 姓名   |
+    | user_id  | varchar(255) | YES        | 身份证号 |
+    | user_tel | varchar(255) | YES        | 电话   |
+    | allergy  | varchar(255) | YES        | 过敏史 |
+    | me_history | varchar(255) | YES      | 是否急救过 |
+  
+  * 公社行政通知：后台增删改查通知，前台接收查看，发布时间；
+  ###### advice表
+    | 列       | 数据类型     | 可否为null | 备注   |
+    | -------- | ------------ | ---------- | ------ |
+    | id       | int          | NO         | 唯一键 |
+    | title    | varchar(255) | YES        | 标题   |
+    | time     | varchar(255) | YES        | 时间   |
+    | content  | varchar(255) | YES        | 内容   |
+  
+  * 第三方服务；
+  * 去掉所有的id；

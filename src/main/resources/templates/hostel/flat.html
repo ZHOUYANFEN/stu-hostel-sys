@@ -1,14 +1,543 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Flat Setting</title>
+
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/dataTables.bootstrap4.min.css" th:href="@{css/dataTables.bootstrap4.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"/>
+
 </head>
+
 <body>
+
 <div class="content-page">
-    <h1 style="margin: 330px">
-        BUG 修复中......
-    </h1>
+
+    <!-- Start content -->
+    <div class="content">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb-holder">
+                        <h1 class="main-title float-left">
+                            公寓住户管理
+                            <button data-toggle="modal" data-target="#addflatModal" title="新增住户">
+                                <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
+                            </button>
+                        </h1>
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item">HOSTEL</li>
+                            <li class="breadcrumb-item active">公寓住户管理</li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+
+                <table id="flatSetTable" class="table table-bordered table-hover display" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>userName</th>
+                        <th>power</th>
+                        <th>操作</th>
+                        <th>操作</th>
+                        <th>操作</th>
+                        <th>操作</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <!-- 新增住户 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="addflatModal" tabindex="-1" role="dialog"
+                     aria-labelledby="addflatModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addflatModalLabel">新增住户</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="inputFlatName" class="col-sm-2 col-form-label">地址：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="inputFlatName">
+                                                <option value="0">请选择公寓</option>
+                                                <option  th:each="comm: ${comm}" th:value="${comm.flatName}" th:text="${comm.address }"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatNum" class="col-sm-2 col-form-label">房间号：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatNum"
+                                                   placeholder="房间号">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatUser" class="col-sm-2 col-form-label">住户姓名：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatUser"
+                                                   placeholder="住户姓名">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatUserTel" class="col-sm-2 col-form-label">住户电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatUserTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatUserId" class="col-sm-2 col-form-label">住户身份证：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatUserId"
+                                                   placeholder="住户身份证">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputSize" class="col-sm-2 col-form-label">住户大小：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="inputSize">
+                                                <option value="单间">单间</option>
+                                                <option value="两房">两房</option>
+                                                <option value="三房">三房</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputType" class="col-sm-2 col-form-label">住户属性：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="inputType">
+                                                <option value="自住">自住</option>
+                                                <option value="已住满">已住满</option>
+                                                <option value="未住满">未住满</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-2 col-form-label">备注：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputRemark" placeholder="备注"></textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="saveflat" onclick="saveflat()">保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 新增住户 Modal -->
+
+                <!-- 修改住户 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="updateflatModal" tabindex="-1" role="dialog"
+                     aria-labelledby="updatedminModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateflatModalLabel">修改住户</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="updateFlatName" class="col-sm-2 col-form-label">地址：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="updateFlatName">
+                                                <option value="0">请选择公寓</option>
+                                                <option  th:each="comm: ${comm}" th:value="${comm.flatName}" th:text="${comm.address }"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateFlatUser" class="col-sm-2 col-form-label">住户姓名：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateFlatUser"
+                                                   placeholder="住户姓名">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateFlatUserTel" class="col-sm-2 col-form-label">住户电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateFlatUserTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateFlatUserId" class="col-sm-2 col-form-label">住户身份证：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateFlatUserId"
+                                                   placeholder="住户身份证">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateSize" class="col-sm-2 col-form-label">住户大小：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="updateSize">
+                                                <option value="单间">单间</option>
+                                                <option value="两房">两房</option>
+                                                <option value="三房">三房</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateType" class="col-sm-2 col-form-label">住户属性：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="updateType">
+                                                <option value="自住">自住</option>
+                                                <option value="已住满">已住满</option>
+                                                <option value="未住满">未住满</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateRemark" class="col-sm-2 col-form-label">备注：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="updateRemark" placeholder="备注"></textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="updateflatById()">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 修改住户 Modal -->
+
+                <!-- Delete Modal -->
+                <div class="modal fade" id="sureDeleteModal" tabindex="-1" role="dialog" aria-labelledby="sureDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="sureDeleteModalLabel">删除</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                是否删除？
+                                <input type="text" id="hidDeleteId" value="" hidden="hidden" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" name="cancel" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="deleteFlatById()">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end Delete Modal -->
+            </div>
+        </div>
+        <!-- END container-fluid -->
+    </div>
+    <!-- END content -->
 </div>
+<!-- END content-page -->
+
+<script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js" th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
+<script>
+    var u = window.location.search;
+    var rl = u.split("id=")[1];
+
+    var id;
+    var adminId = rl;
+    var adminName;
+    var flatName;
+    var flatNum;
+    var flatUser;
+    var flatUserId;
+    var flatUserTel;
+    var type;
+    var size;
+    var remark;
+
+    selectAdmin(adminId);
+    flatSetTable();
+
+    function selectAdmin(adminId) {
+        $.post("/stu-hostel-sys/findAdminById", {
+            "id": adminId
+        }, function (r) {
+            if (r.admin[0] != "" || r.admin[0] != null) {
+                var a = r.admin[0];
+                adminName = a.userName;
+            } else {
+                alert(r.error);
+            }
+        });
+    }
+
+    /**
+     * 表格生成
+     */
+    function flatSetTable() {
+        setTable = $("#flatSetTable").dataTable({
+            "processing": true,
+            // "flatrSide": true,
+            "retrieve": true,
+            "destroy": true,
+            "language": {
+                "processing": "处理中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "search": "搜索:",
+                "url": "",
+                "emptyTable": "表中数据为空",
+                "loadingRecords": "载入中...",
+                "infoThousands": ",",
+                "paginate": {
+                    "first": "首页",
+                    "previous": "上页",
+                    "next": "下页",
+                    "last": "末页"
+                },
+                "aria": {
+                    "sortAscending": ": 以升序排列此列",
+                    "sortDescending": ": 以降序排列此列"
+                }
+            },
+            "ajax": {
+                "url": "/stu-hostel-sys/getFlatListByAdminId",
+                "data": {"adminId": adminId},
+                "type": "POST"
+            },
+            "columns": [{
+                "title": "公寓",
+                "data": "flatName"
+            }, {
+                "title": "房间号",
+                "data": "flatNum"
+            }, {
+                "title": "住户姓名",
+                "data": "flatUser"
+            }, {
+                "title": "住户身份证",
+                "data": "flatUserId"
+            }, {
+                "title": "住户电话",
+                "data": "flatUserTel"
+            }, {
+                "title": "房间类型",
+                "data": "type"
+            },{
+                "title": "房间大小",
+                "data": "size"
+            },{
+                "title": "操作",
+                // 定义操作列,######以下是重点########
+                "targets": 8,//操作按钮目标列
+                "data": null,
+                "render": function (data, type, row) {
+                    var id = row.id;
+                    return "<a class='up btn btn-default btn-xs' onclick='selectflatById(" + id + ")' style='color: blue'>修改</a>" +
+                        "<a class='up btn btn-default btn-xs' onclick='showDeleteModal(" + id + ")' style='color: blue'>删除</a>";
+                }
+            }
+            ]
+        });
+    }
+
+    /**
+     * 保存&校验
+     */
+    function saveflat() {
+
+        flatName = $("#inputFlatName").val();
+        flatNum = $("#inputFlatNum").val();
+        flatUser = $("#inputFlatUser").val();
+        flatUserId = $("#inputFlatUserId").val();
+        flatUserTel = $("#inputFlatUserTel").val();
+        type = $("#inputType option:selected").val();
+        size = $("#inputSize option:selected").val();
+        remark = $("#inputRemark").val();
+
+        if (flatName == null || flatName == "") {
+            alert("公寓名为空");
+        } else if (flatNum == null || flatNum == "") {
+            alert("房间号为空");
+        } else if (flatUser == "" || flatUser == null) {
+            alert("住户为空");
+        }else if (flatUserTel == "" || flatUserTel == null) {
+            alert("住户电话为空");
+        }else if (flatUserId == "" || flatUserId == null) {
+            alert("住户身份证为空");
+        } else {
+            $.post("/stu-hostel-sys/saveFlat", {
+                "flatName": flatName,
+                "flatNum": flatNum,
+                "flatUser": flatUser,
+                "flatUserTel": flatUserTel,
+                "flatUserId": flatUserId,
+                "type": type,
+                "size": size,
+                "adminId": adminId,
+                "adminName": adminName,
+                "remark": remark
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#addflatModal").modal('hide');
+                    alert("保存成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    flatSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    };
+
+    /**
+     * 清空addflatModal数据
+     */
+    $("#addflatModal").on("hidden.bs.modal", function () {
+        $("#inputFlatName").val("");
+        $("#inputFlatNum").val("");
+        $("#inputFlatUser").val("");
+        $("#inputFlatUserId").val("");
+        $("#inputFlatUserTel").val("");
+        $("#inputType option:selected").val("");
+        $("#inputSize option:selected").val("");
+    });
+
+    /**
+     * 查一条flat
+     * @param id
+     */
+    function selectflatById(id) {
+        $.post("/stu-hostel-sys/findFlatById", {"id": id}, function (r) {
+            var rs = r.flat[0];
+            $("#hidUpdateflat").val(id);
+            if (rs != "" && rs != null) {
+                $("#updateflatModal").modal('show');
+            } else {
+                alert("报错了！");
+            }
+        });
+    }
+
+    $("#updateflatModal").on("hidden.bs.modal", function () {
+
+    });
+
+    /**
+     * 修改一条flat
+     * @param id
+     */
+    function updateflatById() {
+        id = $("#hidUpdateflat").val();
+        flat = $("#updateflat").val();
+        flatId = $("#updateflatId").val();
+        flatTel = $("#updateflatTel").val();
+        time = $("#updateTime").val();
+        if (flat == null || flat == "") {
+            alert("住户名为空");
+        } else if (flatId == null || flatId == "") {
+            alert("密码为空");
+        } else if (flatTel == null || flatTel == "") {
+            alert("密码不一致");
+        } else {
+            $.post("/stu-hostel-sys/updateflat", {
+                "id": id,
+                "flatName": "",
+                "flatAddress": "",
+                "flatUser": "",
+                "flatUserTel": "",
+                "type": "",
+                "time": time,
+                "flat": flat,
+                "flatId": flatId,
+                "flatTel": flatTel,
+                "remark": ""
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#updateflatModal").modal('hide');
+                    alert("修改成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    flatSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    }
+
+    /**
+     * updateflatModal
+     */
+    $("#updateflatModal").on("hidden.bs.modal", function () {
+        $("#hidUpdateflat").val("");
+        $("#updateflat").val("");
+        $("#updateflatId").val("");
+        $("#updateflatTel").val("");
+        $("#updateTime").val("")
+    });
+
+
+    /**
+     * 删除模态框
+     */
+    function showDeleteModal(id) {
+        $("#sureDeleteModal").modal('show');
+        $("#hidDeleteId").val(id);
+    }
+
+    /**
+     * 删除一条Admin
+     * @param id
+     */
+    function deleteFlatById() {
+        var id = $("#hidDeleteId").val();
+        $.post("/stu-hostel-sys/deleteflat",{"id": parseInt(id)},function (r) {
+            if(r.data == "0") {
+                $("#sureDeleteModal").modal('hide');
+                setTable.fnClearTable();
+                setTable.fnDestroy(); //还原初始化了的datatable
+                flatSetTable();
+                alert("删除成功！");
+            } else {
+                alert(r.error);
+            }
+        });
+    }
+</script>
 </body>
+
 </html>
