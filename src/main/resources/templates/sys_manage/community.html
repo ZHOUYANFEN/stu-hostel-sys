@@ -52,15 +52,6 @@
 
                     <table id="commSetTable" class="table table-bordered table-hover display" width="100%">
                         <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>community</th>
-                                <th>adminName</th>
-                                <th>flatName</th>
-                                <th>address</th>
-                                <th>remark</th>
-                                <th>操作</th>
-                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -277,10 +268,7 @@
                     "url": "/stu-hostel-sys/getCommunityList",
                     "type": "POST"
                 },
-                "columns": [{
-                    "title": "id",
-                    "data": "id"
-                },
+                "columns": [
                 {
                     "title": "公社名",
                     "data": "communityName"
@@ -304,7 +292,7 @@
                 {
                     "title": "操作",
                     // 定义操作列,######以下是重点########
-                    "targets": 3,//操作按钮目标列
+                    "targets": 5,//操作按钮目标列
                     "data": null,
                     "render": function (data, type, row) {
                         var id = row.id;

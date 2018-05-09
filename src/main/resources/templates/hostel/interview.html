@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Setting</title>
+
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/dataTables.bootstrap4.min.css"
+          th:href="@{css/dataTables.bootstrap4.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/daterangepicker.css"
+          th:href="@{css/daterangepicker.css}"/>
+    <style>
+        .daterangepicker.dropdown-menu {
+            max-width: none;
+            background-color: transparent;
+            border: 0;
+            z-index: 1100 !important;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="content-page">
+
+    <!-- Start content -->
+    <div class="content">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb-holder">
+                        <h1 class="main-title float-left">
+                            访客登记
+                            <button data-toggle="modal" data-target="#addInterviewModal" title="新增服务">
+                                <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
+                            </button>
+                        </h1>
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item">HOSTEL</li>
+                            <li class="breadcrumb-item active">访客登记</li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+
+                <table id="iSetTable" class="table table-bordered table-hover display" width="100%">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <!-- 新增访客 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="addInterviewModal" tabindex="-1" role="dialog"
+                     aria-labelledby="addstatusModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addstatusModalLabel">新增访客</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="inputFlatName" class="col-sm-2 col-form-label">住户：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatName"
+                                                   placeholder="住户姓名">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatTel" class="col-sm-2 col-form-label">住户电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatNum" class="col-sm-2 col-form-label">房间号：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputFlatNum"
+                                                   placeholder="房间号">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputTime" class="col-sm-2 col-form-label">探访时间：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputTime"
+                                                   placeholder="探访时间">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputVisit" class="col-sm-2 col-form-label">访客姓名：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputVisit"
+                                                      placeholder="访客姓名"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputVisitTel" class="col-sm-2 col-form-label">访客电话：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputVisitTel"
+                                                      placeholder="访客电话"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputVisitId" class="col-sm-2 col-form-label">访客身份证：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputVisitId"
+                                                      placeholder="访客身份证"></textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="savestatus" onclick="saveInterview()">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 新增服务 Modal -->
+
+            </div>
+        </div>
+        <!-- END container-fluid -->
+    </div>
+    <!-- END content -->
+</div>
+<!-- END content-page -->
+
+<script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../../static/js/jquery.dataTables.min.js"
+        th:src="@{js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js"
+        th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
+<script type="text/javascript" src="../../static/js/moment.min.js" th:src="@{js/moment.min.js}"></script>
+<script type="text/javascript" src="../../static/js/daterangepicker.js" th:src="@{js/daterangepicker.js}"></script>
+<script>
+
+    $('#inputTime').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    });
+
+    var flatName;
+    var flatNum;
+    var flatTel;
+    var visit;
+    var visitId;
+    var visitTel;
+    var time;
+
+    iSetTable();
+
+    var remarkShowLength = 10;
+    /**
+     * 表格生成
+     */
+    function iSetTable() {
+        setTable = $("#iSetTable").dataTable({
+            "processing": true,
+            // "statusrSide": true,
+            "retrieve": true,
+            "destroy": true,
+            "language": {
+                "processing": "处理中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "search": "搜索:",
+                "url": "",
+                "emptyTable": "表中数据为空",
+                "loadingRecords": "载入中...",
+                "infoThousands": ",",
+                "paginate": {
+                    "first": "首页",
+                    "previous": "上页",
+                    "next": "下页",
+                    "last": "末页"
+                },
+                "aria": {
+                    "sortAscending": ": 以升序排列此列",
+                    "sortDescending": ": 以降序排列此列"
+                }
+            },
+            // "createdRow": function( row, data, dataIndex ) {
+            //     if(data.remarks.length > remarkShowLength){//只有超长，才有td点击事件
+            //         $(row).children('td').eq(7).attr('title','111111');
+            //     }
+            //     $(row).children('td').eq(7).attr('content',data.remarks);
+            // },
+            "ajax": {
+                "url": "/stu-hostel-sys/getInterviewList",
+                "type": "POST"
+            },
+            "columns": [{
+                "title": "住户",
+                "data": "flatName"
+            }, {
+                "title": "房间",
+                "data": "flatNum"
+            }, {
+                "title": "住户电话",
+                "data": "flatTel"
+            }, {
+                "title": "访客姓名",
+                "data": "visit"
+            }, {
+                "title": "访客身份证",
+                "data": "visitId"
+            }, {
+                "title": "访客电话",
+                "data": "visitTel"
+            }, {
+                "title": "拜访时间",
+                "data": "time"
+            }
+            ]
+        });
+    }
+
+    /**
+     * 保存&校验
+     */
+    function saveInterview() {
+        flatName = $("#inputFlatName").val();
+        flatNum = $("#inputFlatNum").val();
+        flatTel = $("#inputFlatTel").val();
+        visit = $("#inputVisit").val();
+        time = $("#inputTime").val();
+        visitId = $("#inputVisitId").val();
+        visitTel = $("#inputVisitTel").val();
+
+        if (flatName == null || flatName == "") {
+            alert("住户姓名为空");
+        } else if (flatNum == null || flatNum == "") {
+            alert("住户房间为空");
+        } else if (visit == "" || visit == null) {
+            alert("访客姓名为空");
+        } else if (visitTel == "" || visitTel == null) {
+            alert("访客电话为空");
+        } else if (flatTel == null || flatTel == "") {
+            alert("住户电话为空");
+        } else if (visitId == "" || visitId == null) {
+            alert("访客身份证为空");
+        } else if (time == "" || time == null) {
+            alert("访客时间为空");
+        } else {
+            $.post("/stu-hostel-sys/saveInterview", {
+                "flatNum": flatNum,
+                "flatName": flatName,
+                "visit": visit,
+                "visitTel": visitTel,
+                "visitId": visitId,
+                "time": time,
+                "flatTel": flatTel
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#addInterviewModal").modal('hide');
+                    alert("保存成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    iSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    };
+
+    /**
+     * 清空addServe Modal数据
+     */
+    $("#addInterviewModal").on("hidden.bs.modal", function () {
+        $("#inputFlatName").val("");
+        $("#inputFlatNum").val("");
+        $("#inputFlatTel").val("");
+        $("#inputVisit").val("");
+        $("#inputTime").val("");
+        $("#inputVisitId").val("");
+        $("#inputVisitTel").val("");
+    });
+
+
+</script>
+</body>
+
+</html>

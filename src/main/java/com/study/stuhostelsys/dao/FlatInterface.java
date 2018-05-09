@@ -13,10 +13,10 @@ import java.util.List;
 
 public interface FlatInterface extends JpaRepository<Flat, Integer>, JpaSpecificationExecutor<Flat> {
 
-    @Query("DELETE FROM Flat f WHERE f.adminId=?1 AND f.flatName=?2 AND f.flatName=?3")
+    @Query("DELETE FROM Flat f WHERE f.adminId=?1 AND f.flatName=?2 AND f.flatNum=?3")
     @Modifying
     @Transactional
-    void deleteFlatByAdminIdAndFlat(String adminId, String flatName, String flatNum);
+    int deleteFlatByAdminIdAndFlat(String adminId, String flatName, String flatNum);
 
     @Query("UPDATE Flat f SET f.flatName=?2, f.flatNum=?3, f.flatUser=?4, f.flatUserId=?5, f.flatUserTel=?6, f.type=?7, f.size=?8, f.remark=?9 WHERE f.id=?1")
     @Modifying

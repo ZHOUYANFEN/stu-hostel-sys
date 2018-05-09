@@ -93,6 +93,7 @@ public class FlatController {
         JSONObject r = new JSONObject();
         try {
             flatInterface.deleteById(id);
+            r.put("data", "0");
         } catch (Exception e) {
             e.printStackTrace();
             r.put("data", "-1");
@@ -114,8 +115,9 @@ public class FlatController {
                                                                @RequestParam String flatNum){
         JSONObject r = new JSONObject();
         try {
-            flatInterface.deleteFlatByAdminIdAndFlat(adminId, flatName, flatNum);
+            int f = flatInterface.deleteFlatByAdminIdAndFlat(adminId, flatName, flatNum);
             r.put("data", "0");
+            r.put("f",f);
         } catch (Exception e) {
             e.printStackTrace();
             r.put("data", "-1");

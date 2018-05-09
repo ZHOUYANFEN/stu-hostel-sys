@@ -27,14 +27,8 @@ public class Serve {
     @Column(name = "time")
     private String time; // 服务时间
 
-    @Column(name = "serve")
-    private String serve; // 服务服务者
-
-    @Column(name = "serve_id")
-    private String serveId; // 服务服务者
-
-    @Column(name = "serve_tel")
-    private String serveTel; // 服务服务者电话
+    @Column(name = "status")
+    private String status; // 服务状态
 
     @Column(name = "remark")
     private String remark; // 备注 - admin标记
@@ -98,28 +92,12 @@ public class Serve {
         this.time = time;
     }
 
-    public String getServe() {
-        return serve;
+    public String getStatus() {
+        return status;
     }
 
-    public void setServe(String serve) {
-        this.serve = serve;
-    }
-
-    public String getServeId() {
-        return serveId;
-    }
-
-    public void setServeId(String serveId) {
-        this.serveId = serveId;
-    }
-
-    public String getServeTel() {
-        return serveTel;
-    }
-
-    public void setServeTel(String serveTel) {
-        this.serveTel = serveTel;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getRemark() {

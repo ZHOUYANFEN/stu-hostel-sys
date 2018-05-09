@@ -45,13 +45,6 @@
 
                 <table id="devSetTable" class="table table-bordered table-hover display" width="100%">
                     <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>devName</th>
-                            <th>url</th>
-                            <th>remark</th>
-                            <th>操作</th>
-                        </tr>
                     </thead>
                     <tbody>
                     </tbody>
@@ -219,10 +212,7 @@
                 "url": "/stu-hostel-sys/getDevelopList",
                 "type": "POST"
             },
-            "columns": [{
-                "title": "id",
-                "data": "id"
-            },
+            "columns": [
             {
                 "title": "第三方名称",
                 "data": "devName"
@@ -237,7 +227,7 @@
             },
             {
                 "title": "操作",
-                "targets" : 4,//操作按钮目标列
+                "targets" : 3,//操作按钮目标列
                 "data" : null,
                 "render" : function(data, type,row) {
                     var id = row.id;

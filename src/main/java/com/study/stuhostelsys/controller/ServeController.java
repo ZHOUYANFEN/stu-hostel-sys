@@ -41,9 +41,7 @@ public class ServeController {
      * @param flatUserTel
      * @param type
      * @param time
-     * @param serve
-     * @param serveId
-     * @param serveTel
+     * @param status
      * @param remark
      * @return
      */
@@ -54,9 +52,7 @@ public class ServeController {
                          @RequestParam String flatUserTel,
                          @RequestParam String type,
                          @RequestParam String time,
-                         @RequestParam String serve,
-                         @RequestParam String serveId,
-                         @RequestParam String serveTel,
+                         @RequestParam String status,
                          @RequestParam String remark){
         JSONObject r = new JSONObject();
         Serve ser = new Serve();
@@ -66,9 +62,7 @@ public class ServeController {
         ser.setFlatUserTel(flatUserTel);
         ser.setType(type);
         ser.setTime(time);
-        ser.setServe(serve);
-        ser.setServeId(serveId);
-        ser.setServeTel(serveTel);
+        ser.setStatus(status);
         ser.setRemark(remark);
         try {
             serveInterface.save(ser);
@@ -128,22 +122,23 @@ public class ServeController {
      */
     @PostMapping("/updateServe")
     public @ResponseBody JSONObject updateServe(@RequestParam Integer id,
+                                                @RequestParam String flatName,
+                                                @RequestParam String flatAddress,
+                                                @RequestParam String flatUser,
                                                 @RequestParam String flatUserTel,
                                                 @RequestParam String type,
                                                 @RequestParam String time,
-                                                @RequestParam String serve,
-                                                @RequestParam String serveId,
-                                                @RequestParam String serveTel,
+                                                @RequestParam String status,
                                                 @RequestParam String remark){
         JSONObject r = new JSONObject();
         try {
-            serveInterface.updateServe( id,
+            serveInterface.updateServe( id,flatName,
+                    flatAddress,
+                    flatUser,
                     flatUserTel,
                     type,
                     time,
-                    serve,
-                    serveId,
-                    serveTel,
+                    status,
                     remark);
             r.put("data", "0");
         } catch (Exception e) {

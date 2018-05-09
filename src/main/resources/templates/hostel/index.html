@@ -6,13 +6,15 @@
     <title>HOSTEL Setting</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="../../static/bootstrap/bootstrap.min.css"
+          th:href="@{bootstrap/bootstrap.min.css}">
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{css/style.css}">
     <!-- BEGIN CSS for this page -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
     <!-- END CSS for this page -->
 </head>
 
@@ -25,7 +27,7 @@
         <!-- LOGO -->
         <div class="headerbar-left">
             <a href="index.html" class="logo">
-                <img alt="Logo" th:src="@{images/logo.png}" />
+                <img alt="Logo" th:src="@{images/logo.png}"/>
                 <span>HOSTEL</span>
             </a>
         </div>
@@ -35,8 +37,9 @@
             <ul class="list-inline float-right mb-0">
 
                 <li class="list-inline-item dropdown notif">
-                    <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img  th:src="@{images/avatars/admin.png}" alt="Profile image" class="avatar-rounded">
+                    <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="false" aria-expanded="false">
+                        <img th:src="@{images/avatars/admin.png}" alt="Profile image" class="avatar-rounded">
                     </a>
                 </li>
             </ul>
@@ -65,7 +68,12 @@
                             <span> 公寓管理 </span>
                         </a>
                     </li>
-
+                    <li class="submenu">
+                        <a class="" onclick="goSrc('interviewPage')">
+                            <i class="fa fa-fw fa-bars"></i>
+                            <span> 访客登记 </span>
+                        </a>
+                    </li>
                     <li class="submenu">
                         <a onclick="goSrc('servePage')">
                             <i class="fa fa-fw fa-area-chart"></i>
@@ -74,7 +82,7 @@
                     </li>
 
                     <li class="submenu">
-                        <a onclick="goSrc('HRPage')">
+                        <a onclick="goSrc('advicePage')">
                             <i class="fa fa-fw fa-table"></i>
                             <span> 公社行政管理 </span>
                         </a>
@@ -87,11 +95,11 @@
                             <span> 第三方服务 </span>
                         </a>
                         <ul class="list-unstyled">
-                            <li><a href="page-pricing-tables.html">天猫代购</a></li>
-                            <li><a target="_blank" href="page-coming-soon.html">百度知道</a></li>
-                            <li><a href="page-invoice.html">Invoice</a></li>
-                            <li><a href="page-login.html">Login / Register</a></li>
-                            <li><a href="page-blank.html">Blank Page</a></li>
+                            <!--<li><a href="http://www.baidu.html">天猫代购</a></li>-->
+                            <!--<li><a target="_blank" href="page-coming-soon.html">百度知道</a></li>-->
+                            <li th:each="dev: ${dev}" >
+                                <a th:text="${dev.devName}" th:src="${dev.url}"></a>
+                            </li>
                         </ul>
                     </li>
 
@@ -104,19 +112,20 @@
     </div>
     <!-- End Sidebar -->
 
-    <iframe class="" id="iframe" src="serve.html" th:src="@{/flat}" frameborder="0" width="100%" height="900px"></iframe>
+    <iframe class="" id="iframe" src="serve.html" th:src="@{/flat}" frameborder="0" width="100%"
+            height="900px"></iframe>
 
     <footer class="footer">
-            <span class="text-right">
-                Copyright
-                <a target="_blank" href="#">Your Website</a>
-            </span>
+        <span class="text-right">
+            Copyright
+            <a target="_blank" href="#">Your Website</a>
+        </span>
         <span class="float-right">
-                Powered by
-                <a target="_blank" href="https://www.workroom.top">
-                    <b>Work Room</b>
-                </a>
-            </span>
+            Powered by
+            <a target="_blank" href="https://www.workroom.top">
+                <b>Work Room</b>
+            </a>
+        </span>
     </footer>
 
 </div>
@@ -133,8 +142,11 @@
 <script>
     var u = window.location.search;
     var rl = u.split("id=")[1];
+    var p = u.split("&")[0];
+    var pl = p.split("power=")[1];
     var index = "flatPage";
     goSrc(index);
+
     /**
      * 页面切换
      * @param url
@@ -142,12 +154,15 @@
     function goSrc(url) {
         if (url == "flatPage") {
             document.getElementById('iframe').src = "flat?id=" + rl;
-        }else if(url == "servePage"){
+        } else if (url == "servePage") {
             document.getElementById('iframe').src = "serve";
-        } else if(url == "developPage") {
-            document.getElementById('iframe').src = "developPage";
+        } else if (url == "advicePage") {
+            document.getElementById('iframe').src = "advice?power=" + pl;
+        } else if (url == "interviewPage") {
+            document.getElementById('iframe').src = "interview";
         }
     }
+
 </script>
 </body>
 

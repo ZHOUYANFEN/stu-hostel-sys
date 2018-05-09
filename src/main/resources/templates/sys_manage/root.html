@@ -50,12 +50,6 @@
 
                     <table id="rootSetTable" class="table table-bordered table-hover display" width="100%">
                         <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>userName</th>
-                                <th>power</th>
-                                <th>操作</th>
-                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -253,10 +247,7 @@
                     "url": "/stu-hostel-sys/getAdminList",
                     "type": "POST"
                 },
-                "columns": [{
-                    "title": "id",
-                    "data": "id"
-                },
+                "columns": [
                     {
                         "title": "用户名",
                         "data": "userName"
@@ -275,7 +266,7 @@
                     {
                         "title": "操作",
                         // 定义操作列,######以下是重点########
-                        "targets" : 3,//操作按钮目标列
+                        "targets" : 2,//操作按钮目标列
                         "data" : null,
                         "render" : function(data, type,row) {
                             var id = row.id;

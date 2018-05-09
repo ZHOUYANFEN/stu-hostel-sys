@@ -8,127 +8,158 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}">
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}">
     <!-- BEGIN CSS for this page -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
     <!-- END CSS for this page -->
 </head>
 
 <body class="adminbody">
 
-    <div id="main">
+<div id="main">
 
-        <!-- top bar navigation -->
-        <div class="headerbar">
-            <!-- LOGO -->
-            <div class="headerbar-left">
-                <a href="index.html" class="logo">
-                    <img alt="Logo" th:src="@{images/logo.png}" />
-                    <span>Admin</span>
-                </a>
-            </div>
+    <!-- top bar navigation -->
+    <div class="headerbar">
+        <!-- LOGO -->
+        <div class="headerbar-left">
+            <a href="index.html" class="logo">
+                <img alt="Logo" th:src="@{images/logo.png}"/>
+                <span>Admin</span>
+            </a>
+        </div>
 
-            <nav class="navbar-custom">
+        <nav class="navbar-custom">
 
-                <ul class="list-inline float-right mb-0">
+            <ul class="list-inline float-right mb-0">
 
-                    <li class="list-inline-item dropdown notif">
-                        <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img  th:src="@{images/avatars/admin.png}" alt="Profile image" class="avatar-rounded">
+                <li class="list-inline-item dropdown notif">
+                    <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="false" aria-expanded="false">
+                        <img th:src="@{images/avatars/admin.png}" alt="Profile image" class="avatar-rounded">
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="list-inline menu-left mb-0">
+                <li class="float-left">
+                    <button class="button-menu-mobile open-left">
+                        <i class="fa fa-fw fa-bars"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+    <!-- End Navigation -->
+
+    <!-- Left Sidebar -->
+    <div class="left main-sidebar">
+        <div class="sidebar-inner leftscroll">
+            <div id="sidebar-menu">
+
+                <ul>
+                    <li class="submenu">
+                        <a class="active" onclick="goSrc('adminPage')">
+                            <i class="fa fa-fw fa-bars"></i>
+                            <span> Admin分配 </span>
                         </a>
                     </li>
-                </ul>
 
-                <ul class="list-inline menu-left mb-0">
-                    <li class="float-left">
-                        <button class="button-menu-mobile open-left">
-                            <i class="fa fa-fw fa-bars"></i>
-                        </button>
+                    <li class="submenu">
+                        <a onclick="goSrc('developPage')">
+                            <i class="fa fa-fw fa-area-chart"></i>
+                            <span> 第三方管理 </span>
+                        </a>
+                    </li>
+
+                    <li class="submenu">
+                        <a onclick="goSrc('communityPage')">
+                            <i class="fa fa-fw fa-table"></i>
+                            <span> 公社管理 </span>
+                        </a>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <span class="label radius-circle bg-danger float-right">2</span>
+                            <i class="fa fa-fw fa-copy"></i>
+                            <span> 公社管理 </span>
+                        </a>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a onclick="goSrc('communityPage')">
+                                    <i class="fa fa-fw fa-table"></i>
+                                    <span> 公社管理 </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="goSrc('advicePage')">
+                                    <i class="fa fa-fw fa-table"></i>
+                                    <span> 行政通知 </span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </nav>
 
-        </div>
-        <!-- End Navigation -->
-
-        <!-- Left Sidebar -->
-        <div class="left main-sidebar">
-            <div class="sidebar-inner leftscroll">
-                <div id="sidebar-menu">
-
-                    <ul>
-                        <li class="submenu">
-                            <a class="active" onclick="goSrc('adminPage')">
-                                <i class="fa fa-fw fa-bars"></i>
-                                <span> Admin分配 </span>
-                            </a>
-                        </li>
-
-                        <li class="submenu">
-                            <a onclick="goSrc('developPage')">
-                                <i class="fa fa-fw fa-area-chart"></i>
-                                <span> 第三方管理 </span>
-                            </a>
-                        </li>
-
-                        <li class="submenu">
-                            <a onclick="goSrc('communityPage')">
-                                <i class="fa fa-fw fa-table"></i>
-                                <span> 公社管理 </span>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="clearfix"></div>
-                </div>
                 <div class="clearfix"></div>
             </div>
+            <div class="clearfix"></div>
         </div>
-        <!-- End Sidebar -->
+    </div>
+    <!-- End Sidebar -->
 
-        <iframe class="" id="iframe" src="root.html" th:src="@{/root}" frameborder="0" width="100%" height="900px"></iframe>
+    <iframe class="" id="iframe" src="root.html" th:src="@{/root}" frameborder="0" width="100%" height="900px"></iframe>
 
-        <footer class="footer">
+    <footer class="footer">
             <span class="text-right">
                 Copyright
                 <a target="_blank" href="#">Your Website</a>
             </span>
-            <span class="float-right">
+        <span class="float-right">
                 Powered by
                 <a target="_blank" href="https://www.workroom.top">
                     <b>Work Room</b>
                 </a>
             </span>
-        </footer>
+    </footer>
 
-    </div>
+</div>
 
-    <script src="../../static/js/modernizr.min.js" th:src="@{js/modernizr.min.js}"></script>
-    <script src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script src="../../static/js/modernizr.min.js" th:src="@{js/modernizr.min.js}"></script>
+<script src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
 
-    <script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
 
-    <script src="../../static/js/detect.js" th:src="@{js/detect.js}"></script>
-    <script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
-    <script src="../../static/js/jquery.nicescroll.js" th:src="@{js/jquery.nicescroll.js}"></script>
-    <script src="../../static/js/pikeadmin.js" th:src="@{js/pikeadmin.js}"></script>
-    <script>
-        /**
-         * 页面切换
-         * @param url
-         */
-        function goSrc(url) {
-            if (url == "adminPage") {
-                document.getElementById('iframe').src = "root";
-            }else if(url == "developPage"){
-                document.getElementById('iframe').src = "develop";
-            } else if(url == "communityPage") {
-                document.getElementById('iframe').src = "community";
-            }
+<script src="../../static/js/detect.js" th:src="@{js/detect.js}"></script>
+<script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+<script src="../../static/js/jquery.nicescroll.js" th:src="@{js/jquery.nicescroll.js}"></script>
+<script src="../../static/js/pikeadmin.js" th:src="@{js/pikeadmin.js}"></script>
+<script>
+    var u = window.location.search;
+    var rl = u.split("id=")[1];
+    var p = u.split("&")[0];
+    var pl = p.split("power=")[1];
+    var index = "adminPage";
+    goSrc(index);
+    /**
+     * 页面切换
+     * @param url
+     */
+    function goSrc(url) {
+        if (url == "adminPage") {
+            document.getElementById('iframe').src = "root";
+        } else if (url == "developPage") {
+            document.getElementById('iframe').src = "develop";
+        } else if (url == "communityPage") {
+            document.getElementById('iframe').src = "community";
+        }else if(url == "advicePage") {
+            document.getElementById('iframe').src = "advice?power=" + pl;
         }
-    </script>
+    }
+</script>
 </body>
 
 </html>

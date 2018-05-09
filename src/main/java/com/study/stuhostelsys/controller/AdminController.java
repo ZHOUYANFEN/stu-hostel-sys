@@ -3,7 +3,9 @@ package com.study.stuhostelsys.controller;
 /**
  * 管理员权限表
  */
+
 import com.study.stuhostelsys.dao.AdminInterface;
+import com.study.stuhostelsys.dao.DevelopInterface;
 import com.study.stuhostelsys.model.Admin;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -26,18 +28,23 @@ public class AdminController {
     @Autowired
     private AdminInterface adminInterface;
 
+    @Autowired
+    private DevelopInterface developInterface;
+
     /**
      * 跳转login页
+     *
      * @return
      */
     @RequestMapping(value = "/login")
-    public ModelAndView login(){
+    public ModelAndView login() {
         ModelAndView login = new ModelAndView("login");
         return login;
     }
 
     /**
      * 登录 - signin
+     *
      * @param userName
      * @param userPassword
      * @param request
@@ -54,7 +61,7 @@ public class AdminController {
         Admin admin = new Admin();
         try {
             admin = adminInterface.findByUserNameAndUserPassword(userName, userPassword);
-            if(admin == null){
+            if (admin == null) {
                 result.put("msage", Boolean.FALSE);
                 result.put("data", "用户名 / 密码错误！");
             } else {
@@ -71,6 +78,7 @@ public class AdminController {
 
     /**
      * 修改密码
+     *
      * @param userName
      * @param userPassword
      * @param request
@@ -78,11 +86,12 @@ public class AdminController {
      * @return
      */
     @PostMapping("/updateUserPassword")
-    public @ResponseBody JSONObject updateUserPassword(@RequestParam String userName,
-                                                    @RequestParam String userPassword,
-                                                    @RequestParam String power,
-                                                    @RequestParam Integer id,
-                                     HttpServletRequest request,HttpServletResponse response){
+    public @ResponseBody
+    JSONObject updateUserPassword(@RequestParam String userName,
+                                  @RequestParam String userPassword,
+                                  @RequestParam String power,
+                                  @RequestParam Integer id,
+                                  HttpServletRequest request, HttpServletResponse response) {
         JSONObject r = new JSONObject();
         try {
             adminInterface.updateUserPassword(userName, userPassword, power, id);
@@ -97,6 +106,7 @@ public class AdminController {
 
     /**
      * 新增admin
+     *
      * @param userName
      * @param userPassword
      * @param power
@@ -105,10 +115,11 @@ public class AdminController {
      * @return
      */
     @PostMapping("/saveAdmin")
-    public @ResponseBody JSONObject saveAdmin(@RequestParam String userName,
-                                          @RequestParam String userPassword,
-                                          @RequestParam String power,
-                                          HttpServletRequest request, HttpServletResponse response){
+    public @ResponseBody
+    JSONObject saveAdmin(@RequestParam String userName,
+                         @RequestParam String userPassword,
+                         @RequestParam String power,
+                         HttpServletRequest request, HttpServletResponse response) {
         Admin admin = new Admin();
         admin.setUserName(userName);
         admin.setUserPassword(userPassword);
@@ -116,23 +127,25 @@ public class AdminController {
         JSONObject r = new JSONObject();
         try {
             adminInterface.save(admin);
-            r.put("data","0");
+            r.put("data", "0");
         } catch (Exception e) {
             e.printStackTrace();
-            r.put("data","-1");
-            r.put("error",e.getMessage());
+            r.put("data", "-1");
+            r.put("error", e.getMessage());
         }
         return r;
     }
 
     /**
      * 所有admin
+     *
      * @param request
      * @param response
      * @return
      */
     @PostMapping("/getAdminList")
-    public @ResponseBody JSONObject getAdminList(Model model, HttpServletRequest request, HttpServletResponse response){
+    public @ResponseBody
+    JSONObject getAdminList(Model model, HttpServletRequest request, HttpServletResponse response) {
         List<Admin> admin = new ArrayList<>();
         JSONObject obj = new JSONObject();
         try {
@@ -147,11 +160,13 @@ public class AdminController {
 
     /**
      * 删除admin
+     *
      * @param id
      * @return
      */
     @PostMapping("/deleteAdmin")
-    public @ResponseBody JSONObject deleteAdmin(@RequestParam Integer id){
+    public @ResponseBody
+    JSONObject deleteAdmin(@RequestParam Integer id) {
         JSONObject r = new JSONObject();
         try {
             adminInterface.deleteById(id);
@@ -166,37 +181,40 @@ public class AdminController {
 
     /**
      * 跳转admin框架主页
+     *
      * @return
      */
     @GetMapping(value = "/admin")
-    public ModelAndView admin(@RequestParam("power") String power, Model model){
+    public ModelAndView admin(@RequestParam("power") String power, Model model) {
         ModelAndView index;
-        if (power.equals("1")){
+        if (power.equals("1")) {
             index = new ModelAndView("sys_manage/index");
             model.addAttribute("model", index);
         } else {
             index = new ModelAndView("hostel/index");
-            model.addAttribute("model", index);
+            model.addAttribute("dev", developInterface.findAll());
         }
         return index;
     }
 
     /**
      * 根据ID查用户信息
+     *
      * @param id
      * @param model
      * @return
      */
     @PostMapping("/findAdminById")
-    public @ResponseBody JSONObject findAdminById(@RequestParam Integer id, Model model){
+    public @ResponseBody
+    JSONObject findAdminById(@RequestParam Integer id, Model model) {
         JSONObject result = new JSONObject();
-        result.put("admin",adminInterface.findAllById(id));
+        result.put("admin", adminInterface.findAllById(id));
 //        model.addAttribute("admin", result);
         return result;
     }
 
     @GetMapping("/root")
-    public ModelAndView root(){
+    public ModelAndView root() {
         ModelAndView root = new ModelAndView("sys_manage/root");
         return root;
     }

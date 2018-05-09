@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>status Setting</title>
+
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/dataTables.bootstrap4.min.css"
+          th:href="@{css/dataTables.bootstrap4.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/daterangepicker.css"
+          th:href="@{css/daterangepicker.css}"/>
+    <style>
+        .daterangepicker.dropdown-menu {
+            max-width: none;
+            background-color: transparent;
+            border: 0;
+            z-index: 1100 !important;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="content-page">
+
+    <!-- Start content -->
+    <div class="content">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb-holder">
+                        <h1 class="main-title float-left">
+                            行政通知
+                            <button data-toggle="modal" data-target="#addAdviceModel" title="新增通知">
+                                <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
+                            </button>
+                        </h1>
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item">HOSTEL</li>
+                            <li class="breadcrumb-item active">行政通知</li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+
+                <table id="aSetTable" class="table table-bordered table-hover display" width="100%">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <!-- 新增通知 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="addAdviceModel" tabindex="-1" role="dialog"
+                     aria-labelledby="addstatusModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addstatusModalLabel">新增通知</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="inputTitle" class="col-sm-2 col-form-label">标题：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputTitle"
+                                                   placeholder="标题">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputTime" class="col-sm-2 col-form-label">时间：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputTime"
+                                                   placeholder="探访时间">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputContent" class="col-sm-2 col-form-label">内容：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputContent"
+                                                      placeholder="内容"></textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="saveAdvice" onclick="saveAdvice()">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 新增服务 Modal -->
+
+                <!-- show -->
+                <div class="modal fade bd-example-modal-lg" id="showContentModal" tabindex="-1" role="dialog"
+                     aria-labelledby="showContentModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="showContentModalLabel">通知内容</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="form-group row">
+                                        <label for="showContent" class="col-sm-2 col-form-label">内容：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="showContent" placeholder="内容"></textarea>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end show -->
+
+                <!-- Delete Modal -->
+                <div class="modal fade" id="sureDeleteModal" tabindex="-1" role="dialog" aria-labelledby="sureDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="sureDeleteModalLabel">删除</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                是否删除？
+                                <input type="text" id="hidDeleteId" value="" hidden="hidden" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" name="cancel" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="deleteAdvice()">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end Delete Modal -->
+
+            </div>
+        </div>
+        <!-- END container-fluid -->
+    </div>
+    <!-- END content -->
+</div>
+<!-- END content-page -->
+
+<script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../../static/js/jquery.dataTables.min.js"
+        th:src="@{js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js"
+        th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
+<script type="text/javascript" src="../../static/js/moment.min.js" th:src="@{js/moment.min.js}"></script>
+<script type="text/javascript" src="../../static/js/daterangepicker.js" th:src="@{js/daterangepicker.js}"></script>
+<script>
+
+    $('#inputTime').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    });
+
+    var title;
+    var content;
+    var time;
+    var id;
+
+    aSetTable();
+
+    /**
+     * 表格生成
+     */
+    function aSetTable() {
+        setTable = $("#aSetTable").dataTable({
+            "processing": true,
+            // "statusrSide": true,
+            "retrieve": true,
+            "destroy": true,
+            "language": {
+                "processing": "处理中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "search": "搜索:",
+                "url": "",
+                "emptyTable": "表中数据为空",
+                "loadingRecords": "载入中...",
+                "infoThousands": ",",
+                "paginate": {
+                    "first": "首页",
+                    "previous": "上页",
+                    "next": "下页",
+                    "last": "末页"
+                },
+                "aria": {
+                    "sortAscending": ": 以升序排列此列",
+                    "sortDescending": ": 以降序排列此列"
+                }
+            },
+            "ajax": {
+                "url": "/stu-hostel-sys/getAdviceList",
+                "type": "POST"
+            },
+            "columns": [{
+                "title": "标题",
+                "data": "title"
+            }, {
+                "title": "时间",
+                "data": "time"
+            }, {
+                "title": "操作",
+                "data": null,
+                "targets": 2,
+                "render": function (data, type, row) {
+                    var id = row.id;
+                    return "<a class='up btn btn-default btn-xs' onclick='selectAdviceById("+id+")' style='color: blue'> 查看内容 </a>" +
+                        "<a class='up btn btn-default btn-xs' onclick='deleteAdviceById("+id+")' style='color: blue'> 删除 </a>";
+                }
+            }
+            ]
+        });
+    }
+
+    /**
+     * 保存&校验
+     */
+    function saveAdvice() {
+        title = $("#inputTitle").val();
+        time = $("#inputTime").val();
+        content = $("#inputContent").val();
+
+        if (title == null || title == "") {
+            alert("住户姓名为空");
+        } else if (time == null || time == "") {
+            alert("住户房间为空");
+        } else if (content == "" || content == null) {
+            alert("访客姓名为空");
+        } else {
+            $.post("/stu-hostel-sys/saveAdvice", {
+                "title": title,
+                "time": time,
+                "content": content
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#addAdviceModel").modal('hide');
+                    alert("保存成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    aSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    };
+
+    /**
+     * 清空addServe Modal数据
+     */
+    $("#addAdviceModel").on("hidden.bs.modal", function () {
+        $("#inputTitle").val("");
+        $("#inputTime").val("");
+        $("#inputContent").val("");
+    });
+
+    function selectAdviceById(id) {
+        $.post("/stu-hostel-sys/selectAdviceById", {"id": id},function (r) {
+            if(r.data != "" || r.data != null){
+                $('#showContentModal').modal('show');
+                $('#showContent').val(r.data);
+            } else {
+                alert(r.error);
+            }
+        });
+    }
+
+    function deleteAdviceById(id){
+        $("#sureDeleteModal").modal("show");
+        $("#hidDeleteId").val(id);
+    }
+
+    function deleteAdvice(){
+        id = $("#hidDeleteId").val();
+        $.post("/stu-hostel-sys/deleteAdvice", {"id": id},function(r){
+            if (r.data == "0"){
+                alert("删除成功！");
+                $("#sureDeleteModal").modal("hide");
+                setTable.fnClearTable();
+                setTable.fnDestroy(); //还原初始化了的datatable
+                aSetTable();
+            }else {
+                alert(r.error);
+            }
+        });
+    }
+
+</script>
+</body>
+
+</html>

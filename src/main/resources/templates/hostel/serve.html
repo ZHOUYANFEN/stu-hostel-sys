@@ -42,9 +42,6 @@
                             <button data-toggle="modal" data-target="#addServeModal" title="新增服务">
                                 <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
                             </button>
-                            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addServeModal">-->
-
-                            <!--</button>-->
                         </h1>
                         <ol class="breadcrumb float-right">
                             <li class="breadcrumb-item">HOSTEL</li>
@@ -61,16 +58,7 @@
 
                 <table id="serSetTable" class="table table-bordered table-hover display" width="100%">
                     <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>userName</th>
-                        <th>power</th>
-                        <th>操作</th>
-                        <th>操作</th>
-                        <th>操作</th>
-                        <th>操作</th>
-                        <th>操作</th>
-                    </tr>
+
                     </thead>
                     <tbody>
                     </tbody>
@@ -78,11 +66,11 @@
 
                 <!-- 新增服务 Modal -->
                 <div class="modal fade bd-example-modal-lg" id="addServeModal" tabindex="-1" role="dialog"
-                     aria-labelledby="addServeModalLabel" aria-hidden="true">
+                     aria-labelledby="addstatusModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addServeModalLabel">新增服务</h5>
+                                <h5 class="modal-title" id="addstatusModalLabel">新增服务</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true" title="关闭">&times;</span>
                                 </button>
@@ -99,14 +87,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputFlatUser" class="col-sm-2 col-form-label">甲方：</label>
+                                        <label for="inputFlatUser" class="col-sm-2 col-form-label">住户：</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputFlatUser"
                                                    placeholder="住户姓名">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputFlatUserTel" class="col-sm-2 col-form-label">甲方电话：</label>
+                                        <label for="inputFlatUserTel" class="col-sm-2 col-form-label">住户电话：</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inputFlatUserTel"
                                                    placeholder="住户电话">
@@ -130,8 +118,14 @@
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="radioType"
                                                        id="radioType2" value="repair">
-                                                <label class="form-check-label" for="radioType2">保修</label>
+                                                <label class="form-check-label" for="radioType2">报修</label>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputStatus" class="col-sm-2 col-form-label">服务状态：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputStatus" placeholder="服务状态"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -146,7 +140,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消
                                 </button>
-                                <button type="button" class="btn btn-primary" id="saveServe" onclick="saveServe()">保存
+                                <button type="button" class="btn btn-primary" id="savestatus" onclick="saveServe()">保存
                                 </button>
                             </div>
                         </div>
@@ -160,7 +154,7 @@
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="updateServeModalLabel">修改服务</h5>
+                                <h5 class="modal-title" id="updatestatusModalLabel">修改服务</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true" title="关闭">&times;</span>
                                 </button>
@@ -168,7 +162,30 @@
                             <div class="modal-body">
                                 <form>
                                     <div class="form-group row">
-                                        <input type="text" id="hidUpdateServe" hidden="hidden" />
+                                        <label for="updateFlatName" class="col-sm-2 col-form-label">地址：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="updateFlatName">
+                                                <option value="0">请选择公寓</option>
+                                                <option  th:each="comm: ${comm}" th:value="${comm.flatName}" th:text="${comm.address }"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateFlatUser" class="col-sm-2 col-form-label">住户：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateFlatUser"
+                                                   placeholder="住户姓名">
+                                            <input type="text" class="form-control" id="hidUpdatestatus" hidden="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateFlatUserTel" class="col-sm-2 col-form-label">住户电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateFlatUserTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="updateTime" class="col-sm-2 col-form-label">服务时间：</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="updateTime"
@@ -176,21 +193,30 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="updateServe" class="col-sm-2 col-form-label">服务者：</label>
+                                        <label for="" class="col-sm-2 col-form-label">服务类型：</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="updateServe" placeholder="服务者姓名">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="updateType"
+                                                       id="updateType1" value="clean">
+                                                <label class="form-check-label" for="updateType1">卫生</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="updateType"
+                                                       id="updateType2" value="repair">
+                                                <label class="form-check-label" for="updateType2">报修</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="updateServeId" class="col-sm-2 col-form-label">身份证：</label>
+                                        <label for="updateStatus" class="col-sm-2 col-form-label">服务状态：</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="updateServeId" placeholder="服务者身份证">
+                                            <textarea class="form-control" id="updateStatus" placeholder="服务状态"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="updateServeTel" class="col-sm-2 col-form-label">电话：</label>
+                                        <label for="" class="col-sm-2 col-form-label">备注：</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="updateServeTel" placeholder="服务者电话">
+                                            <textarea class="form-control" id="updateRemark" placeholder="备注"></textarea>
                                         </div>
                                     </div>
 
@@ -260,9 +286,7 @@
     var flatUserTel;
     var type;
     var time;
-    var serve;
-    var serveId;
-    var serveTel;
+    var status;
     var remark;
 
     serSetTable();
@@ -273,7 +297,7 @@
     function serSetTable() {
         setTable = $("#serSetTable").dataTable({
             "processing": true,
-            // "serverSide": true,
+            // "statusrSide": true,
             "retrieve": true,
             "destroy": true,
             "language": {
@@ -305,41 +329,41 @@
                 "type": "POST"
             },
             "columns": [{
-                "title": "id",
-                "data": "id"
-            }, {
                 "title": "公寓",
                 "data": "flatName"
             }, {
                 "title": "地址",
                 "data": "flatAddress"
             }, {
-                "title": "甲方",
+                "title": "住户",
                 "data": "flatUser"
             }, {
-                "title": "甲方电话",
+                "title": "住户电话",
                 "data": "flatUserTel"
             }, {
                 "title": "服务类型",
                 "data": "type",
                 "render": function(data, type, row){
                     if(row.type == "clean"){
-                        return "<span style='color: red'>卫生</span>"
+                        return "<span>卫生</span>"
                     } else {
-                        return "<span>保修</span>";
+                        return "<span>报修</span>";
                     }
                 }
             }, {
                 "title": "服务时间",
                 "data": "time"
+            },{
+                "title": "服务状态",
+                "data": "status"
             }, {
                 "title": "操作",
                 // 定义操作列,######以下是重点########
-                "targets": 7,//操作按钮目标列
+                "targets": 6,//操作按钮目标列
                 "data": null,
                 "render": function (data, type, row) {
                     var id = row.id;
-                    return "<a class='up btn btn-default btn-xs' onclick='selectServeById(" + id + ")' style='color: blue'>上门服务登记</a>" +
+                    return "<a class='up btn btn-default btn-xs' onclick='selectstatusById(" + id + ")' style='color: blue'>修改服务</a>" +
                         "<a class='up btn btn-default btn-xs' onclick='showDeleteModal(" + id + ")' style='color: blue'>取消服务</a>";
                 }
             }
@@ -357,6 +381,7 @@
         flatUserTel = $("#inputFlatUserTel").val();
         type = $('input[name="radioType"]:checked').val();
         time = $("#inputTime").val();
+        status = $("#inputStatus").val();
         remark = $("#inputRemark").val();
 
         if (flatName == null || flatName == "") {
@@ -375,9 +400,7 @@
                 "flatUserTel": flatUserTel,
                 "type": type,
                 "time": time,
-                "serve": "",
-                "serveId": "",
-                "serveTel": "",
+                "status": status,
                 "remark": remark
             }, function (r) {
                 if (r.data == "0") {
@@ -394,28 +417,44 @@
     };
 
     /**
-     * 清空addServeModal数据
+     * 清空addServe Modal数据
      */
     $("#addServeModal").on("hidden.bs.modal", function () {
         $("#inputFlatName").val("");
         $("#inputFlatName option:selected").text("");
         $("#inputFlatUser").val("");
         $("#inputFlatUserTel").val("");
-        $('input[name="radioType"]:checked').val("");
+        $('input[name="radioType"]').prop("checked",false);
         $("#inputTime").val("");
+        $("#inputStatus").val("");
         $("#inputRemark").val("");
     });
 
     /**
-     * 查一条Serve
+     * 查一条serve
      * @param id
      */
-    function selectServeById(id) {
+    function selectstatusById(id) {
         $.post("/stu-hostel-sys/findServeById", {"id": id}, function (r) {
             var rs = r.ser[0];
-            $("#hidUpdateServe").val(id);
+            $("#hidUpdatestatus").val(id);
             if (rs != "" && rs != null) {
                 $("#updateServeModal").modal('show');
+                $("#updateFlatName").val(rs.flatName);
+                $("#updateFlatName option:selected").text(rs.flatAddress);
+                $("#updateFlatUser").val(rs.flatUser);
+                $("#updateFlatUserTel").val(rs.flatUserTel);
+                if(rs.type == "clean"){
+                    $('input[name="updateType"]:eq(0)').prop("checked",true);
+                    $('input[name="updateType"]:eq(1)').prop("checked",false);
+                }else{
+                    $('input[name="updateType"]:eq(1)').prop("checked",true);
+                    $('input[name="updateType"]:eq(0)').prop("checked",false);
+                }
+                $('input[name="updateType"]:checked').val(rs.type);
+                $("#updateTime").val(rs.time);
+                $("#updateStatus").val(rs.status);
+                $("#updateRemark").val(rs.remark);
             } else {
                 alert("报错了！");
             }
@@ -423,38 +462,41 @@
     }
 
     $("#updateServeModal").on("hidden.bs.modal", function () {
-
     });
 
     /**
-     * 修改一条Serve
+     * 修改一条serve
      * @param id
      */
     function updateServeById() {
-        id = $("#hidUpdateServe").val();
-        serve = $("#updateServe").val();
-        serveId = $("#updateServeId").val();
-        serveTel = $("#updateServeTel").val();
+        id = $("#hidUpdatestatus").val();
+        flatName = $("#updateFlatName").val();
+        flatAddress = $("#updateFlatName option:selected").text();
+        flatUser = $("#updateFlatUser").val();
+        flatUserTel = $("#updateFlatUserTel").val();
+        type = $('input[name="updateType"]:checked').val();
         time = $("#updateTime").val();
-        if (serve == null || serve == "") {
-            alert("服务名为空");
-        } else if (serveId == null || serveId == "") {
-            alert("密码为空");
-        } else if (serveTel == null || serveTel == "") {
-            alert("密码不一致");
+        status = $("#updateStatus").val();
+        remark = $("#updateRemark").val();
+        if (flatName == null || flatName == "") {
+            alert("公寓名为空");
+        } else if (flatAddress == null || flatAddress == "") {
+            alert("地址为空");
+        } else if (flatUser == "" || flatUser == null) {
+            alert("住户为空");
+        }else if (flatUserTel == "" || flatUserTel == null) {
+            alert("住户电话为空");
         } else {
             $.post("/stu-hostel-sys/updateServe", {
                 "id": id,
-                "flatName": "",
-                "flatAddress": "",
-                "flatUser": "",
-                "flatUserTel": "",
-                "type": "",
+                "flatName": flatName,
+                "flatAddress": flatAddress,
+                "flatUser": flatUser,
+                "flatUserTel": flatUserTel,
+                "type": type,
                 "time": time,
-                "serve": serve,
-                "serveId": serveId,
-                "serveTel": serveTel,
-                "remark": ""
+                "status": status,
+                "remark": remark
             }, function (r) {
                 if (r.data == "0") {
                     $("#updateServeModal").modal('hide');
@@ -473,11 +515,15 @@
      * updateServeModal
      */
     $("#updateServeModal").on("hidden.bs.modal", function () {
-        $("#hidUpdateServe").val("");
-        $("#updateServe").val("");
-        $("#updateServeId").val("");
-        $("#updateServeTel").val("");
-        $("#updateTime").val("")
+        $("#hidUpdatestatus").val("");
+        $("#updateFlatName").val("");
+        $("#updateFlatName option:selected").text("");
+        $("#updateFlatUser").val("");
+        $("#updateFlatUserTel").val("");
+        $('input[name="updateType"]:checked').val("");
+        $("#updateTime").val("");
+        $("#updateStatus").val("");
+        $("#updateRemark").val("");
     });
 
 

@@ -31,6 +31,9 @@
                             <button data-toggle="modal" data-target="#addflatModal" title="新增住户">
                                 <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
                             </button>
+                            <button data-toggle="modal" data-target="#removeflatModal" title="清空房间">
+                                <i class="fa fa-remove bigfonts" aria-hidden="true"></i>
+                            </button>
                         </h1>
                         <ol class="breadcrumb float-right">
                             <li class="breadcrumb-item">HOSTEL</li>
@@ -151,6 +154,49 @@
                 </div>
                 <!-- end 新增住户 Modal -->
 
+                <!-- 清空房间 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="removeflatModal" tabindex="-1" role="dialog"
+                     aria-labelledby="removeflatModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removeflatModalLabel">清空房间</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="inputFlatName" class="col-sm-2 col-form-label">地址：</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="removeFlatName">
+                                                <option value="0">请选择公寓</option>
+                                                <option  th:each="comm: ${comm}" th:value="${comm.flatName}" th:text="${comm.address }"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputFlatNum" class="col-sm-2 col-form-label">房间号：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="removeFlatNum"
+                                                   placeholder="房间号">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="removeFlat" onclick="removeFlat()">清空房间
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 新增住户 Modal -->
+
                 <!-- 修改住户 Modal -->
                 <div class="modal fade bd-example-modal-lg" id="updateflatModal" tabindex="-1" role="dialog"
                      aria-labelledby="updatedminModalLabel" aria-hidden="true">
@@ -171,6 +217,14 @@
                                                 <option value="0">请选择公寓</option>
                                                 <option  th:each="comm: ${comm}" th:value="${comm.flatName}" th:text="${comm.address }"></option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateFlatNum" class="col-sm-2 col-form-label">房间号：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateFlatNum"
+                                                   placeholder="房间号">
+                                            <input type="text" class="form-control" id="hidUpdateflat" hidden="hidden">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -383,8 +437,8 @@
         flatUser = $("#inputFlatUser").val();
         flatUserId = $("#inputFlatUserId").val();
         flatUserTel = $("#inputFlatUserTel").val();
-        type = $("#inputType option:selected").val();
-        size = $("#inputSize option:selected").val();
+        type = $("#inputType option:selected").text();
+        size = $("#inputSize option:selected").text();
         remark = $("#inputRemark").val();
 
         if (flatName == null || flatName == "") {
@@ -432,8 +486,8 @@
         $("#inputFlatUser").val("");
         $("#inputFlatUserId").val("");
         $("#inputFlatUserTel").val("");
-        $("#inputType option:selected").val("");
-        $("#inputSize option:selected").val("");
+        $("#inputType option:selected").text("");
+        $("#inputSize option:selected").text("");
     });
 
     /**
@@ -446,6 +500,14 @@
             $("#hidUpdateflat").val(id);
             if (rs != "" && rs != null) {
                 $("#updateflatModal").modal('show');
+                $("#updateFlatName").val(rs.flatName);
+                $("#updateFlatNum").val(rs.flatNum);
+                $("#updateFlatUser").val(rs.flatUser);
+                $("#updateFlatUserId").val(rs.flatUserId);
+                $("#updateFlatUserTel").val(rs.flatUserTel);
+                $("#updateType option:selected").text(rs.type);
+                $("#updateSize option:selected").text(rs.size);
+                $("#updateRemark").val(rs.remark);
             } else {
                 alert("报错了！");
             }
@@ -462,29 +524,38 @@
      */
     function updateflatById() {
         id = $("#hidUpdateflat").val();
-        flat = $("#updateflat").val();
-        flatId = $("#updateflatId").val();
-        flatTel = $("#updateflatTel").val();
-        time = $("#updateTime").val();
-        if (flat == null || flat == "") {
-            alert("住户名为空");
-        } else if (flatId == null || flatId == "") {
-            alert("密码为空");
-        } else if (flatTel == null || flatTel == "") {
-            alert("密码不一致");
+        flatName = $("#updateFlatName").val();
+        flatNum = $("#updateFlatNum").val();
+        flatUser = $("#updateFlatUser").val();
+        flatUserId = $("#updateFlatUserId").val();
+        flatUserTel = $("#updateFlatUserTel").val();
+        type = $("#updateType option:selected").text();
+        size = $("#updateSize option:selected").text();
+        remark = $("#updateRemark").val();
+
+        if (flatName == null || flatName == "") {
+            alert("公寓名为空");
+        } else if (flatNum == null || flatNum == "") {
+            alert("房间号为空");
+        } else if (flatUser == "" || flatUser == null) {
+            alert("住户为空");
+        }else if (flatUserTel == "" || flatUserTel == null) {
+            alert("住户电话为空");
+        }else if (flatUserId == "" || flatUserId == null) {
+            alert("住户身份证为空");
         } else {
-            $.post("/stu-hostel-sys/updateflat", {
-                "id": id,
-                "flatName": "",
-                "flatAddress": "",
-                "flatUser": "",
-                "flatUserTel": "",
-                "type": "",
-                "time": time,
-                "flat": flat,
-                "flatId": flatId,
-                "flatTel": flatTel,
-                "remark": ""
+            $.post("/stu-hostel-sys/updateFlatById", {
+                "id": parseInt(id),
+                "flatName": flatName,
+                "flatNum": flatNum,
+                "flatUser": flatUser,
+                "flatUserTel": flatUserTel,
+                "flatUserId": flatUserId,
+                "type": type,
+                "size": size,
+                "adminId": adminId,
+                "adminName": adminName,
+                "remark": remark
             }, function (r) {
                 if (r.data == "0") {
                     $("#updateflatModal").modal('hide');
@@ -503,11 +574,13 @@
      * updateflatModal
      */
     $("#updateflatModal").on("hidden.bs.modal", function () {
-        $("#hidUpdateflat").val("");
-        $("#updateflat").val("");
-        $("#updateflatId").val("");
-        $("#updateflatTel").val("");
-        $("#updateTime").val("")
+        $("#updateFlatName").val("");
+        $("#updateFlatNum").val("");
+        $("#updateFlatUser").val("");
+        $("#updateFlatUserId").val("");
+        $("#updateFlatUserTel").val("");
+        $("#updateType option:selected").text("");
+        $("#updateSize option:selected").text("");
     });
 
 
@@ -525,7 +598,7 @@
      */
     function deleteFlatById() {
         var id = $("#hidDeleteId").val();
-        $.post("/stu-hostel-sys/deleteflat",{"id": parseInt(id)},function (r) {
+        $.post("/stu-hostel-sys/deleteFlat",{"id": parseInt(id)},function (r) {
             if(r.data == "0") {
                 $("#sureDeleteModal").modal('hide');
                 setTable.fnClearTable();
@@ -537,6 +610,28 @@
             }
         });
     }
+
+    function removeFlat() {
+        flatName = $("#removeFlatName option:selected").val();
+        flatNum = $("#removeFlatNum").val();
+
+        $.post("/stu-hostel-sys/deleteFlatByAdminIdAndFlat",{"adminId":adminId,"flatName":flatName,"flatNum":flatNum},function (r) {
+            if(r.data == "0") {
+                $("#removeflatModal").modal('hide');
+                setTable.fnClearTable();
+                setTable.fnDestroy(); //还原初始化了的datatable
+                flatSetTable();
+                alert("删除成功！");
+            } else {
+                alert(r.error);
+            }
+        })
+    }
+
+    $("#removeflatModal").on("hidden.bs.modal", function () {
+        $("#removeFlatName option:selected").text("");
+        $("#removeFlatNum").val("");
+    });
 </script>
 </body>
 

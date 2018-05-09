@@ -221,7 +221,7 @@
     | type     | varchar(255) | YES    | 服务类型 clean(卫生)/repair(报修) |
     | time     | varchar(255) | YES    | 服务时间 |
     | status   | varchar(255) | YES    | 服务状态 |
-    | remark   | varchar(255) | YES        | 备注 - ${admin} |
+    | remark   | varchar(255) | YES        | 备注 |
     
   * 图书登记：增记录--姓名、身份证号、电话、书名、借阅时间、归还时间，修改电话、还书时间；
   ###### library表
@@ -257,3 +257,12 @@
   
   * 第三方服务；
   * 去掉所有的id；
+  
+  # 2018-05-09 版本记录
+  * 修复flat 
+  * 修复serve
+  * 去除table 的id
+  * 新加访客
+  * 第三方服务
+  * 公社行政通知
+  
