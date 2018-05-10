@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Setting</title>
+
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/dataTables.bootstrap4.min.css"
+          th:href="@{css/dataTables.bootstrap4.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/daterangepicker.css"
+          th:href="@{css/daterangepicker.css}"/>
+    <style>
+        .daterangepicker.dropdown-menu {
+            max-width: none;
+            background-color: transparent;
+            border: 0;
+            z-index: 1100 !important;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="content-page">
+
+    <!-- Start content -->
+    <div class="content">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb-holder">
+                        <h1 class="main-title float-left">
+                            便民医疗站
+                            <button data-toggle="modal" data-target="#addMedicalModal" title="新增记录">
+                                <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
+                            </button>
+                        </h1>
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item">HOSTEL</li>
+                            <li class="breadcrumb-item active">便民医疗站</li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+
+                <table id="mSetTable" class="table table-bordered table-hover display" width="100%">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <!-- 新增记录 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="addMedicalModal" tabindex="-1" role="dialog"
+                     aria-labelledby="addMedicalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addMedicalModalLabel">新增记录</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="inputUserName" class="col-sm-2 col-form-label">住户：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputUserName"
+                                                   placeholder="住户姓名">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputUserTel" class="col-sm-2 col-form-label">住户电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputUserTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputUserId" class="col-sm-2 col-form-label">住户身份证号：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputUserId"
+                                                   placeholder="住户身份证号">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputAllergy" class="col-sm-2 col-form-label">过敏史：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputAllergy"
+                                                   placeholder="过敏史">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputMeHistory" class="col-sm-2 col-form-label">急救备忘：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="inputMeHistory"
+                                                      placeholder="急救备忘"> </textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="savestatus" onclick="saveMedical()">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 新增记录 Modal -->
+
+                <!-- 修改记录 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="updateMedicalModal" tabindex="-1" role="dialog"
+                     aria-labelledby="updateMedicalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateMedicalModalLabel">修改记录</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="updateUserName" class="col-sm-2 col-form-label">住户：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateUserName"
+                                                   placeholder="住户姓名" readonly>
+                                            <input type="text" class="form-control" id="hidUpdate" hidden="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateUserTel" class="col-sm-2 col-form-label">住户电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateUserTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateUserId" class="col-sm-2 col-form-label">住户身份证号：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateUserId"
+                                                   placeholder="住户身份证号" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateAllergy" class="col-sm-2 col-form-label">过敏史：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateAllergy"
+                                                   placeholder="过敏史">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateMeHistory" class="col-sm-2 col-form-label">急救备忘：</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="updateMeHistory"
+                                                      placeholder="急救备忘"> </textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="updateMedical" onclick="updateMedical()">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 修改记录 Modal -->
+            </div>
+        </div>
+        <!-- END container-fluid -->
+    </div>
+    <!-- END content -->
+</div>
+<!-- END content-page -->
+
+<script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../../static/js/jquery.dataTables.min.js"
+        th:src="@{js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js"
+        th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
+<script type="text/javascript" src="../../static/js/moment.min.js" th:src="@{js/moment.min.js}"></script>
+<script type="text/javascript" src="../../static/js/daterangepicker.js" th:src="@{js/daterangepicker.js}"></script>
+<script>
+
+    var userName;
+    var userId;
+    var userTel;
+    var allergy;
+    var meHistory;
+    var id;
+
+    mSetTable();
+
+    /**
+     * 表格生成
+     */
+    function mSetTable() {
+        setTable = $("#mSetTable").dataTable({
+            "processing": true,
+            // "statusrSide": true,
+            "retrieve": true,
+            "destroy": true,
+            "language": {
+                "processing": "处理中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "search": "搜索:",
+                "url": "",
+                "emptyTable": "表中数据为空",
+                "loadingRecords": "载入中...",
+                "infoThousands": ",",
+                "paginate": {
+                    "first": "首页",
+                    "previous": "上页",
+                    "next": "下页",
+                    "last": "末页"
+                },
+                "aria": {
+                    "sortAscending": ": 以升序排列此列",
+                    "sortDescending": ": 以降序排列此列"
+                }
+            },
+            "ajax": {
+                "url": "/stu-hostel-sys/getMedicalList",
+                "type": "POST"
+            },
+            "columns": [{
+                "title": "住户",
+                "data": "userName"
+            }, {
+                "title": "住户身份证",
+                "data": "userId"
+            }, {
+                "title": "住户电话",
+                "data": "userTel"
+            }, {
+                "title": "过敏史",
+                "data": "allergy"
+            }, {
+                "title": "急救备忘录",
+                "data": "meHistory"
+            }, {
+                "title": "操作",
+                "data": null,
+                "targets": 5,
+                "render": function (data, type, row) {
+                    var id = row.id;
+                    return "<a class='up btn btn-default btn-xs' onclick='selectMedicalById(" + id + ")' style='color: blue'>明细</a>";
+                }
+            }
+            ]
+        });
+    }
+
+    /**
+     * 保存&校验
+     */
+    function saveMedical() {
+        userName = $("#inputUserName").val();
+        userId = $("#inputUserId").val();
+        userTel = $("#inputUserTel").val();
+        meHistory = $("#inputMeHistory").val();
+        allergy = $("#inputAllergy").val();
+
+        if (userName == null || userName == "") {
+            alert("住户姓名为空");
+        } else if (userId == null || userId == "") {
+            alert("住户身份证为空");
+        } else if (userTel == "" || userTel == null) {
+            alert("电话为空");
+        } else {
+            $.post("/stu-hostel-sys/saveMedical", {
+                "userName": userName,
+                "userId": userId,
+                "userTel": userTel,
+                "meHistory": meHistory,
+                "allergy": allergy
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#addMedicalModal").modal('hide');
+                    alert("保存成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    mSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    }
+
+    /**
+     * 清空addMedical Modal数据
+     */
+    $("#addMedicalModal").on("hidden.bs.modal", function () {
+        $("#inputUserName").val("");
+        $("#inputUserId").val("");
+        $("#inputUserTel").val("");
+        $("#inputMeHistory").val("");
+        $("#inputAllergy").val("");
+    });
+
+    function selectMedicalById(id) {
+        $.post("/stu-hostel-sys/findMedicalById", {"id": id}, function (re) {
+            var r = re.data[0];
+            $("#hidUpdate").val(id);
+            if (r != "" && r != null) {
+                $("#updateMedicalModal").modal("show");
+                $("#updateUserName").val(r.userName);
+                $("#updateUserId").val(r.userId);
+                $("#updateUserTel").val(r.userTel);
+                $("#updateMeHistory").val(r.meHistory);
+                $("#updateAllergy").val(r.allergy);
+            } else {
+                alert(r.error);
+            }
+        });
+    }
+
+    $("#updateMedicalModal").on("hidden.bs.modal", function() {
+        $("#updateUserName").val("");
+        $("#updateUserId").val("");
+        $("#updateUserTel").val("");
+        $("#updateMeHistory").val("");
+        $("#updateAllergy").val("");
+    });
+
+    function updateMedical() {
+        id = $("#hidUpdate").val();
+        userName = $("#updateUserName").val();
+        userId = $("#updateUserId").val();
+        userTel = $("#updateUserTel").val();
+        meHistory = $("#updateMeHistory").val();
+        allergy = $("#updateAllergy").val();
+        if (userName == null || userName == "") {
+            alert("住户姓名为空");
+        } else if (userId == null || userId == "") {
+            alert("住户身份证为空");
+        } else if (userTel == "" || userTel == null) {
+            alert("电话为空");
+        } else {
+            $.post("/stu-hostel-sys/updateMedical", {
+                "userName": userName,
+                "userId": userId,
+                "userTel": userTel,
+                "allergy": allergy,
+                "meHistory": meHistory,
+                "id": id
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#updateMedicalModal").modal('hide');
+                    alert("保存成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    mSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    }
+</script>
+</body>
+
+</html>

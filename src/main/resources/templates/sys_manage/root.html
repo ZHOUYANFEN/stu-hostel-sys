@@ -333,12 +333,12 @@
                     $("#updateUserName").val(rs.userName);
                     if(rs.power == "1"){
                         $("#updateAdminModal").modal('show');
-                        // $("#updatePower1").attr("checked","checked");
-                        // $("#updatePower2").removeAttr("checked");
+                        $("#updatePower1").prop("checked",true);
+                        $("#updatePower2").prop("checked",false);
                     }else if(rs.power == "2"){
                         $("#updateAdminModal").modal('show');
-                        // $("#updatePower2").attr("checked","checked");
-                        // $("#updatePower1").removeAttr("checked");
+                        $("#updatePower2").prop("checked",true);
+                        $("#updatePower1").prop("checked",false);
                     }else {
                         alert("无权限用户");
                         $("#updateAdminModal").modal('show');

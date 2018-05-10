@@ -90,7 +90,7 @@
 
                     <li class="submenu">
                         <a href="#">
-                            <span class="label radius-circle bg-danger float-right">3</span>
+                            <span class="label radius-circle bg-danger float-right" th:text="${dev.size()}"></span>
                             <i class="fa fa-fw fa-copy"></i>
                             <span> 第三方服务 </span>
                         </a>
@@ -98,7 +98,7 @@
                             <!--<li><a href="http://www.baidu.html">天猫代购</a></li>-->
                             <!--<li><a target="_blank" href="page-coming-soon.html">百度知道</a></li>-->
                             <li th:each="dev: ${dev}" >
-                                <a th:text="${dev.devName}" th:src="${dev.url}"></a>
+                                <a th:text="${dev.devName}" th:src="${dev.url}" th:onclick="'javascript:goDevelp(\''+${dev.url}+'\');'"></a>
                             </li>
                         </ul>
                     </li>
@@ -160,6 +160,17 @@
             document.getElementById('iframe').src = "advice?power=" + pl;
         } else if (url == "interviewPage") {
             document.getElementById('iframe').src = "interview";
+        }
+    }
+
+    function goDevelp(url){
+        var patt8080 = new RegExp("8080");
+        var patt8081 = new RegExp("8081");
+        if(patt8080.test(url) || patt8081.test(url)){
+            var u = url.split("/stu-hostel-sys/")[1];
+            document.getElementById('iframe').src = u;
+        }else {
+            window.open(url);
         }
     }
 

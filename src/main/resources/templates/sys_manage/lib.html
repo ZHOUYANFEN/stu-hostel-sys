@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lib Setting</title>
+
+    <link rel="stylesheet" href="../../static/bootstrap/bootstrap.min.css" th:href="@{bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/dataTables.bootstrap4.min.css"
+          th:href="@{css/dataTables.bootstrap4.min.css}"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{css/style.css}"/>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="../../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" href="../../static/css/daterangepicker.css"
+          th:href="@{css/daterangepicker.css}"/>
+    <style>
+        .daterangepicker.dropdown-menu {
+            max-width: none;
+            background-color: transparent;
+            border: 0;
+            z-index: 1100 !important;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="content-page">
+
+    <!-- Start content -->
+    <div class="content">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb-holder">
+                        <h1 class="main-title float-left">
+                            城市图书馆
+                            <button data-toggle="modal" data-target="#addLibModal" title="新增记录">
+                                <i class="fa fa-plus-square bigfonts" aria-hidden="true"></i>
+                            </button>
+                        </h1>
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item">HOSTEL</li>
+                            <li class="breadcrumb-item active">城市图书馆</li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+
+                <table id="libSetTable" class="table table-bordered table-hover display" width="100%">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <!-- 新增记录 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="addLibModal" tabindex="-1" role="dialog"
+                     aria-labelledby="addLibModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addLibModalLabel">新增记录</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="inputUserName" class="col-sm-2 col-form-label">住户：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputUserName"
+                                                   placeholder="住户姓名">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputUserTel" class="col-sm-2 col-form-label">住户电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputUserTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputUserId" class="col-sm-2 col-form-label">住户身份证号：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputUserId"
+                                                   placeholder="住户身份证号">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputBorrowTime" class="col-sm-2 col-form-label">借阅时间：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputBorrowTime"
+                                                   placeholder="借阅时间">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputBook" class="col-sm-2 col-form-label">书名：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputBook"
+                                                   placeholder="书名"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputBackTime" class="col-sm-2 col-form-label">归还时间：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputBackTime"
+                                                   placeholder="归还时间" value="" readonly/>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="savestatus" onclick="saveLib()">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 新增记录 Modal -->
+
+                <!-- 修改记录 Modal -->
+                <div class="modal fade bd-example-modal-lg" id="updateLibModal" tabindex="-1" role="dialog"
+                     aria-labelledby="updateLibModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateLibModalLabel">修改记录</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" title="关闭">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="updateUserName" class="col-sm-2 col-form-label">住户：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateUserName"
+                                                   placeholder="住户姓名" readonly>
+                                            <input type="text" class="form-control" id="hidUpdate" hidden="hidden">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateUserTel" class="col-sm-2 col-form-label">住户电话：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateUserTel"
+                                                   placeholder="住户电话">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateUserId" class="col-sm-2 col-form-label">住户身份证号：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateUserId"
+                                                   placeholder="住户身份证号" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateBorrowTime" class="col-sm-2 col-form-label">借阅时间：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateBorrowTime"
+                                                   placeholder="借阅时间" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateBook" class="col-sm-2 col-form-label">书名：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateBook"
+                                                   placeholder="书名" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="updateBackTime" class="col-sm-2 col-form-label">归还时间：</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="updateBackTime"
+                                                   placeholder="归还时间"/>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id="" data-dismiss="modal">取消
+                                </button>
+                                <button type="button" class="btn btn-primary" id="updateLib" onclick="updateLib()">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end 修改记录 Modal -->
+            </div>
+        </div>
+        <!-- END container-fluid -->
+    </div>
+    <!-- END content -->
+</div>
+<!-- END content-page -->
+
+<script type="text/javascript" src="../../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script src="../../static/js/fastclick.js" th:src="@{js/fastclick.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../../static/js/jquery.dataTables.min.js"
+        th:src="@{js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" src="../../static/js/dataTables.bootsstrap4.min.js"
+        th:src="@{js/dataTables.bootsstrap4.min.js}"></script>
+<script type="text/javascript" src="../../static/js/moment.min.js" th:src="@{js/moment.min.js}"></script>
+<script type="text/javascript" src="../../static/js/daterangepicker.js" th:src="@{js/daterangepicker.js}"></script>
+<script>
+
+    $('#inputBorrowTime').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    });
+    $('#updateBackTime').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    });
+
+    var userName;
+    var userId;
+    var userTel;
+    var book;
+    var borrowTime;
+    var backTime;
+    var id;
+
+    libSetTable();
+
+    /**
+     * 表格生成
+     */
+    function libSetTable() {
+        setTable = $("#libSetTable").dataTable({
+            "processing": true,
+            // "statusrSide": true,
+            "retrieve": true,
+            "destroy": true,
+            "language": {
+                "processing": "处理中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "search": "搜索:",
+                "url": "",
+                "emptyTable": "表中数据为空",
+                "loadingRecords": "载入中...",
+                "infoThousands": ",",
+                "paginate": {
+                    "first": "首页",
+                    "previous": "上页",
+                    "next": "下页",
+                    "last": "末页"
+                },
+                "aria": {
+                    "sortAscending": ": 以升序排列此列",
+                    "sortDescending": ": 以降序排列此列"
+                }
+            },
+            "ajax": {
+                "url": "/stu-hostel-sys/getLibList",
+                "type": "POST"
+            },
+            "columns": [{
+                "title": "住户",
+                "data": "userName"
+            }, {
+                "title": "住户身份证",
+                "data": "userId"
+            }, {
+                "title": "住户电话",
+                "data": "userTel"
+            }, {
+                "title": "书名",
+                "data": "book"
+            }, {
+                "title": "借阅时间",
+                "data": "borrowTime"
+            }, {
+                "title": "归还时间",
+                "data": "backTime"
+            }, {
+                "title": "操作",
+                "data": null,
+                "targets": 6,
+                "render": function (data, type, row) {
+                    var id = row.id;
+                    return "<a class='up btn btn-default btn-xs' onclick='selectLibById(" + id + ")' style='color: blue'>编辑</a>";
+                }
+            }
+            ]
+        });
+    }
+
+    /**
+     * 保存&校验
+     */
+    function saveLib() {
+        userName = $("#inputUserName").val();
+        userId = $("#inputUserId").val();
+        userTel = $("#inputUserTel").val();
+        book = $("#inputBook").val();
+        borrowTime = $("#inputBorrowTime").val();
+        backTime = $("#inputBackTime").val();
+
+        if (userName == null || userName == "") {
+            alert("住户姓名为空");
+        } else if (userId == null || userId == "") {
+            alert("住户身份证为空");
+        } else if (userTel == "" || userTel == null) {
+            alert("电话为空");
+        } else if (book == "" || book == null) {
+            alert("书名为空");
+        } else if (borrowTime == null || borrowTime == "") {
+            alert("借阅时间为空");
+        } else {
+            $.post("/stu-hostel-sys/saveLib", {
+                "userName": userName,
+                "userId": userId,
+                "userTel": userTel,
+                "book": book,
+                "borrowTime": borrowTime,
+                "backTime": backTime
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#addLibModal").modal('hide');
+                    alert("保存成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    libSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    }
+
+    /**
+     * 清空addLib Modal数据
+     */
+    $("#addLibModal").on("hidden.bs.modal", function () {
+        $("#inputUserName").val("");
+        $("#inputUserId").val("");
+        $("#inputUserTel").val("");
+        $("#inputBook").val("");
+        $("#inputBorrowTime").val("");
+        $("#inputBackTime").val("");
+    });
+
+    function selectLibById(id) {
+        $.post("/stu-hostel-sys/findLibById", {"id": id}, function (re) {
+            var r = re.data[0];
+            $("#hidUpdate").val(id);
+            if (r != "" && r != null) {
+                $("#updateLibModal").modal("show");
+                $("#updateUserName").val(r.userName);
+                $("#updateUserId").val(r.userId);
+                $("#updateUserTel").val(r.userTel);
+                $("#updateBook").val(r.book);
+                $("#updateBorrowTime").val(r.borrowTime);
+                $("#updateBackTime").val(r.backTime);
+            } else {
+                alert(r.error);
+            }
+        });
+    }
+
+    $("#updateLibModal").on("hidden.bs.modal", function() {
+        $("#updateUserName").val("");
+        $("#updateUserId").val("");
+        $("#updateUserTel").val("");
+        $("#updateBook").val("");
+        $("#updateBorrowTime").val("");
+        $("#updateBackTime").val("");
+    });
+
+    function updateLib() {
+        id = $("#hidUpdate").val();
+        userName = $("#updateUserName").val();
+        userId = $("#updateUserId").val();
+        userTel = $("#updateUserTel").val();
+        book = $("#updateBook").val();
+        borrowTime = $("#updateBorrowTime").val();
+        backTime = $("#updateBackTime").val();
+        if (userName == null || userName == "") {
+            alert("住户姓名为空");
+        } else if (userId == null || userId == "") {
+            alert("住户身份证为空");
+        } else if (userTel == "" || userTel == null) {
+            alert("电话为空");
+        } else if (book == "" || book == null) {
+            alert("书名为空");
+        } else if (borrowTime == null || borrowTime == "") {
+            alert("借阅时间为空");
+        } else if (backTime == null || backTime == "") {
+            alert("归还时间为空");
+        } else {
+            $.post("/stu-hostel-sys/updateLib", {
+                "userName": userName,
+                "userId": userId,
+                "userTel": userTel,
+                "book": book,
+                "borrowTime": borrowTime,
+                "backTime": backTime,
+                "id": id
+            }, function (r) {
+                if (r.data == "0") {
+                    $("#updateLibModal").modal('hide');
+                    alert("保存成功！");
+                    setTable.fnClearTable();
+                    setTable.fnDestroy(); //还原初始化了的datatable
+                    libSetTable();
+                } else {
+                    alert(r.error);
+                }
+            });
+        }
+    }
+</script>
+</body>
+
+</html>
