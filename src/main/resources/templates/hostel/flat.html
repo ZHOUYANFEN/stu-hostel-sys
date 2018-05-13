@@ -252,6 +252,7 @@
                                         <label for="updateSize" class="col-sm-2 col-form-label">住户大小：</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" id="updateSize">
+                                                <option value="">请选择大小</option>
                                                 <option value="单间">单间</option>
                                                 <option value="两房">两房</option>
                                                 <option value="三房">三房</option>
@@ -262,6 +263,7 @@
                                         <label for="updateType" class="col-sm-2 col-form-label">住户属性：</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" id="updateType">
+                                                <option value="">请选择住户属性</option>
                                                 <option value="自住">自住</option>
                                                 <option value="已住满">已住满</option>
                                                 <option value="未住满">未住满</option>
@@ -505,8 +507,8 @@
                 $("#updateFlatUser").val(rs.flatUser);
                 $("#updateFlatUserId").val(rs.flatUserId);
                 $("#updateFlatUserTel").val(rs.flatUserTel);
-                $("#updateType option:selected").text(rs.type);
-                $("#updateSize option:selected").text(rs.size);
+                $("#updateType option[value='"+ rs.type +"']").prop("selected", true);
+                $("#updateSize option[value='"+ rs.size +"']").prop("selected", true) ;
                 $("#updateRemark").val(rs.remark);
             } else {
                 alert("报错了！");
@@ -514,17 +516,13 @@
         });
     }
 
-    $("#updateflatModal").on("hidden.bs.modal", function () {
-
-    });
-
     /**
      * 修改一条flat
      * @param id
      */
     function updateflatById() {
         id = $("#hidUpdateflat").val();
-        flatName = $("#updateFlatName").val();
+        flatName = $("#updateFlatName option:selected").val();
         flatNum = $("#updateFlatNum").val();
         flatUser = $("#updateFlatUser").val();
         flatUserId = $("#updateFlatUserId").val();
@@ -574,13 +572,13 @@
      * updateflatModal
      */
     $("#updateflatModal").on("hidden.bs.modal", function () {
-        $("#updateFlatName").val("");
+        $("#updateFlatName option:selected").text("请选择公寓");
         $("#updateFlatNum").val("");
         $("#updateFlatUser").val("");
         $("#updateFlatUserId").val("");
         $("#updateFlatUserTel").val("");
-        $("#updateType option:selected").text("");
-        $("#updateSize option:selected").text("");
+        // $("#updateType option:selected").text("");
+        // $("#updateSize option:selected").text("");
     });
 
 
