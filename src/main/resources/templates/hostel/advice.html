@@ -58,12 +58,24 @@
 
             <div class="row">
 
-                <table id="aSetTable" class="table table-bordered table-hover display" width="100%">
-                    <thead>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div class="card" style="width: 18rem; margin: 20px;" th:each="advice:${advice.data}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${advice.title}">Card title</h5>
+                        <hr />
+                        <p class="card-subtitle mb-2 text-muted" th:text="${advice.time}">
+                            <small class="text-muted">Card subtitle</small></p>
+                        <p class="card-text" th:text="${advice.content}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                        <a href="#" class="card-link" th:onclick="'javascript:selectAdviceById(\''+${advice.id}+'\')'" >查看详情</a>
+                    </div>
+                </div>
+
+                <!--<table id="aSetTable" class="table table-bordered table-hover display" width="100%">-->
+                    <!--<thead>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--</tbody>-->
+                <!--</table>-->
 
                 <!-- show -->
                 <div class="modal fade bd-example-modal-lg" id="showContentModal" tabindex="-1" role="dialog"
@@ -80,7 +92,7 @@
                                 <div class="form-group row">
                                     <label for="showContent" class="col-sm-2 col-form-label">内容：</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="showContent" placeholder="内容"></textarea>
+                                        <textarea class="form-control" id="showContent" placeholder="内容" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -122,69 +134,69 @@
     var time;
     var id;
 
-    aSetTable();
+    // aSetTable();
 
     /**
      * 表格生成
      */
-    function aSetTable() {
-        setTable = $("#aSetTable").dataTable({
-            "processing": true,
-            // "statusrSide": true,
-            "retrieve": true,
-            "destroy": true,
-            "language": {
-                "processing": "处理中...",
-                "lengthMenu": "显示 _MENU_ 项结果",
-                "zeroRecords": "没有匹配结果",
-                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "infoFiltered": "(由 _MAX_ 项结果过滤)",
-                "infoPostFix": "",
-                "search": "搜索:",
-                "url": "",
-                "emptyTable": "表中数据为空",
-                "loadingRecords": "载入中...",
-                "infoThousands": ",",
-                "paginate": {
-                    "first": "首页",
-                    "previous": "上页",
-                    "next": "下页",
-                    "last": "末页"
-                },
-                "aria": {
-                    "sortAscending": ": 以升序排列此列",
-                    "sortDescending": ": 以降序排列此列"
-                }
-            },
-            "ajax": {
-                "url": "/stu-hostel-sys/getAdviceList",
-                "type": "POST"
-            },
-            "columns": [{
-                "title": "标题",
-                "data": "title"
-            }, {
-                "title": "时间",
-                "data": "time"
-            }, {
-                "title": "内容",
-                "data": "content",
-                "render": function (data, type, row) {
-                    return "<div class='hide'>"+ row.content +"</div>";
-                }
-            }, {
-                "title": "操作",
-                "data": null,
-                "targets": 3,
-                "render": function (data, type, row) {
-                    var id = row.id;
-                    return "<a class='up btn btn-default btn-xs' onclick='selectAdviceById("+id+")' style='color: blue'> 查看内容 </a>";
-                }
-            }
-            ]
-        });
-    }
+    // function aSetTable() {
+    //     setTable = $("#aSetTable").dataTable({
+    //         "processing": true,
+    //         // "statusrSide": true,
+    //         "retrieve": true,
+    //         "destroy": true,
+    //         "language": {
+    //             "processing": "处理中...",
+    //             "lengthMenu": "显示 _MENU_ 项结果",
+    //             "zeroRecords": "没有匹配结果",
+    //             "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+    //             "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+    //             "infoFiltered": "(由 _MAX_ 项结果过滤)",
+    //             "infoPostFix": "",
+    //             "search": "搜索:",
+    //             "url": "",
+    //             "emptyTable": "表中数据为空",
+    //             "loadingRecords": "载入中...",
+    //             "infoThousands": ",",
+    //             "paginate": {
+    //                 "first": "首页",
+    //                 "previous": "上页",
+    //                 "next": "下页",
+    //                 "last": "末页"
+    //             },
+    //             "aria": {
+    //                 "sortAscending": ": 以升序排列此列",
+    //                 "sortDescending": ": 以降序排列此列"
+    //             }
+    //         },
+    //         "ajax": {
+    //             "url": "/stu-hostel-sys/getAdviceList",
+    //             "type": "POST"
+    //         },
+    //         "columns": [{
+    //             "title": "标题",
+    //             "data": "title"
+    //         }, {
+    //             "title": "时间",
+    //             "data": "time"
+    //         }, {
+    //             "title": "内容",
+    //             "data": "content",
+    //             "render": function (data, type, row) {
+    //                 return "<div class='hide'>"+ row.content +"</div>";
+    //             }
+    //         }, {
+    //             "title": "操作",
+    //             "data": null,
+    //             "targets": 3,
+    //             "render": function (data, type, row) {
+    //                 var id = row.id;
+    //                 return "<a class='up btn btn-default btn-xs' onclick='selectAdviceById("+id+")' style='color: blue'> 查看内容 </a>";
+    //             }
+    //         }
+    //         ]
+    //     });
+    // }
 
     function selectAdviceById(id) {
         $.post("/stu-hostel-sys/selectAdviceById", {"id": id},function (r) {

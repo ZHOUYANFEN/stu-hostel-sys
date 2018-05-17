@@ -262,11 +262,11 @@
         content = $("#inputContent").val();
 
         if (title == null || title == "") {
-            alert("住户姓名为空");
+            alert("标题为空");
         } else if (time == null || time == "") {
-            alert("住户房间为空");
+            alert("时间为为空");
         } else if (content == "" || content == null) {
-            alert("访客姓名为空");
+            alert("内容为空");
         } else {
             $.post("/stu-hostel-sys/saveAdvice", {
                 "title": title,

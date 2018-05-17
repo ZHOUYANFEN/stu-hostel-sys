@@ -5,6 +5,7 @@ import com.study.stuhostelsys.model.Advice;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,12 +19,13 @@ public class AdviceController {
     private AdviceInterface adviceInterface;
 
     @GetMapping("/advice")
-    public ModelAndView advice(@RequestParam("power") String power){
+    public ModelAndView advice(@RequestParam("power") String power, Model model){
         ModelAndView view;
         if (power.equals("1")) {
             view = new ModelAndView("sys_manage/advice");
         } else {
             view = new ModelAndView("hostel/advice");
+            model.addAttribute("advice", getAdviceList());
         }
         return view;
     }
